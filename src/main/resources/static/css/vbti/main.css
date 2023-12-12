@@ -1,0 +1,59 @@
+#logo_img_link {
+  display: block;
+  margin: 0px auto;
+  width: 300px;
+  height: 200px;
+}
+#valrorant_logo_img {
+  display: block;
+  margin: 0px auto;
+  margin-top: 75px;
+}
+
+#help_text {
+  font-size: 20pt;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+  color: #ff4454;
+}
+
+#start_button {
+  display: block;
+  /* padding: 25px 50px; */
+  min-height: 50px;
+  min-width: 200px;
+  margin: 0px auto;
+  font-size: 30px;
+  color: #ff4454;
+  border: 5px solid;
+  border-color: #ff4454;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+#start_a {
+  text-decoration: none;
+}
+
+#start_button:hover {
+  background-color: #ff9ca4;
+  color: aliceblue;
+  transition: 0.7s;
+}
+#start_button:focus {
+  outline-color: transparent;
+  outline-style: solid;
+  box-shadow: 0 0 0 4px #ff8080eb;
+}
+
+#foot {
+  padding-top: 5px;
+  margin-top: 100px;
+  border-top: 1px solid pink;
+
+  color: salmon;
+  text-align: center;
+  font-size: 15px;
+}

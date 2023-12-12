@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .btn {
+        padding: 10px 20px;
+        background-color: azure;
+        cursor: pointer;
+      }
+      .modal-wrap {
+        /* background-color: #fffa;  */
+        width: 100%;
+        height: 100%;
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        /* 1. flex */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        transition: background-color 1s, visibility 0.5s;
+
+        visibility: hidden;
+      }
+      .modal-wrap.active {
+        background-color: #000a;
+        visibility: visible;
+      }
+      .modal {
+        width: 300px;
+        height: 300px;
+        background-color: #fff;
+
+        /* 2. position */
+        /* position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); */
+      }
+    </style>
+  </head>
+  <body>
+    <button class="open-btn">open modal</button>
+
+    <div class="modal-wrap">
+      <div class="modal">
+        <div>modal content</div>
+        <button class="close-btn">close btn</button>
+      </div>
+    </div>
+
+    <script>
+      const modalElem = document.querySelector(".modal-wrap");
+      // btn에 이벤트 주기
+      document.querySelector(".open-btn").addEventListener("click", () => {
+        modalElem.classList.toggle("active");
+      });
+      document.querySelector(".close-btn").addEventListener("click", () => {
+        modalElem.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

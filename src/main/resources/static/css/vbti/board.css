@@ -1,0 +1,162 @@
+caption {
+  display: none;
+}
+table {
+  border-collapse: collapse;
+}
+.board_list_wrap {
+  padding: 50px;
+}
+
+.board_list {
+  width: 85%;
+  border-top: 2px solid #ff4454;
+  margin: 0 auto;
+}
+.board_list tr {
+  color: salmon;
+  border-bottom: 2px solid pink;
+}
+
+.board_list th,
+.board_list td {
+  padding: 10px;
+  font-size: 14pt;
+}
+
+.board_list td {
+  text-align: center;
+}
+
+.board_list .tit {
+  text-align: left;
+}
+
+td > a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+td > a:hover {
+  text-decoration: underline !important;
+  color: inherit !important;
+}
+
+td > a:active {
+  text-decoration: underline !important;
+  color: pink !important;
+}
+.paging_wrap {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+
+  transform: translate(-50%);
+  display: flex;
+  justify-content: center;
+}
+
+.paging {
+  margin-top: 20px;
+  font-size: 0;
+  text-align: center;
+  color: salmon;
+}
+
+.paging a {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 5px 8px;
+  border: 3px solid pink;
+  border-radius: 5px;
+  text-decoration: none !important;
+  color: inherit !important;
+  font-size: 10pt;
+}
+
+.paging a:hover {
+  color: #ffffff !important;
+  background-color: salmon;
+}
+
+.paging a.nump_on {
+  background-color: pink;
+  color: white !important;
+}
+
+.tit_wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.comment {
+  color: rgb(255, 145, 163);
+  position: absolute;
+  margin-top: 3px;
+  font-size: 10pt;
+}
+
+#d_menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #ece8e1;
+  color: salmon;
+  list-style: none;
+
+  width: 75px;
+  height: 100px;
+  border: 3px solid #ff4454;
+  border-radius: 5px;
+  font-size: 8pt;
+}
+#d_menu p {
+  text-align: center;
+
+  margin: 0 auto;
+  border-bottom: 3px solid pink;
+}
+
+#d_menu p a {
+  font-family: "나눔고딕";
+  color: salmon;
+  text-decoration: none;
+}
+
+#d_menu p a:hover {
+  color: pink;
+  text-decoration: none;
+}
+#divView {
+  position: absolute;
+  display: none;
+  background-color: #ffffff;
+  border: solid 2px #d0d0d0;
+  width: 350px;
+  height: 150px;
+  padding: 10px;
+}
+
+.sub_btn {
+  color: #ff4454;
+  padding: 5px 10px;
+  position: relative;
+  float: right;
+  margin-top: 10px;
+  margin-right: 100px;
+  border: 3px solid #ff4454;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.sub_btn:hover {
+  background-color: #ff9ca4;
+  color: aliceblue;
+  transition: 0.7s;
+}
+.sub_btn:focus {
+  outline-color: transparent;
+  outline-style: solid;
+  box-shadow: 0 0 0 4px #ff8080eb;
+}

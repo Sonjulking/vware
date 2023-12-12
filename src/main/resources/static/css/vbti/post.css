@@ -1,0 +1,140 @@
+#Q_board_wrap {
+  margin-top: 10px;
+  margin: 0px auto;
+  border-radius: 10px;
+  border: 4px solid #ff4454;
+
+  width: 50%;
+  height: 600px;
+}
+#Q_board {
+  border: 3px solid pink;
+  margin: 20px auto;
+  width: 85%;
+  height: 450px;
+
+  border-radius: 5px;
+}
+
+hr {
+  height: 3px;
+  background-color: #ff4454;
+}
+
+#answer_btn_wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.answer {
+  /* padding: 25px 50px; */
+  min-height: 50px;
+  min-width: 200px;
+
+  font-size: 30px;
+  color: #ff4454;
+  border: 5px solid;
+  border-color: #ff4454;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0);
+  margin-top: 15px;
+}
+
+.answer:hover {
+  background-color: #ff9ca4;
+  color: aliceblue;
+  transition: 0.7s;
+}
+.answer:focus {
+  outline-color: transparent;
+  outline-style: solid;
+  box-shadow: 0 0 0 4px #ff8080eb;
+}
+
+#Question {
+  font-family: "나눔고딕";
+  font-weight: 500;
+  /* font-family: "HYGothic"; */
+  margin-top: 70px;
+  margin-right: 20px;
+  margin-left: 20px;
+  color: #ff4454;
+  text-align: center;
+  font-size: 15pt;
+}
+
+/* #yt_wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} */
+#yt {
+  width: 600px;
+  height: 400px;
+  margin: 0 auto;
+  margin-top: 3%;
+  display: flex;
+}
+
+#pb_wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#pb_img {
+  width: 75px;
+  height: 75px;
+}
+
+.sub_btn_wrap {
+  margin-right: 55px;
+}
+.sub_btn {
+  color: #ff4454;
+  padding: 5px 10px;
+  position: relative;
+  float: right;
+  margin-top: 10px;
+  margin-left: 25px;
+  border: 3px solid #ff4454;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.sub_btn:hover {
+  background-color: #ff9ca4;
+  color: aliceblue;
+  transition: 0.7s;
+}
+.sub_btn:focus {
+  outline-color: transparent;
+  outline-style: solid;
+  box-shadow: 0 0 0 4px #ff8080eb;
+}
+/* summernote 색깔 섬머노트 */
+.note-editable {
+  background-color: whitesmoke !important;
+  color: black !important;
+}
+.title-box {
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: whitesmoke;
+  width: 89%;
+  height: 25px;
+  border: 1px solid pink;
+  border-radius: 5px;
+}
+
+#Q_board span {
+  color: #ff4454;
+  font-family: "나눔고딕";
+  font-weight: 500;
+  margin-left: 15px;
+}
