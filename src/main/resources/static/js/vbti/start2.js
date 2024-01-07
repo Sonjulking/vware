@@ -119,6 +119,7 @@ function begin() {
     setTimeout(() => {
       main.style.display = "none";
       qna.style.display = "block";
+      qna.style.margin = "0 auto";
     }, 450);
     let qIdx = 0;
     goNext(qIdx);

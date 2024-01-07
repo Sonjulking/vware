@@ -8,7 +8,7 @@
   <link rel="stylesheet" th:href="@{/css/vbti/only_test/result.css}"/>
 
   <div class="container">
-    <section id="main" class="mx-auto my-5 py-5 px-3">
+    <section id="main" class="">
       <!-- pt-5 pb-5 -->
       <h1>발로란트 적성검사</h1>
       <div class="col-lg-6 col-md-6 col-sm-6 col-12 mx-auto">
@@ -28,7 +28,7 @@
       </button>
     </section>
     <section id="qna">
-      <div class="status mx-auto mt-5">
+      <div class="">
         <div class="statusBar"></div>
       </div>
       <div class="qBox my-5 py-3 mx-auto"></div>
@@ -37,13 +37,10 @@
     <section id="result">
       <h1>당신의 결과는</h1>
       <div class="resultname"></div>
-      <div id="resultImg" class="col-lg-6 col-md-6 col-sm-6 col-12 mx-auto">
+      <div id="resultImg" class="">
         <!-- <img src="./img/main.png" alt="mainImage" class="img-fluid" /> -->
       </div>
       <div class="resultDesc"></div>
-      <a th:href="@{/vbti/resultSave}">
-        <button type="button">결과 저장하기</button>
-      </a>
       <form th:action="@{/vbti/resultSave}" method="post">
         <input type="hidden" name="testResult" id="hidden_test_result">
         <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">결과를 로그인을 하여

@@ -1,5 +1,6 @@
 #qna {
   display: none;
+  width: 80%;
 }
 
 .qBox {
@@ -9,6 +10,7 @@
   font-size: 24px;
   width: 80%;
 }
+
 
 .answerList {
   background-color: whitesmoke;
@@ -21,9 +23,10 @@
 
 .answerList:hover,
 .answerList:focus {
-  background-color: pink;
+  background-color: #ff4454;
   color: whitesmoke;
 }
+
 
 .status {
   height: 20px;
@@ -36,10 +39,10 @@
   height: 100%;
   /* Permalink - use to edit and share this gradient. 퍼머링크 - 이 그라디언트를 편집하고 공유하는 데 사용: https://colorzilla.com/gradient-editor/#febbbb+0,fe9090+45,ff5c5c+100;Red+3D+%231 */
   background: linear-gradient(
-    to bottom,
-    #febbbb 0%,
-    #fe9090 45%,
-    #ff5c5c 100%
+      to bottom,
+      #febbbb 0%,
+      #fe9090 45%,
+      #ff5c5c 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
   border-radius: 20px;
