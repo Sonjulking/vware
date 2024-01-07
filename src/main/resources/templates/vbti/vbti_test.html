@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+
+  <title></title>
+
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/default.css}" />
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/main.css}" />
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/qna.css}" />
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/animation.css}" />
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/result.css}" />
+  <link rel="preconnect" th:href="@{https://fonts.googleapis.com}" />
+  <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin />
+  <link
+      th:href="@{https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR&display=swap}"
+      rel="stylesheet"
+  />
+</head>
+<body>
+<div class="container">
+  <section id="main" class="mx-auto my-5 py-5 px-3">
+    <!-- pt-5 pb-5 -->
+    <h1>십이간지로 알아보는 연애유형</h1>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-12 mx-auto">
+      <img src="./img/main.png" alt="mainImage" class="img-fluid" />
+    </div>
+    <p>
+      나만의 MBTI 사이트 입니다. <br />
+      아래 시작하기 버튼을 눌러 시작해 주십시오.
+    </p>
+    <button
+        type="button"
+        class="btn btn-outline-danger mt-3"
+        onclick="js:begin()"
+    >
+      시작하기
+    </button>
+  </section>
+  <section id="qna">
+    <div class="status mx-auto mt-5">
+      <div class="statusBar"></div>
+    </div>
+    <div class="qBox my-5 py-3 mx-auto"></div>
+    <div class="answerBox"></div>
+  </section>
+  <section id="result">
+    <h1>당신의 결과는</h1>
+    <div class="resultname"></div>
+    <div id="resultImg" class="col-lg-6 col-md-6 col-sm-6 col-12 mx-auto">
+      <!-- <img src="./img/main.png" alt="mainImage" class="img-fluid" /> -->
+    </div>
+    <div class="resultDesc"></div>
+    <a th:href="@{/vbti/resultSave}" ><button type="button" >결과 저장하기</button></a>
+  </section>
+</div>
+<script th:src="@{/js/vbti/data2.js}" charset="UTF-8"></script>
+<script th:src="@{/js/vbti/start2.js}" charset="UTF-8"></script>
+</body>
+</html>

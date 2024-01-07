@@ -7,6 +7,8 @@
   <title>발로란트 적성검사</title>
   <!--  <link rel="stylesheet" href="css/nav.css"/>
     <link rel="stylesheet" href="css/main.css"/>-->
+  <link rel="stylesheet" th:href="@{/css/vbti/main.css}">
+  <link rel="stylesheet" th:href="@{/css/vbti/nav.css}">
 </head>
 <body>
 <div class="main_header_wrap">
@@ -34,7 +36,7 @@
       width="300"
   /></a>-->
   <h1 id="help_text">발로란트 캐릭터 적성검사 입니다.</h1>
-  <a id="start_a" href="question.html">
+  <a id="start_a" th:href="@{/vbti/test}">
     <input id="start_button" type="button" value="START"
     /></a>
 </div>
@@ -44,10 +46,10 @@
   <address>E-Mail : VBTI@gmail.com</address>
   <p>Copyright &copy; All right reserved</p>
 </footer>
-<!--<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
-<script src="js/main.js"></script>
-<script src="js/clock.js"></script>
-<script src="js/chncolor.js"></script>-->
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.js}"></script>
+<script th:src="@{js/vbti/main.js}"></script>
+<script th:src="@{js/vbti/clock.js}"></script>
+<script th:src="@{js/vbti/chncolor.js}"></script>
 <!--회원가입시 닉네임 + 축하 메세지-->
 <script th:if="${session.sendNickName != null}" th:inline="javascript">
   alert([[${session.sendNickName}]] + '님 회원가입을 축하드립니다.');
