@@ -1,7 +1,9 @@
 package com.ggck.vware.user;
 
+import com.ggck.vware.DataNotFoundException;
 import jakarta.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,5 +32,25 @@ public class SiteUserService {
     //siteUser.setLastAccessTime(LocalDateTime.now());
     this.siteUserRepository.save(siteUser);
     return siteUserDto;
+  }
+
+  public SiteUser getUser(String userId) {
+    Optional<SiteUser> siteUser = this.siteUserRepository.findByUserId(userId);
+    if (siteUser.isPresent()) {
+      return siteUser.get();
+    } else {
+      throw new DataNotFoundException("siteuser not found");
+    }
+  }
+
+  public void savePositionResult(SiteUser siteUser, SiteUserDto siteUserDto,
+      String positionResult) {
+    siteUser.setUserId(siteUserDto.getUserId());
+    siteUser.setUserEmail(siteUserDto.getUserEmail());
+    siteUser.setPassword(siteUserDto.getPassword());
+    siteUser.setUserNickName(siteUserDto.getUserNickName());
+    siteUser.setPreferredPosition(siteUserDto.getPreferredPosition());
+    siteUser.setTestResult(positionResult);
+    this.siteUserRepository.save(siteUser);
   }
 }

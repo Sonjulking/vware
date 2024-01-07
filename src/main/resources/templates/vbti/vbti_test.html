@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
 
   <title></title>
 
-  <link rel="stylesheet" th:href="@{/css/vbti/only_test/default.css}" />
-  <link rel="stylesheet" th:href="@{/css/vbti/only_test/main.css}" />
-  <link rel="stylesheet" th:href="@{/css/vbti/only_test/qna.css}" />
-  <link rel="stylesheet" th:href="@{/css/vbti/only_test/animation.css}" />
-  <link rel="stylesheet" th:href="@{/css/vbti/only_test/result.css}" />
-  <link rel="preconnect" th:href="@{https://fonts.googleapis.com}" />
-  <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin />
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/default.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/main.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/qna.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/animation.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vbti/only_test/result.css}"/>
+  <link rel="preconnect" th:href="@{https://fonts.googleapis.com}"/>
+  <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin/>
   <link
       th:href="@{https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR&display=swap}"
       rel="stylesheet"
@@ -21,13 +21,14 @@
 <div class="container">
   <section id="main" class="mx-auto my-5 py-5 px-3">
     <!-- pt-5 pb-5 -->
-    <h1>십이간지로 알아보는 연애유형</h1>
+    <h1>발로란트 적성검사</h1>
     <div class="col-lg-6 col-md-6 col-sm-6 col-12 mx-auto">
-      <img src="./img/main.png" alt="mainImage" class="img-fluid" />
+      <img src="./img/main.png" alt="mainImage" class="img-fluid"/>
     </div>
     <p>
-      나만의 MBTI 사이트 입니다. <br />
-      아래 시작하기 버튼을 눌러 시작해 주십시오.
+      발로란트 적성검사 테스트입니다. <br/>
+      아래 시작하기 버튼을 눌러 시작해 주십시오.<br/>
+      결과를 저장하고 싶다면, 회원가입후 로그인하고 테스트를 진행해주세요.
     </p>
     <button
         type="button"
@@ -51,7 +52,15 @@
       <!-- <img src="./img/main.png" alt="mainImage" class="img-fluid" /> -->
     </div>
     <div class="resultDesc"></div>
-    <a th:href="@{/vbti/resultSave}" ><button type="button" >결과 저장하기</button></a>
+    <a th:href="@{/vbti/resultSave}">
+      <button type="button">결과 저장하기</button>
+    </a>
+    <form th:action="@{/vbti/resultSave}" method="post">
+      <input type="hidden" name="testResult" id="hidden_test_result">
+      <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">결과를 로그인을 하여
+        저장하세요</a>
+      <input sec:authorize="isAuthenticated()" type="submit" value="저장해용~">
+    </form>
   </section>
 </div>
 <script th:src="@{/js/vbti/data2.js}" charset="UTF-8"></script>

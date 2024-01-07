@@ -3,7 +3,7 @@ const qna = document.querySelector("#qna");
 const result = document.querySelector("#result");
 
 const endPoint = 12; //질문이 12개라서
-const select = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 어떠한 답변을 했는지 배열 생성, 사용자가 버튼을 선택할때마다 배열에 내용을 추가
+const select = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 어떠한 답변을 했는지 배열 생성, 사용자가 버튼을 선택할때마다 배열에 내용을 추가
 
 function calResult() {
   //결과를 연산해주는 함수
@@ -27,6 +27,9 @@ function setResult() {
 
   const resultDesc = document.querySelector(".resultDesc");
   resultDesc.innerHTML = infoList[point].desc;
+  const hiddenInput = document.querySelector("#hidden_test_result");
+  hiddenInput.value = infoList[point].agent; // 밸류값에다가 결과를 저장
+
 }
 
 function goResult() {
@@ -62,30 +65,30 @@ function addAnswer(answerText, qIdx, idx) {
   // console.log("앤서 텍스트 : " + answerText);
 
   answer.addEventListener(
-    "click",
-    function () {
-      let children = document.querySelectorAll(".answerList");
-      for (let i = 0; i < children.length; i++) {
-        children[i].disabled = true;
-        children[i].style.WebkitAnimation = "fadeOut 0.5s";
-        children[i].style.animation = "fadeOut 0.5s";
-      }
-      setTimeout(() => {
-        let target = qnaList[qIdx].a[idx].type; //qIdx번째 질문에서 idx번째 선택지.
-        for (let i = 0; i < Object.keys(target).length; i++) {
-          select[target[i]] += 1;
-        }
-        console.log("qidx = " + qIdx);
-        console.log("idx = " + idx);
-        //select[qIdx] = idx; //사용자가 몇번쨰 질문에서 몇번째 답변을 클릭했는지 저장.
-
+      "click",
+      function () {
+        let children = document.querySelectorAll(".answerList");
         for (let i = 0; i < children.length; i++) {
-          children[i].style.display = "none";
+          children[i].disabled = true;
+          children[i].style.WebkitAnimation = "fadeOut 0.5s";
+          children[i].style.animation = "fadeOut 0.5s";
         }
-        goNext(++qIdx);
-      }, 450);
-    },
-    false
+        setTimeout(() => {
+          let target = qnaList[qIdx].a[idx].type; //qIdx번째 질문에서 idx번째 선택지.
+          for (let i = 0; i < Object.keys(target).length; i++) {
+            select[target[i]] += 1;
+          }
+          console.log("qidx = " + qIdx);
+          console.log("idx = " + idx);
+          //select[qIdx] = idx; //사용자가 몇번쨰 질문에서 몇번째 답변을 클릭했는지 저장.
+
+          for (let i = 0; i < children.length; i++) {
+            children[i].style.display = "none";
+          }
+          goNext(++qIdx);
+        }, 450);
+      },
+      false
   );
   console.log("select[]" + select);
 }
