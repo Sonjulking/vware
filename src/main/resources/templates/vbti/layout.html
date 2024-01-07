@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>발로란트 적성검사</title>
+  <!--  <link rel="stylesheet" href="css/nav.css"/>
+    <link rel="stylesheet" href="css/main.css"/>-->
+  <link rel="stylesheet" th:href="@{/css/vbti/main.css}">
+  <link rel="stylesheet" th:href="@{/css/vbti/nav.css}">
+</head>
+<body>
+<div class="main_header_wrap">
+      <span id="main_logo_text"
+      ><a id="logo_link" href="main.html">VBTI</a></span
+      >
+  <span id="clock">00:00:00</span>
+</div>
+<nav>
+  <ul>
+    <li><a href="main.html">HOME</a></li>
+    <li><a href="board.html">NOTICE</a></li>
+    <li><a th:href="@{/vbti/test}">TEST</a></li>
+    <li><a href="madmovie.html">MAD MOVIE</a></li>
+    <li><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a><a
+        class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
+    <li sec:authorize="isAnonymous()"><a th:href="@{/user/signup}">회원가입</a></li>
+  </ul>
+</nav>
+<th:block layout:fragment="content"></th:block>
+</body>
+</html>
