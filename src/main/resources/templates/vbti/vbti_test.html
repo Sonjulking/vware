@@ -1,4 +1,4 @@
-<html layout:decorate="~{vbti/layout}">
+<html layout:decorate="~{common/layout}">
 <div layout:fragment="content">
 
   <!--  <link rel="stylesheet" th:href="@{/css/vbti/only_test/default.css}"/>-->
@@ -10,28 +10,28 @@
   <div class="container">
     <section id="main" class="">
       <!-- pt-5 pb-5 -->
-      <h1>발로란트 적성검사</h1>
-      <div class="col-lg-6 col-md-6 col-sm-6 col-12 mx-auto">
-        <img src="./img/main.png" alt="mainImage" class="img-fluid"/>
+      <h1 id="help_text">발로란트 캐릭터 적성검사 입니다.</h1>
+      <div class="">
+        <img src="./img/main.png" alt="mainImage" class=""/>
       </div>
       <p>
-        발로란트 적성검사 테스트입니다. <br/>
         아래 시작하기 버튼을 눌러 시작해 주십시오.<br/>
         결과를 저장하고 싶다면, 회원가입후 로그인하고 테스트를 진행해주세요.
       </p>
       <button
           type="button"
-          class="btn btn-outline-danger mt-3"
+          class="btn start_button"
           onclick="js:begin()"
       >
-        시작하기
+        START
       </button>
+
     </section>
     <section id="qna">
       <div class="">
         <div class="statusBar"></div>
       </div>
-      <div class="qBox my-5 py-3 mx-auto"></div>
+      <div class="qBox"></div>
       <div class="answerBox"></div>
     </section>
     <section id="result">

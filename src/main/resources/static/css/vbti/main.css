@@ -18,7 +18,7 @@
   color: #ff4454;
 }
 
-#start_button {
+.start_button {
   display: block;
   /* padding: 25px 50px; */
   min-height: 50px;
@@ -33,16 +33,16 @@
   cursor: pointer;
 }
 
-#start_a {
+.start_a {
   text-decoration: none;
 }
 
-#start_button:hover {
+.start_button:hover {
   background-color: #ff9ca4;
   color: aliceblue;
   transition: 0.7s;
 }
-#start_button:focus {
+.start_button:focus {
   outline-color: transparent;
   outline-style: solid;
   box-shadow: 0 0 0 4px #ff8080eb;
