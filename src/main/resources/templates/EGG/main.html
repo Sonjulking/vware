@@ -1,0 +1,31 @@
+<html layout:decorate="~{common/layout}">
+<div layout:fragment="content">
+  <div>
+    <!--<a id="logo_img_link" href="https://playvalorant.com/ko-kr/"
+    ><img
+        id="valrorant_logo_img"
+        src="images/valrorant_logo.png"
+        width="300"
+    /></a>-->
+    <h1 id="help_text">발로란트 캐릭터 적성검사 입니다.</h1>
+    <a id="start_a" th:href="@{/vbti/test}">
+      <input id="start_button" type="button" value="START"
+      /></a>
+  </div>
+
+  <footer id="foot">
+    <p>제작 : 고강찬</p>
+    <address>E-Mail : VBTI@gmail.com</address>
+    <p>Copyright &copy; All right reserved</p>
+  </footer>
+  <script th:src="@{https://code.jquery.com/jquery-3.6.3.js}"></script>
+  <script th:src="@{js/vbti/main.js}"></script>
+  <script th:src="@{js/vbti/clock.js}"></script>
+  <script th:src="@{js/vbti/chncolor.js}"></script>
+  <!--회원가입시 닉네임 + 축하 메세지-->
+  <script th:if="${session.sendNickName != null}" th:inline="javascript">
+    alert([[${session.sendNickName}]] + '님 회원가입을 축하드립니다.');
+    //   /*<![CDATA[*/ [[${javascriptCode}]] /*]]>*/ 모델로 보내면 이렇게 받아줌.
+  </script>
+</div>
+</html>
