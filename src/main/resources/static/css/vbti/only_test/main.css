@@ -1,9 +1,16 @@
 #main {
-  background-color: whitesmoke;
+  background-color: #ece8e1;
   width: 80%;
   text-align: center;
   border-radius: 20px;
   margin: 0 auto;
+}
+.valorant_test_logo{
+  width: 300px;
+}
+
+.test_explanation{
+  color: #ff4454;
 }
 
 p {

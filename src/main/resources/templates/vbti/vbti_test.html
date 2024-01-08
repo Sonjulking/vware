@@ -12,9 +12,9 @@
       <!-- pt-5 pb-5 -->
       <h1 id="help_text">발로란트 캐릭터 적성검사 입니다.</h1>
       <div class="">
-        <img src="./img/main.png" alt="mainImage" class=""/>
+        <img th:src="@{/assets/vbti/img/valrorant_logo.png}" alt="mainImage" class="valorant_test_logo"/>
       </div>
-      <p>
+      <p class ="test_explanation">
         아래 시작하기 버튼을 눌러 시작해 주십시오.<br/>
         결과를 저장하고 싶다면, 회원가입후 로그인하고 테스트를 진행해주세요.
       </p>
@@ -28,7 +28,7 @@
 
     </section>
     <section id="qna">
-      <div class="">
+      <div class="status">
         <div class="statusBar"></div>
       </div>
       <div class="qBox"></div>
@@ -52,4 +52,5 @@
   <script th:src="@{/js/vbti/data2.js}" charset="UTF-8"></script>
   <script th:src="@{/js/vbti/start2.js}" charset="UTF-8"></script>
 </div>
+
 </html>

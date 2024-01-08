@@ -38,10 +38,10 @@
   <p>Copyright &copy; All right reserved</p>
 </footer>
 
-<script th:src="@{https://code.jquery.com/jquery-3.6.3.js}"></script>
-<script th:src="@{js/vbti/main.js}"></script>
-<script th:src="@{js/vbti/clock.js}"></script>
-<script th:src="@{js/vbti/chncolor.js}"></script>
+<script type="application/javascript"  th:src="@{https://code.jquery.com/jquery-3.6.3.js}"></script>
+<script type="application/javascript" th:src="@{/js/vbti/main.js}" charset="UTF-8"></script>
+<script type="application/javascript" th:src="@{/js/vbti/clock.js}" charset="UTF-8"></script>
+<script  type="application/javascript" th:src="@{/js/vbti/chncolor.js}" charset="UTF-8"></script>
 
 <!-- 회원가입시 닉네임 + 축하 메세지 -->
 <script th:if="${session.sendNickName != null}" th:inline="javascript">

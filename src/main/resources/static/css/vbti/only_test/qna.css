@@ -1,38 +1,51 @@
 #qna {
+  margin-top: 100px;
   display: none;
-  width: 80%;
+  width: 50%;
+  border: #ff9ca4 5px solid;
+  color: #ff4454;
+  font-weight: bold;
+  border-radius: 3px;
 }
 
 .qBox {
-  background-color: whitesmoke;
-  text-align: center;
+  text-align: left;
   border-radius: 20px;
   font-size: 24px;
   width: 80%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+.answerBox{
+text-align: center;
 }
 
-
 .answerList {
-  background-color: whitesmoke;
-  border-radius: 20px;
+  text-align: left;
+  border: 3px salmon solid;
+  border-radius: 5px;
   display: block;
-  width: 80%;
-  border: 0px;
+  width: 70%;
   font-size: 20px;
+  margin: 50px auto;
+  background-color: #ece8e1;
+  color: #ff4454;
+
 }
 
 .answerList:hover,
 .answerList:focus {
-  background-color: #ff4454;
-  color: whitesmoke;
+  background-color: #ff9ca4;
+  color: aliceblue;
+  /*color: whitesmoke;*/
 }
 
 
 .status {
-  height: 20px;
-  width: 80%;
+  height: 10px;
+  width: 100%;
   background-color: white;
-  border-radius: 20px;
+
 }
 
 .statusBar {
@@ -45,5 +58,4 @@
       #ff5c5c 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
-  border-radius: 20px;
 }
