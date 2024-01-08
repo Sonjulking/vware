@@ -23,8 +23,10 @@
     <li><a href="board.html">NOTICE</a></li>
     <li><a th:href="@{/vbti/test}">TEST</a></li>
     <li><a href="madmovie.html">MAD MOVIE</a></li>
+    <li><a
+        class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/MyPage}">My Page</a> </li>
     <li><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a><a
-        class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
+        class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a> </li>
     <li sec:authorize="isAnonymous()"><a th:href="@{/user/signup}">회원가입</a></li>
   </ul>
 </nav>

@@ -52,7 +52,7 @@ public class SecurityConfig {
 
       // 로그인 성공 시 JavaScript 코드를 실행하여 alert 창을 띄움
       String script =
-          "<script>alert('환영합니다., " + userNickName + "님! 현재 포인트는 " + point
+          "<script>alert('환영합니다. " + userNickName + "님! 현재 포인트는 " + point
               + "pt입니다." + "'); window.location='/';</script>";
       response.setContentType("text/html;charset=UTF-8");
       response.getWriter().write(script);
