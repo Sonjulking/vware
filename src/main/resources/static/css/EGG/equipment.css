@@ -1,0 +1,90 @@
+table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #444444;
+    padding: 10px;
+}
+
+#modal1 {
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+#modal1 h2 {
+    margin:0;
+}
+#modal1 .modal_content {
+    width:300px;
+    margin:100px auto;
+    padding:20px 10px;
+    background:#fff;
+    border:2px solid #666;
+}
+#modal1 .modal_layer {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.5);
+    z-index:-1;
+}
+
+#modal2 {
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+#modal2 h2 {
+    margin:0;
+}
+#modal2 .modal_content {
+    width:300px;
+    margin:100px auto;
+    padding:20px 10px;
+    background:#fff;
+    border:2px solid #666;
+}
+#modal2 .modal_layer {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.5);
+    z-index:-1;
+}
+
+#topMenu {
+    height: 30px;
+    width: 850px;
+}
+#topMenu ul li {
+    list-style: none;
+    color: white;
+    background-color: #2d2d2d;
+    float: left;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+}
+#topMenu .menuLink {
+    text-decoration:none;
+    color: white;
+    display: block;
+    width: 150px;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: "Trebuchet MS", Dotum, Arial;
+}
+#topMenu .menuLink:hover {
+    color: red;
+    background-color: #4d4d4d;
+}
