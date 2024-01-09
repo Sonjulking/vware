@@ -1,13 +1,15 @@
 package com.ggck.vware.user;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,4 +79,42 @@ public class SiteUserController {
     return "siteUser/login_form";
   }
 
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/MyPage")
+  public String myPage(Principal principal, ModelMap modelMap) {
+    String loginId = principal.getName();
+    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
+    SiteUserDto myUserDto = SiteUserDto.builder()
+        .userId(siteUser.getUserId())
+        .userEmail(siteUser.getUserEmail())
+        .userNickName(siteUser.getUserNickName())
+        .point(siteUser.getPoint())
+        .testResult(siteUser.getTestResult())
+        .preferredPosition(siteUser.getPreferredPosition())
+        .signUpTime(siteUser.getSignUpTime())
+        .build();
+
+    modelMap.addAttribute("myUserDTO", myUserDto);
+
+    return "siteUser/my_page";
+  }
+
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/MyPage/modify")
+  public String myPageModify(Principal principal, Model model, ModelMap modelMap) {
+    String loginId = principal.getName();
+    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
+    SiteUserDto myUserDto = SiteUserDto.builder()
+        .userId(siteUser.getUserId())
+        .userEmail(siteUser.getUserEmail())
+        .userNickName(siteUser.getUserNickName())
+        .point(siteUser.getPoint())
+        .testResult(siteUser.getTestResult())
+        .preferredPosition(siteUser.getPreferredPosition())
+        .signUpTime(siteUser.getSignUpTime())
+        .build();
+    modelMap.addAttribute("myUserDTO", myUserDto);
+    model.addAttribute("siteUserCreateForm", new SiteUserCreateForm());
+    return "siteUser/my_page_modify";
+  }
 }

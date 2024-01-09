@@ -53,4 +53,8 @@ public class SiteUserService {
     siteUser.setTestResult(positionResult);
     this.siteUserRepository.save(siteUser);
   }
+
+ /* public SiteUser updateUserInfo(SiteUserDto siteUserDto){
+
+  }*/
 }

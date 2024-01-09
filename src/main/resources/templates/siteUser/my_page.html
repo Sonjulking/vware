@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<table border="1">
+  <tr>
+    <th colspan="2">My Page</th>
+  </tr>
+  <tr>
+    <th>아이디</th>
+    <td th:text="${myUserDTO.userId}"></td>
+  </tr>
+  <tr>
+    <th>닉네임</th>
+    <td th:text="${myUserDTO.userNickName}"></td>
+  </tr>
+  <tr>
+    <th> 이메일</th>
+    <td th:text="${myUserDTO.userEmail}"></td>
+  </tr>
+  <tr>
+    <th>선호 포지션</th>
+    <td th:text="${myUserDTO.preferredPosition}"></td>
+  </tr>
+  <tr>
+    <th>포지션 검사 결과</th>
+    <td th:if="${myUserDTO.getTestResult() !=null}"> 적성 검사를 진행해주세요</td>
+    <td th:if="${myUserDTO.getTestResult() == null}" th:text="${myUserDTO.testResult}"></td>
+  </tr>
+</table>
+<a th:href="@{/user/MyPage/modify}"><button>수정</button></a>
+</body>
+</html>
