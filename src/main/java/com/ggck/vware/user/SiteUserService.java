@@ -54,7 +54,22 @@ public class SiteUserService {
     this.siteUserRepository.save(siteUser);
   }
 
- /* public SiteUser updateUserInfo(SiteUserDto siteUserDto){
+  public void updateUserInfo(SiteUser siteUser, SiteUserDto siteUserDto) {
+    siteUser.setUserId(siteUserDto.getUserId());
+    siteUser.setUserEmail(siteUserDto.getUserEmail());
+    //siteUser.setPassword(siteUserDto.getPassword());
+    //siteUser.setPassword(passwordEncoder.encode(siteUserDto.getPassword()));
+    siteUser.setUserNickName(siteUserDto.getUserNickName());
+    //siteUser.setPoint(100);
+    siteUser.setSignUpTime(LocalDateTime.now());
+    siteUser.setPreferredPosition(siteUserDto.getPreferredPosition());
+    //siteUser.setLastAccessTime(LocalDateTime.now());
+    this.siteUserRepository.save(siteUser);
+  }
 
-  }*/
+  public void updateUserPassword(SiteUser siteUser, SiteUserDto siteUserDto) {
+    siteUser.setPassword(passwordEncoder.encode(siteUserDto.getPassword()));
+    this.siteUserRepository.save(siteUser);
+  }
+
 }

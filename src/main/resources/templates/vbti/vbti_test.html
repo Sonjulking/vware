@@ -12,15 +12,16 @@
       <!-- pt-5 pb-5 -->
       <h1 id="help_text">발로란트 캐릭터 적성검사 입니다.</h1>
       <div class="">
-        <img th:src="@{/assets/vbti/img/valrorant_logo.png}" alt="mainImage" class="valorant_test_logo"/>
+        <img th:src="@{/assets/vbti/img/valrorant_logo.png}" alt="mainImage"
+             class="valorant_test_logo"/>
       </div>
-      <p class ="test_explanation">
+      <p class="test_explanation">
         아래 시작하기 버튼을 눌러 시작해 주십시오.<br/>
         결과를 저장하고 싶다면, 회원가입후 로그인하고 테스트를 진행해주세요.
       </p>
       <button
           type="button"
-          class="btn start_button"
+          class="btn start_button dbPrevent"
           onclick="js:begin()"
       >
         START
@@ -51,6 +52,7 @@
   </div>
   <script th:src="@{/js/vbti/data2.js}" charset="UTF-8"></script>
   <script th:src="@{/js/vbti/start2.js}" charset="UTF-8"></script>
+  <script th:src="@{/js/vbti/preventDoubleClick.js}" charset="UTF-8"></script>
 </div>
 
 </html>

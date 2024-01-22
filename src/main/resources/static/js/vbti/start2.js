@@ -57,6 +57,7 @@ function addAnswer(answerText, qIdx, idx) {
   let answer = document.createElement("button");
   answer.classList.add("answerList");
   answer.classList.add("fadeIn");
+  answer.classList.add("dbPrevent");
   a.appendChild(answer);
   answer.innerHTML = answerText;
   // console.log("앤서 텍스트 : " + answerText);

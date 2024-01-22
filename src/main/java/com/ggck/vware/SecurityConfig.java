@@ -20,9 +20,11 @@ public class SecurityConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-        .csrf().disable() // 이거 안하면 시큐리티에서 post 막음 -> 보안 취약해질 수 있으니 다른 방법 구글링 해서 해결할 것 : 고강찬 담당
-        .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-            .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
+        .csrf()
+        .disable() // 이거 안하면 시큐리티에서 post 막음 -> TODO : 보안 취약해질 수 있으니 다른 방법 구글링 해서 해결할 것 : 고강찬 담당
+        .authorizeHttpRequests((authorizeHttpRequests) ->
+            authorizeHttpRequests
+                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
         .formLogin((formLogin) -> formLogin.loginPage("/user/login").defaultSuccessUrl("/")
             .successHandler(loginSuccessHandler()))
         .logout((logout) -> logout
@@ -33,10 +35,12 @@ public class SecurityConfig {
     return http.build();
   }
 
+
   @Bean
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
+
 
   @Bean
   AuthenticationManager authenticationManager(

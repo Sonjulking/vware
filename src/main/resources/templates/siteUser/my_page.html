@@ -27,10 +27,16 @@
   </tr>
   <tr>
     <th>포지션 검사 결과</th>
-    <td th:if="${myUserDTO.getTestResult() !=null}"> 적성 검사를 진행해주세요</td>
-    <td th:if="${myUserDTO.getTestResult() == null}" th:text="${myUserDTO.testResult}"></td>
+    <td th:if="${myUserDTO.testResult == null }"> 적성 검사를 진행해주세요</td>
+    <td th:if="${myUserDTO.testResult != null}" th:text="${myUserDTO.testResult}"></td>
+  </tr>
+  <tr>
+    <th>포인트</th>
+    <td th:text="${myUserDTO.point}"></td>
   </tr>
 </table>
-<a th:href="@{/user/MyPage/modify}"><button>수정</button></a>
+<a th:href="@{/user/MyPage/prevModify}">
+  <button>수정</button>
+</a>
 </body>
 </html>
