@@ -2,8 +2,9 @@ const main = document.querySelector("#main");
 const qna = document.querySelector("#qna");
 const result = document.querySelector("#result");
 
-const endPoint = 12; //질문이 12개라서
-const select = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 어떠한 답변을 했는지 배열 생성, 사용자가 버튼을 선택할때마다 배열에 내용을 추가
+const endPoint = 10; //질문이 12개라서
+const select = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0]; // 어떠한 답변을 했는지 배열 생성, 사용자가 버튼을 선택할때마다 배열에 내용을 추가 //현재 23개 0 ~ 22
 
 function calResult() {
   //결과를 연산해주는 함수
@@ -20,9 +21,10 @@ function setResult() {
 
   let resultImg = document.createElement("img");
   const imgDiv = document.querySelector("#resultImg");
-  let imgURL = "img/image-" + point + ".png";
+  let imgURL = "/assets/vbti/agent/agent-" + point + ".png";
   resultImg.src = imgURL;
   resultImg.alt = point;
+  resultImg.classList.add("agentImg");
   imgDiv.appendChild(resultImg);
 
   const resultDesc = document.querySelector(".resultDesc");

@@ -220,6 +220,7 @@ public class SiteUserController {
           .userNickName(siteUserModifyForm.getUserNickName())
           //.password(siteUser.getPassword())
           .preferredPosition(siteUserModifyForm.getPreferredPosition())
+          .point(siteUser.getPoint())
           .build();
 
       siteUserService.updateUserInfo(siteUser, modifyUserDto);

@@ -48,6 +48,8 @@
           저장하세요</a>
         <input sec:authorize="isAuthenticated()" type="submit" value="저장해용~">
       </form>
+      <div th:utext="${resultSavedScript}"></div>
+      <!--      th:utext 속성은 HTML을 unescaped로 렌더링 -->
     </section>
   </div>
   <script th:src="@{/js/vbti/data2.js}" charset="UTF-8"></script>
