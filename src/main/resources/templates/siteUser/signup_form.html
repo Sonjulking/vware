@@ -66,9 +66,9 @@
   <div class="email_code">
     <label for="inputCode" class="form-label">인증번호</label>
     <input type="text" id="inputCode" name="inputCode" class="input_code" disabled="disabled">
-    <button type="button" class="inputCodeButton"> 입력하기</button>
-    <div id="code_timer"></div>
-    <span id="mail_check_input_box_warn"></span>
+    <button type="button" class="inputCodeButton" disabled="disabled"> 입력하기</button>
+    <span id="code_timer"></span>
+    <div id="mail_check_input_box_warn"></div>
   </div>
   <div>
     <label class="form-label">선호 포지션</label>
@@ -104,6 +104,7 @@
   });
 
   $(".sendCodeButton").click(function () {
+    $(".sendCodeButton").attr("disabled", true);
     let email = $("#userEmail").val();
     let input_code_box = $(".input_code");
     $("#mail_check_input_box_warn").html("잠시만 기다려주세요");
@@ -120,8 +121,12 @@
         }
 
         input_code_box.attr("disabled", false);
+        $(".inputCodeButton").attr("disabled", false);
+
         code = data;
+
         $("#mail_check_input_box_warn").html("메일을 발송했습니다. 도착하지 않았다면, 스팸메일함을 확인해주세요.");
+
         // 5분지나면 코드 소멸시킴...
         codeTimer = setTimeout(function () {
           code = "$2a$10$2k0Eㄴㅠㅠ9gvzZKYU1ㅇㅇViQ7F3TH.mS.jgF4KE6FCSㄴㅇVOlPPPj38Zb8ydjsdi"; //의미없는 값,해킹불가하게
@@ -163,7 +168,10 @@
       let minutes = Math.floor(timerValue / 60);
       let seconds = timerValue % 60;
 
-      timerElement.text(`${minutes}:${seconds}`);
+      let formattedMinutes = String(minutes).padStart(2, '0');
+      let formattedSeconds = String(seconds).padStart(2, '0');
+
+      timerElement.text(`${formattedMinutes}:${formattedSeconds}`);
 
       if (--timerValue < 0) {
         clearInterval(timer);
@@ -171,6 +179,7 @@
         timerElement.text("인증 번호 만료");
 
         $(".input_code").attr("disabled", true);
+        $(".sendCodeButton").attr("disabled", false);
       }
     }, 1000);
   }

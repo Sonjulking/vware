@@ -78,7 +78,7 @@ public class SiteUserAuthenticationController {
 
     simpleMailMessage.setTo(email);
     simpleMailMessage.setSubject("EGG.GG에 회원가입 해주셔서 감사합니다. 인증을 위한 메일입니다.");
-    simpleMailMessage.setText("인증번호를 입력해주세요. <\n> 인증번호 : " + codeBuilder.toString()); // setSubject 대신 setText 사용
+    simpleMailMessage.setText("인증번호를 입력해주세요.\n인증번호 : " + codeBuilder.toString()); // setSubject 대신 setText 사용
 
 /*
     simpleMailMessage.setSubject("반갑습니다.", "UTF-8");
