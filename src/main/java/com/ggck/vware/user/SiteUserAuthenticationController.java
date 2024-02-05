@@ -77,10 +77,10 @@ public class SiteUserAuthenticationController {
     logger.info("인증번호 : " + codeBuilder.toString());
 
     simpleMailMessage.setTo(email);
-    simpleMailMessage.setSubject("반갑습니다.");
-    simpleMailMessage.setText("인증번호 : " + codeBuilder.toString()); // setSubject 대신 setText 사용
+    simpleMailMessage.setSubject("EGG.GG에 회원가입 해주셔서 감사합니다. 인증을 위한 메일입니다.");
+    simpleMailMessage.setText("인증번호를 입력해주세요. <\n> 인증번호 : " + codeBuilder.toString()); // setSubject 대신 setText 사용
 
-/*    // 문자 인코딩 설정 (예: UTF-8)
+/*
     simpleMailMessage.setSubject("반갑습니다.", "UTF-8");
     simpleMailMessage.setText("인증번호 : " + codeBuilder.toString(), "UTF-8");*/
 
