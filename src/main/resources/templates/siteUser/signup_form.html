@@ -94,7 +94,7 @@
   $("form").submit(function (event) {
     let inputCode = $(".input_code").val();
 
-    if (inputCodeTest === false) {
+    if (inputCodeTest === false) { //기본값이 false라서 아무것도 안하면 막힘, 인증하면 true되서 넘어감
       event.preventDefault(); // 폼 제출을 막음
       let checkResult = $("#mail_check_input_box_warn");
       checkResult.html("인증번호를 다시 확인해주세요.");
@@ -113,7 +113,7 @@
       url: "mailCheck?email=" + email,
       success: function (data) {
 
-        console.log("data : " + data)
+        //console.log("data : " + data)
         if(email === " " || email === ""){
           $("#mail_check_input_box_warn").html("이메일을 입력해주세요.");
           return;
@@ -122,14 +122,14 @@
         input_code_box.attr("disabled", false);
         code = data;
         $("#mail_check_input_box_warn").html("메일발송완료");
-        // Reset code and start the timer after 5 minutes
+        // 5분지나면 코드 소멸시킴...
         codeTimer = setTimeout(function () {
-          code = "$2a$10$2k0E9gvzZKYU1ViQ7F3TH.mS.jgF4KE6FCSVOlPPPj38Zb8ydjsdi";
+          code = "$2a$10$2k0E9gvzZKYU1ViQ7F3TH.mS.jgF4KE6FCSVOlPPPj38Zb8ydjsdi"; //의미없는 값
           console.log("Code reset to 0 after 5 minutes");
-        }, 5 * 60 * 1000); // 5 minutes in milliseconds
+        }, 5 * 60 * 1000); // 5분
 
         // Start the countdown timer
-        startTimer(5 * 60); // 5 minutes in seconds
+        startTimer(5 * 60); // 5분
 
       }
 
@@ -144,8 +144,8 @@
     if (inputCode == code) {                            // 일치할 경우
       checkResult.html("인증번호가 일치합니다.");
       checkResult.attr("class", "correct");
-      clearInterval(timer);
-      clearInterval(codeTimer);
+      clearInterval(timer); //타이머 끔
+      clearInterval(codeTimer); //코드 소멸 타이머도 끔
       inputCodeTest = true;
 
     } else {                                            // 일치하지 않을 경우
@@ -155,7 +155,7 @@
     }
   });
 
-  function startTimer(durationInSeconds) {
+  function startTimer(durationInSeconds) { //5분 타이머
     let timerElement = $("#code_timer");
     let timerValue = durationInSeconds;
 
