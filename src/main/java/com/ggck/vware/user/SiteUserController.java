@@ -107,6 +107,10 @@ public class SiteUserController {
           "site_user.UK_eydkr1n0qdr8lsiduiqh3pcjx")) {
         System.out.println("닉네임 중복");
         bindingResult.rejectValue("userNickName", "signupFailed", "이미 등록된 닉네임 입니다.");
+      } else {
+
+        bindingResult.reject("signupFailed", "이값이 뜨면 망한거시야요");
+
       }
 
       return "siteUser/signup_form";
