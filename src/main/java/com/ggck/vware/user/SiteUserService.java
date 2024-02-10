@@ -19,6 +19,20 @@ public class SiteUserService {
   private final PasswordEncoder passwordEncoder;
 
   public SiteUserDto create(SiteUserDto siteUserDto) {
+    String email = siteUserDto.getUserEmail();
+    String username = siteUserDto.getUserId();
+    String nickname = siteUserDto.getUserNickName();
+
+  /*  if (SiteUserRepository.existsByEmail(email)) {
+      throw new DuplicateEmailException("이미 등록된 이메일입니다.");
+    }
+    if (SiteUserRepository.existsByUsername(username)) {
+      throw new DuplicateUsernameException("이미 사용 중인 아이디입니다.");
+    }
+    if (SiteUserRepository.existsByNickname(nickname)) {
+      throw new DuplicateNicknameException("이미 사용 중인 닉네임입니다.");
+    }
+*/
     //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //비밀번호를 암호화 해주는 보안작업
     SiteUser siteUser = new SiteUser();
     siteUser.setUserId(siteUserDto.getUserId());

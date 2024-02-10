@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
   <title>테스트 회원가입</title>
   <style>
+
+    /* body {
+       background-color: #ece8e1
+     }*/
     #mail_check_input_box_false {
       background-color: #ebebe4;
     }
@@ -21,71 +26,128 @@
       color: red;
     }
 
+    #main_logo_text {
+      font-size: 35pt;
+      font-weight: bolder;
+      /*color: #ff4454;*/
+      color: black;
+      font-family: "Malgun Gothic";
+      margin-left: 20px;
+
+    }
+
+    #logo_link {
+      color: black;
+      text-decoration: none;
+    }
+
+    #logo_link:hover {
+      color: black;
+      text-decoration: none;
+    }
+
+
+    #logo_link:visited {
+      color: black;
+      text-decoration: none;
+    }
+
+    .form-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+
+    }
+    .input-wrap label {
+      display: inline-block;
+      width: 150px;
+    }
+
+/*    .input-wrap label,
+    .input-wrap input,
+    .input-wrap button,
+    .input-wrap span.error-message {
+      margin-left: 10px;
+      margin-bottom: 10px;
+    }*/
+
+
   </style>
 </head>
 <body>
-<div class="my-3 border-bottom">
-  <div>
-    <h4>회원가입</h4>
+<span id="main_logo_text"
+><a id="logo_link" th:href="@{/}">EGG.GG</a></span
+>
+<div class="form-wrap">
+  <div class="left-form">
+    반갑습니다.
+  </div>
+  <div class="right-form">
+    <div>
+      <h4>회원가입</h4>
+    </div>
+
+    <div class="input-wrap">
+      <form th:action="@{/user/signup}" th:object="${siteUserCreateForm}" method="post">
+        <!--  <div th:replace="~{common/form_errors :: formErrorsFragment}"></div>-->
+
+        <div class="mb-3">
+          <label for="userId" class="form-label">ID</label>
+          <input type="text" th:field="*{userId}" class="form-control">
+          <span class="error-message" th:if="${#fields.hasErrors('userId')}"
+                th:each="err : ${#fields.errors('userId')}" th:text="${err}"></span>
+        </div>
+        <div class="mb-3">
+          <label for="userNickName" class="form-label">닉네임</label>
+          <input type="text" th:field="*{userNickName}" class="form-control">
+          <span class="error-message" th:if="${#fields.hasErrors('userNickName')}"
+                th:each="err : ${#fields.errors('userNickName')}" th:text="${err}"></span>
+        </div>
+        <div class="mb-3">
+          <label for="password1" class="form-label">비밀번호</label>
+          <input type="password" th:field="*{password1}" class="form-control">
+          <span class="error-message" th:if="${#fields.hasErrors('password1')}"
+                th:each="err : ${#fields.errors('password1')}" th:text="${err}"></span>
+        </div>
+        <div class="mb-3">
+          <label for="password2" class="form-label">비밀번호 확인</label>
+          <input type="password" th:field="*{password2}" class="form-control">
+          <span class="error-message" th:if="${#fields.hasErrors('password2')}"
+                th:each="err : ${#fields.errors('password2')}" th:text="${err}"></span>
+        </div>
+        <div class="mb-3">
+          <label for="userEmail" class="form-label">E-MAIL</label>
+          <input type="email" th:field="*{userEmail}" class="form-control">
+          <button type="button" class="sendCodeButton"> 전송하기</button>
+          <span class="error-message" th:if="${#fields.hasErrors('userEmail')}"
+                th:each="err : ${#fields.errors('userEmail')}" th:text="${err}"></span>
+        </div>
+
+        <div class="email_code">
+          <label for="inputCode" class="form-label">E-MAIL 인증번호</label>
+          <input type="text" id="inputCode" name="inputCode" class="input_code" disabled="disabled">
+          <button type="button" class="inputCodeButton" disabled="disabled"> 입력하기</button>
+          <span id="code_timer"></span>
+          <div id="mail_check_input_box_warn"></div>
+        </div>
+        <div>
+          <label class="form-label">선호 포지션</label>
+          <input type="radio" th:field="*{preferredPosition}" value="타격대">타격대
+          <input type="radio" th:field="*{preferredPosition}" value="척후대">척후대
+          <input type="radio" th:field="*{preferredPosition}" value="감시자">감시자
+          <input type="radio" th:field="*{preferredPosition}" value="전략가">전략가
+          <span class="error-message" th:if="${#fields.hasErrors('preferredPosition')}"
+                th:each="err : ${#fields.errors('preferredPosition')}" th:text="${err}"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">회원가입</button>
+        <!-- <a th:href="@{/user/authentication}">테스트데스용</a>
+         <p th:text="${resultNumber}"></p>-->
+
+
+      </form>
+    </div>
   </div>
 </div>
-<form th:action="@{/user/signup}" th:object="${siteUserCreateForm}" method="post">
-  <!--<div th:replace="~{common/form_errors :: formErrorsFragment}"></div>-->
-  <div class="mb-3">
-    <label for="userId" class="form-label">사용자ID</label>
-    <input type="text" th:field="*{userId}" class="form-control">
-    <span class="error-message" th:if="${#fields.hasErrors('userId')}"
-         th:each="err : ${#fields.errors('userId')}" th:text="${err}"></span>
-  </div>
-  <div class="mb-3">
-    <label for="userNickName" class="form-label">사용자 닉네임</label>
-    <input type="text" th:field="*{userNickName}" class="form-control">
-    <span class="error-message" th:if="${#fields.hasErrors('userNickName')}"
-         th:each="err : ${#fields.errors('userNickName')}" th:text="${err}"></span>
-  </div>
-  <div class="mb-3">
-    <label for="password1" class="form-label">비밀번호</label>
-    <input type="password" th:field="*{password1}" class="form-control">
-    <span class="error-message" th:if="${#fields.hasErrors('password1')}"
-         th:each="err : ${#fields.errors('password1')}" th:text="${err}"></span>
-  </div>
-  <div class="mb-3">
-    <label for="password2" class="form-label">비밀번호 확인</label>
-    <input type="password" th:field="*{password2}" class="form-control">
-    <span class="error-message" th:if="${#fields.hasErrors('password2')}"
-         th:each="err : ${#fields.errors('password2')}" th:text="${err}"></span>
-  </div>
-  <div class="mb-3">
-    <label for="userEmail" class="form-label">이메일</label>
-    <input type="email" th:field="*{userEmail}" class="form-control">
-    <button type="button" class="sendCodeButton"> 전송하기</button>
-    <span class="error-message" th:if="${#fields.hasErrors('userEmail')}"
-         th:each="err : ${#fields.errors('userEmail')}" th:text="${err}"></span>
-  </div>
-
-  <div class="email_code">
-    <label for="inputCode" class="form-label">인증번호</label>
-    <input type="text" id="inputCode" name="inputCode" class="input_code" disabled="disabled">
-    <button type="button" class="inputCodeButton" disabled="disabled"> 입력하기</button>
-    <span id="code_timer"></span>
-    <div id="mail_check_input_box_warn"></div>
-  </div>
-  <div>
-    <label class="form-label">선호 포지션</label>
-    <input type="radio" th:field="*{preferredPosition}" value="타격대">타격대
-    <input type="radio" th:field="*{preferredPosition}" value="척후대">척후대
-    <input type="radio" th:field="*{preferredPosition}" value="감시자">감시자
-    <input type="radio" th:field="*{preferredPosition}" value="전략가">전략가
-    <span class="error-message" th:if="${#fields.hasErrors('preferredPosition')}"
-         th:each="err : ${#fields.errors('preferredPosition')}" th:text="${err}"></span>
-  </div>
-  <button type="submit" class="btn btn-primary">회원가입</button>
-  <!-- <a th:href="@{/user/authentication}">테스트데스용</a>
-   <p th:text="${resultNumber}"></p>-->
-
-
-</form>
-
 <script type="application/javascript" th:src="@{https://code.jquery.com/jquery-3.6.3.js}"></script>
 <script>
   let code;
@@ -107,6 +169,7 @@
     $(".sendCodeButton").attr("disabled", true);
     let email = $("#userEmail").val();
     let input_code_box = $(".input_code");
+    $("#userEmail").prop("readonly", true);
     $("#mail_check_input_box_warn").html("잠시만 기다려주세요");
     $.ajax({
 
@@ -115,7 +178,7 @@
       success: function (data) {
 
         //console.log("data : " + data)
-        if(email === " " || email === ""){
+        if (email === " " || email === "") {
           $("#mail_check_input_box_warn").html("이메일을 입력해주세요.");
           return;
         }
@@ -130,11 +193,17 @@
         // 5분지나면 코드 소멸시킴...
         codeTimer = setTimeout(function () {
           code = "$2a$10$2k0Eㄴㅠㅠ9gvzZKYU1ㅇㅇViQ7F3TH.mS.jgF4KE6FCSㄴㅇVOlPPPj38Zb8ydjsdi"; //의미없는 값,해킹불가하게
-          console.log("Code reset to 0 after 5 minutes");
         }, 5 * 60 * 1000); // 5분
 
         // Start the countdown timer
         startTimer(5 * 60); // 5분
+
+      },
+      error: function () { // 메일 전송 실패
+
+        $("#mail_check_input_box_warn").html("메일 전송에 실패했습니다. 다시 입력해주세요.");
+        $("#userEmail").prop("readonly", false);
+        $(".sendCodeButton").attr("disabled", false);
 
       }
 
@@ -154,6 +223,7 @@
       inputCodeTest = true;
 
     } else {                                            // 일치하지 않을 경우
+      $("#userEmail").prop("readonly", false);
       checkResult.html("인증번호를 다시 확인해주세요.");
       checkResult.attr("class", "incorrect");
       inputCodeTest = false;

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,17 +75,58 @@ public class SiteUserController {
       siteUserService.create(newUserDto);
 
 
-    } catch (DataIntegrityViolationException e) { // id나 이메일이 중복일 경우 발생하는 예외
-      bindingResult.reject("signupFailed", "이미 등록된 사용자 입니다.");
+    }  /*catch (DuplicateEmailException e) {
+      bindingResult.reject("duplicateEmail", "이미 사용 중인 이메일입니다.");
+      return "siteUser/signup_form";
+
+    } catch (DuplicateNicknameException e) {
+      bindingResult.reject("duplicateNickName", "이미 사용 중인 닉네임입니다.");
+      return "siteUser/signup_form";
+
+    } catch (DuplicateUsernameException e) {
+      bindingResult.reject("duplicateUsername", "이미 사용 중인 아이디입니다.");
       return "siteUser/signup_form";
 
     } catch (Exception e) {
       e.printStackTrace();
       bindingResult.reject("signupFailed", e.getMessage());
       return "siteUser/signup_form";
+    }*/ catch (DataIntegrityViolationException e) { // id나 이메일이 중복일 경우 발생하는 예외
+      String errorMessage = e.getMessage();
+
+      System.out.println("e.getMessage() 출력 : " + errorMessage);
+      if (errorMessage != null && errorMessage.contains(
+          "site_user.UK_7txm0o5jvngqyt8iwgnr1ohwu")) { //아이디 중복일때
+        System.out.println("아이디 중복");
+        bindingResult.rejectValue("userId", "signupFailed", "이미 등록된 아이디 입니다.");
+      } else if (errorMessage != null && errorMessage.contains( //이메일 중복일때
+          "site_user.UK_cff3da7kxabw064f3qqd3t2kj")) {
+        System.out.println("이메일 중복");
+        bindingResult.rejectValue("userEmail", "signupFailed", "이미 등록된 이메일 입니다.");
+      } else if (errorMessage != null && errorMessage.contains( //닉네임 중복일때
+          "site_user.UK_eydkr1n0qdr8lsiduiqh3pcjx")) {
+        System.out.println("닉네임 중복");
+        bindingResult.rejectValue("userNickName", "signupFailed", "이미 등록된 닉네임 입니다.");
+      }
+
+      return "siteUser/signup_form";
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      bindingResult.reject("signupFailed", "회원가입에 실패했습니다.");
+      return "siteUser/signup_form";
     }
+
     return "redirect:/"; // 홈화면으로 이동
   }
+
+/*
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public void handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+    // DataIntegrityViolationException 처리 로직
+    System.out.println("콘솔아 떠라~ " + ex.getMessage());
+  }
+*/
 
   @GetMapping("/login")
   public String login() {
@@ -268,5 +310,6 @@ public class SiteUserController {
     siteUserService.updateUserPassword(siteUser, modifyPasswordUserDto);
     return "EGG/main";
   }
+
 
 }
