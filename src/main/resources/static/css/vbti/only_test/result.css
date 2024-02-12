@@ -1,3 +1,39 @@
 #result {
   display: none;
 }
+
+.agentImg {
+  width: 25%;
+}
+
+.result-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #ff4454;
+  text-align: center;
+  border: solid #ff4454;
+
+}
+
+.resultDesc {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.result-save-form {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.login-save {
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  width: 150px;
+  height: 35px;
+  background-color: rgba(0, 0, 0, 0);
+  color: #ff4454;
+  border-radius: 5px;
+  border: solid 3px #ff4454;
+}

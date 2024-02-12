@@ -24,9 +24,10 @@
     <li><a th:href="@{/vbti/test}">VBTI</a></li>
     <li><a th:href="@{/EggSet}">EGG SET</a></li>
     <li><a
-        class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/MyPage}">My Page</a> </li>
+        class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/MyPage}">My Page</a>
+    </li>
     <li><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a><a
-        class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a> </li>
+        class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
     <li sec:authorize="isAnonymous()"><a th:href="@{/user/signup}">회원가입</a></li>
   </ul>
 </nav>
@@ -35,15 +36,16 @@
 </th:block>
 
 <footer id="foot">
-  <p>제작 : 고강찬</p>
-  <address>E-Mail : VBTI@gmail.com</address>
+  <p>제작 : 팀 김세구</p>
+  <address>E-Mail : valorant.egg.gg@gmail.com
+  </address>
   <p>Copyright &copy; All right reserved</p>
 </footer>
 
-<script type="application/javascript"  th:src="@{https://code.jquery.com/jquery-3.6.3.js}"></script>
+<script type="application/javascript" th:src="@{https://code.jquery.com/jquery-3.6.3.js}"></script>
 <script type="application/javascript" th:src="@{/js/vbti/main.js}" charset="UTF-8"></script>
 <script type="application/javascript" th:src="@{/js/vbti/clock.js}" charset="UTF-8"></script>
-<script  type="application/javascript" th:src="@{/js/vbti/chncolor.js}" charset="UTF-8"></script>
+<script type="application/javascript" th:src="@{/js/vbti/chncolor.js}" charset="UTF-8"></script>
 
 <!-- 회원가입시 닉네임 + 축하 메세지 -->
 <script th:if="${session.sendNickName != null}" th:inline="javascript">

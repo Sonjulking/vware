@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>유저 수정 페이지</title>
+  <style>
+    .noBorder {
+      border: solid 0px white;
+    }
+  </style>
 </head>
 <body>
 <div class="my-3 border-bottom">
@@ -19,7 +24,7 @@
     <div class="mb-3">
       <label for="userId" class="form-label">사용자ID</label>
       <input type="text" th:field="*{userId}"
-             class="form-control" readonly>
+             class="form-control noBorder" readonly>
       <!--    th:if="${#strings.isEmpty(userId)}" th:value="${myUserDTO.userId}" -->
     </div>
     <!--<div th:text="${myUserDTO.userId}"></div>-->
@@ -29,7 +34,9 @@
     </div>
     <div class="mb-3">
       <label for="userEmail" class="form-label">이메일</label>
-      <input type="email" th:field="*{userEmail}" class="form-control">
+      <input type="text" th:field="*{userEmail}" class="form-control noBorder" readonly>
+
+     <!-- <span th:text="${myUserDTO.userEmail}"></span>-->
     </div>
     <div>
       <label class="form-label">선호 포지션</label>

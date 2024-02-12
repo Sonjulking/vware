@@ -1,6 +1,6 @@
 <div th:fragment="formErrorsFragment" class="alert alert-danger"
      role="alert" th:if="${#fields.hasAnyErrors()}">
-  <div th:each="err : ${#fields.allErrors()}" th:text="${err}">
+  <div th:each="err:${#fields.allErrors()}" th:text="${err}">
     <!--
         <div th:each="err : ${#fields.allErrors()}" th:with="errorCode=${err.code}"
              th:text="${errorCode}"></div>
@@ -8,7 +8,6 @@
 
         <span th:if="${err.code == 'duplicateUsername'}">중복된 아이디입니다.</span>
     -->
-
   </div>
 </div>
 

@@ -1,8 +1,10 @@
 package com.ggck.vware.user;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import java.lang.ref.ReferenceQueue;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
@@ -248,14 +250,15 @@ public class SiteUserController {
 
   @PreAuthorize("isAuthenticated()")
   @PostMapping("/MyPage/modify")
-  public String myPageModify(Principal principal, @Valid SiteUserModifyForm siteUserModifyForm,
+  public String myPageModify(@Valid SiteUserModifyForm siteUserModifyForm,
       BindingResult bindingResult,
-      HttpServletRequest request, Model model, ModelMap modelMap) {
+      HttpServletRequest request, Model model, ModelMap modelMap, Principal principal) {
 
     String loginId = principal.getName(); //로그인된 아이디 값 가져오기
     SiteUser siteUser = this.siteUserService.getUser(principal.getName());
 
     if (bindingResult.hasErrors()) { //에러가 생기면
+      System.out.println("hasErrors"); //
       return "siteUser/my_page_modify";
     }
     try {
@@ -275,10 +278,12 @@ public class SiteUserController {
       return "siteUser/my_page"; //이전페이지로 가버림
 
     } catch (DataIntegrityViolationException e) { // id나 이메일이 중복일 경우 발생하는 예외
-      bindingResult.reject("signupFailed", "이미 등록된 사용자 입니다.");
+      System.out.println("중복에러"); //
+      bindingResult.reject("signupFailed", "이미 등록된 닉네임 입니다.");
       return "siteUser/my_page_modify";
 
     } catch (Exception e) {
+      System.out.println("전체에러"); //
       e.printStackTrace();
       bindingResult.reject("signupFailed", e.getMessage());
       return "siteUser/my_page_modify";
@@ -297,10 +302,12 @@ public class SiteUserController {
   @PreAuthorize("isAuthenticated()")
   @PostMapping("/MyPage/modifyPassword")
   public String modifyPassword(@Valid SiteUserModifyPasswordForm siteUserModifyPasswordForm,
-      Principal principal, BindingResult bindingResult) {
+      BindingResult bindingResult,
+      Principal principal, HttpServletResponse response) {
     String loginId = principal.getName(); //로그인된 아이디 값 가져오기
     SiteUser siteUser = this.siteUserService.getUser(principal.getName());
     if (bindingResult.hasErrors()) { //에러가 생기면
+      //bindingResult.reject("comeon", "비밀번호 입력하세용");
       return "siteUser/modify_password_form";
     }
     if (!siteUserModifyPasswordForm.getPassword1()
@@ -308,12 +315,23 @@ public class SiteUserController {
       bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않아요~");
       return "siteUser/modify_password_form";
     }
+
     SiteUserDto modifyPasswordUserDto = SiteUserDto.builder()
         .password(siteUserModifyPasswordForm.getPassword1())
         .build();
     siteUserService.updateUserPassword(siteUser, modifyPasswordUserDto);
-    return "EGG/main";
-  }
 
+    // 비밀변경 시 JavaScript 코드를 실행하여 alert 창을 띄움
+    String script =
+        "<script>alert('비밀번호가 변경되었습니다.'); window.location='/';</script>"; //메인으로 넘어감
+    try {
+      response.setContentType("text/html;charset=UTF-8");
+      response.getWriter().write(script);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return "EGG/main";
+
+  }
 
 }
