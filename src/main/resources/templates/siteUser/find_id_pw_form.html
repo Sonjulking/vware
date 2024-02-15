@@ -189,10 +189,11 @@
 
     .forgot-ID-PW {
       font-size: 10pt;
-      color:  salmon;
+      color: salmon;
       text-decoration-line: none;
     }
-    .forgot-ID-PW:hover{
+
+    .forgot-ID-PW:hover {
       text-decoration-line: underline;
     }
 
@@ -217,52 +218,17 @@
 
 
     <div class="input-wrap">
-      <form th:action="@{/user/signup}" th:object="${siteUserCreateForm}" method="post">
-        <!--  <div th:replace="~{common/form_errors :: formErrorsFragment}"></div>-->
-
-        <div class="mb-3">
-          <div>
-            <label for="userId" class="form-label">ID</label>
-          </div>
-          <input type="text" th:field="*{userId}" class="form-control"
-                 placeholder="3~25자 사이의 영문으로 입력해주세요.">
-          <p class="error-message" th:if="${#fields.hasErrors('userId')}"
-             th:each="err : ${#fields.errors('userId')}" th:text="${err}"></p>
-        </div>
-        <div class="mb-3">
-          <div>
-            <label for="userNickName" class="form-label">닉네임</label>
-          </div>
-          <input type="text" th:field="*{userNickName}" class="form-control">
-          <p class="error-message" th:if="${#fields.hasErrors('userNickName')}"
-             th:each="err : ${#fields.errors('userNickName')}" th:text="${err}"></p>
-        </div>
-        <div class="mb-3">
-          <div>
-            <label for="password1" class="form-label">비밀번호</label>
-          </div>
-          <input type="password" th:field="*{password1}" class="form-control">
-          <p class="error-message" th:if="${#fields.hasErrors('password1')}"
-             th:each="err : ${#fields.errors('password1')}" th:text="${err}"></p>
-        </div>
-        <div class="mb-3">
-          <div>
-            <label for="password2" class="form-label">비밀번호 확인</label>
-          </div>
-          <input type="password" th:field="*{password2}" class="form-control">
-          <p class="error-message" th:if="${#fields.hasErrors('password2')}"
-             th:each="err : ${#fields.errors('password2')}" th:text="${err}"></p>
-        </div>
+      <form th:action="@{/user/findIdPwd}" method="post">
+        <!--<div th:replace="~{common/form_errors :: formErrorsFragment}"></div>-->
         <div class="mb-3">
           <div>
             <label for="userEmail" class="form-label">E-MAIL</label>
           </div>
           <div class="email-wrap">
-            <input type="email" th:field="*{userEmail}" class="form-control">
+            <input type="email" id="userEmail" name="email" class="form-control">
             <button type="button" class="sendCodeButton">인증요청</button>
           </div>
-          <p class="error-message" th:if="${#fields.hasErrors('userEmail')}"
-             th:each="err : ${#fields.errors('userEmail')}" th:text="${err}"></p>
+
         </div>
 
         <div class="email_code">
@@ -277,23 +243,11 @@
           <span id="code_timer"></span>
           <div id="mail_check_input_box_warn"></div>
         </div>
-        <div>
-          <div>
-            <label class="form-label">선호 포지션</label>
-          </div>
-          <div class="radio-wrap">
-            <input type="radio" th:field="*{preferredPosition}" value="타격대">타격대
-            <input type="radio" th:field="*{preferredPosition}" value="척후대">척후대
-            <input type="radio" th:field="*{preferredPosition}" value="감시자">감시자
-            <input type="radio" th:field="*{preferredPosition}" value="전략가">전략가
-          </div>
-          <p class="error-message" th:if="${#fields.hasErrors('preferredPosition')}"
-             th:each="err : ${#fields.errors('preferredPosition')}" th:text="${err}"></p>
-        </div>
+
         <div class="submit-btn-wrap">
-          <button type="submit" class="btn btn-primary submit-btn">회원가입</button>
+          <button type="submit" class="btn btn-primary submit-btn">입력하기</button>
         </div>
-        <a class="forgot-ID-PW" th:href="@{/user/findIdPwd}"><p align="center">혹시 아이디나 비밀번호를 잊으셨나요?</p></a>
+
       </form>
     </div>
   </div>

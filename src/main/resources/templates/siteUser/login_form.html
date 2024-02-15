@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <title>EGG.GG 로그인</title>
     <style>
-      body{
+      body {
         color: red;
       }
+
       .login-form-all-wrap {
         display: flex;
         flex-direction: row;
@@ -15,7 +16,68 @@
       }
 
       .login-form-wrap {
-        border: 1px solid red;
+        /*border: 1px solid red;*/
+      }
+
+      .login-form-label {
+        width: 20rem;
+      }
+
+      .login-btn {
+        font-weight: bold;
+        cursor: pointer;
+        width: 20rem;
+        height: 2rem;
+        display: block;
+        margin: 0 auto;
+        margin-top: 1rem;
+        color: salmon;
+        border-radius: 5px;
+        border: solid 2px salmon;
+        background-color: rgba(0, 0, 0, 0);
+      }
+
+
+      .login-btn:hover {
+        background-color: #ff9ca4;
+        color: aliceblue;
+        transition: 0.7s;
+      }
+
+
+      .login-form div label {
+        margin-top: 1rem;
+        display: inline-block;
+        text-align: left;
+      }
+
+      .form-control {
+        width: 20rem;
+        height: 2rem;
+        border-color: rgb(255, 68, 84, 0.25);
+        border-radius: 5px;
+        background-color: rgba(248, 248, 248, 0.9);
+        margin-top: 1rem;
+      }
+
+
+      input::placeholder {
+        color: rgba(255, 145, 163, 0.5);
+      }
+
+      .forgot-ID-PW {
+        font-size: 10pt;
+        color: salmon;
+        text-decoration-line: none;
+      }
+
+      .forgot-ID-PW:hover {
+        text-decoration-line: underline;
+      }
+
+      .forgot-ID-PW:visited {
+        color: salmon;
+        text-decoration-line: none;
       }
 
     </style>
@@ -24,21 +86,29 @@
   <body>
   <div class="login-form-all-wrap">
     <div class="login-form-wrap">
-      <form th:action="@{/user/login}" method="post">
+      <form class="login-form" th:action="@{/user/login}" method="post">
+
+        <div class="mb-3">
+          <!-- <div>
+             <label for="username" class="login-form-label">ID</label>
+           </div>-->
+          <input type="text" name="username" id="username" class="form-control" placeholder="아이디">
+        </div>
+        <div class="mb-3">
+          <!--          <div>
+                      <label for="password" class="login-form-label">PW</label>
+                    </div>-->
+          <input type="password" name="password" id="password" class="form-control"
+                 placeholder="비밀번호">
+        </div>
         <div th:if="${param.error}">
-          <div class="alert alert-danger">
+          <p class="alert alert-danger" align="center">
             사용자ID 또는 비밀번호를 확인해 주세요.
-          </div>
+          </p>
         </div>
-        <div class="mb-3">
-          <label for="username" class="form-label">사용자ID</label>
-          <input type="text" name="username" id="username" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">비밀번호</label>
-          <input type="password" name="password" id="password" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary login-btn">로그인</button>
+        <button type="submit" class="login-btn">로그인</button>
+        <a class="forgot-ID-PW" th:href="@{/user/findIdPwd}"><p align="center">혹시 아이디나 비밀번호를
+          잊으셨나요?</p></a>
       </form>
     </div>
   </div>

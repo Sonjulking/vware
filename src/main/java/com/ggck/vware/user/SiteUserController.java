@@ -35,6 +35,15 @@ public class SiteUserController {
 
   private final PasswordEncoder passwordEncoder;
 
+
+/*
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public void handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+    // DataIntegrityViolationException 처리 로직
+    System.out.println("콘솔아 떠라~ " + ex.getMessage());
+  }
+*/
+
   @GetMapping("/signup")
  /* public String signup(SiteUserCreateForm siteUserCreateForm) {
     return "siteUser/signup_form";
@@ -45,6 +54,7 @@ public class SiteUserController {
     model.addAttribute("siteUserCreateForm", siteUserCreateForm);
     return "siteUser/signup_form";
   }
+
 
   @PostMapping("/signup")
   public String signup(@Valid SiteUserCreateForm siteUserCreateForm, BindingResult bindingResult,
@@ -126,14 +136,6 @@ public class SiteUserController {
     return "redirect:/"; // 홈화면으로 이동
   }
 
-/*
-  @ExceptionHandler(DataIntegrityViolationException.class)
-  public void handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-    // DataIntegrityViolationException 처리 로직
-    System.out.println("콘솔아 떠라~ " + ex.getMessage());
-  }
-*/
-
   @GetMapping("/login")
   public String login() {
     return "siteUser/login_form";
@@ -158,6 +160,45 @@ public class SiteUserController {
 
     return "siteUser/my_page";
   }
+
+
+/*  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/MyPage/modify")
+  public String myPageModify(SiteUserCreateForm siteUserCreateForm, Principal principal,
+      Model model, ModelMap modelMap) {
+    String loginId = principal.getName();
+    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
+    SiteUserDto myUserDto = SiteUserDto.builder()
+        .userId(siteUser.getUserId())
+        .userEmail(siteUser.getUserEmail())
+        .userNickName(siteUser.getUserNickName())
+        .point(siteUser.getPoint())
+        .testResult(siteUser.getTestResult())
+        .preferredPosition(siteUser.getPreferredPosition())
+        .signUpTime(siteUser.getSignUpTime())
+        .build();
+    modelMap.addAttribute("myUserDTO", myUserDto);
+    siteUserCreateForm.setUserId(myUserDto.getUserId());
+    siteUserCreateForm.setPassword1(siteUser.getPassword());
+    siteUserCreateForm.setPassword2(siteUser.getPassword());
+    siteUserCreateForm.setUserEmail(myUserDto.getUserEmail());
+    siteUserCreateForm.setPreferredPosition(myUserDto.getPreferredPosition());
+    siteUserCreateForm.setUserNickName(myUserDto.getUserNickName());
+    siteUserCreateForm.setUserEmail(myUserDto.getUserEmail());
+    return "siteUser/my_page_modify";
+  }*/
+
+
+/*  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/MyPage/modify")
+  public String myPageModify(SiteUserCreateForm siteUserCreateForm, Principal principal, Model model, ModelMap modelMap) {
+    String loginId = principal.getName();
+    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
+
+    siteUserCreateForm.setUserId(siteUser.getUserId());
+
+    return "siteUser/my_page_modify";
+  }*/
 
   @PreAuthorize("isAuthenticated()")
   @GetMapping("/MyPage/prevModify")
@@ -208,45 +249,6 @@ public class SiteUserController {
       return "redirect:/user/MyPage/prevModify";
     }
   }
-
-
-/*  @PreAuthorize("isAuthenticated()")
-  @GetMapping("/MyPage/modify")
-  public String myPageModify(SiteUserCreateForm siteUserCreateForm, Principal principal,
-      Model model, ModelMap modelMap) {
-    String loginId = principal.getName();
-    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
-    SiteUserDto myUserDto = SiteUserDto.builder()
-        .userId(siteUser.getUserId())
-        .userEmail(siteUser.getUserEmail())
-        .userNickName(siteUser.getUserNickName())
-        .point(siteUser.getPoint())
-        .testResult(siteUser.getTestResult())
-        .preferredPosition(siteUser.getPreferredPosition())
-        .signUpTime(siteUser.getSignUpTime())
-        .build();
-    modelMap.addAttribute("myUserDTO", myUserDto);
-    siteUserCreateForm.setUserId(myUserDto.getUserId());
-    siteUserCreateForm.setPassword1(siteUser.getPassword());
-    siteUserCreateForm.setPassword2(siteUser.getPassword());
-    siteUserCreateForm.setUserEmail(myUserDto.getUserEmail());
-    siteUserCreateForm.setPreferredPosition(myUserDto.getPreferredPosition());
-    siteUserCreateForm.setUserNickName(myUserDto.getUserNickName());
-    siteUserCreateForm.setUserEmail(myUserDto.getUserEmail());
-    return "siteUser/my_page_modify";
-  }*/
-
-
-/*  @PreAuthorize("isAuthenticated()")
-  @GetMapping("/MyPage/modify")
-  public String myPageModify(SiteUserCreateForm siteUserCreateForm, Principal principal, Model model, ModelMap modelMap) {
-    String loginId = principal.getName();
-    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
-
-    siteUserCreateForm.setUserId(siteUser.getUserId());
-
-    return "siteUser/my_page_modify";
-  }*/
 
   @PreAuthorize("isAuthenticated()")
   @PostMapping("/MyPage/modify")
@@ -332,6 +334,19 @@ public class SiteUserController {
     }
     return "EGG/main";
 
+  }
+
+  @GetMapping("/findIdPwd")
+  public String findIdPwd() {
+    return "siteUser/find_id_pw_form";
+  }
+
+
+  @PostMapping("/findIdPwd")
+  public String findIdPwd(@RequestParam("email") String userEmail) {
+    System.out.println("유저이메일" + userEmail);
+    SiteUser siteUser = this.siteUserService.emailGetUser(userEmail);
+    return "";
   }
 
 }

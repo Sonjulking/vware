@@ -74,6 +74,7 @@ public class SiteUserAuthenticationController {
       int digit = random.nextInt(10); // 0부터 9까지의 난수
       codeBuilder.append(digit);
     }
+    logger.info("메일주소 : " + email);
     logger.info("인증번호 : " + codeBuilder.toString());
 
     simpleMailMessage.setTo(email);
