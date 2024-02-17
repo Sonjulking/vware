@@ -1,10 +1,7 @@
 package com.ggck.vware.eggset.controller;
 
-import com.ggck.vware.eggset.dto.EggSetDTO;
 import com.ggck.vware.eggset.dto.KeyBoardDTO;
 import com.ggck.vware.eggset.service.EggSetAdminService;
-import com.ggck.vware.eggset.service.EggSetHomeService;
-import com.ggck.vware.eggset.service.EggSetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +21,7 @@ public class EggSetAdminController {
     // 키보드 목록 조회
     @GetMapping("/KeyBoard")
     public String findAll(Model model) {
-        List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findAll();
+        List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findKeyBoard();
         // keyBoardList 라는 이름으로 데이터를 담음
         model.addAttribute("keyBoardList", keyBoardDTOList);
         return "EGGSET/newKeyboard";
@@ -35,7 +32,7 @@ public class EggSetAdminController {
     {
         System.out.println("keyBoardDTO = " + keyBoardDTO);
         eggSetAdminService.save(keyBoardDTO);
-        List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findAll();
+        List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findKeyBoard();
         // eggSetList 라는 이름으로 데이터를 담음
         model.addAttribute("keyBoardList", keyBoardDTOList);
         return "EGGSET/newKeyboard";

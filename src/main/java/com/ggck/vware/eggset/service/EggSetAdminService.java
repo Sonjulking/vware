@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EggSetAdminService {
     private final EggSetAdminRepository eggSetAdminRepository;
-    public List<KeyBoardDTO> findAll() {
+    public List<KeyBoardDTO> findKeyBoard() {
         List<KeyBoardEntity> keyBoardEntityList = eggSetAdminRepository.findAll();
         List<KeyBoardDTO> keyBoardDTOList = new ArrayList<>();
 

@@ -1,6 +1,8 @@
 package com.ggck.vware.eggset.controller;
 
 import com.ggck.vware.eggset.dto.EggSetDTO;
+import com.ggck.vware.eggset.dto.KeyBoardDTO;
+import com.ggck.vware.eggset.service.EggSetAdminService;
 import com.ggck.vware.eggset.service.EggSetHomeService;
 import com.ggck.vware.eggset.service.EggSetService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.List;
 public class EggSetController {
     private final EggSetService eggSetService; // 생성사 주입방식으로 의존성 주입
     private final EggSetHomeService eggSetHomeService; // 생성사 주입방식으로 의존성 주입
+    private final EggSetAdminService eggSetAdminService;
 
     @PostMapping("/save") // post로 보내서 post로 받는 것.
     public String save(@ModelAttribute EggSetDTO eggSetDTO, Model model)
@@ -26,6 +29,15 @@ public class EggSetController {
         List<EggSetDTO> eggSetDTOList = eggSetHomeService.findAll();
         // eggSetList 라는 이름으로 데이터를 담음
         model.addAttribute("eggSetList", eggSetDTOList);
+        return "redirect:/EggSet";
+    }
+
+    // 키보드 목록 조회
+    @GetMapping("/")
+    public String findKeyBoard(Model model) {
+        List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findKeyBoard();
+        // keyBoardList 라는 이름으로 데이터를 담음
+        model.addAttribute("keyBoardList", keyBoardDTOList);
         return "EGGSET/equipment";
     }
 
