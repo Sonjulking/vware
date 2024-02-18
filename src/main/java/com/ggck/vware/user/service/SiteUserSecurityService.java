@@ -1,5 +1,9 @@
-package com.ggck.vware.user;
+package com.ggck.vware.user.service;
 
+import com.ggck.vware.user.CustomSiteUserDetails;
+import com.ggck.vware.user.repository.SiteUserRepository;
+import com.ggck.vware.user.SiteUserRole;
+import com.ggck.vware.user.entity.SiteUserEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +23,11 @@ public class SiteUserSecurityService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-    Optional<SiteUser> _siteUser = this.siteUserRepository.findByUserId(userId);
+    Optional<SiteUserEntity> _siteUser = this.siteUserRepository.findByUserId(userId);
     if (_siteUser.isEmpty()) {
       throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
     }
-    SiteUser siteUser = _siteUser.get();
+    SiteUserEntity siteUser = _siteUser.get();
     List<GrantedAuthority> authorities = new ArrayList<>();
 
     if ("admin".equals(userId)) {

@@ -1,4 +1,4 @@
-package com.ggck.vware.user;
+package com.ggck.vware.user.form;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

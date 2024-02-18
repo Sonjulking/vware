@@ -1,8 +1,7 @@
 package com.ggck.vware.vbti;
 
-import com.ggck.vware.user.SiteUser;
-import com.ggck.vware.user.SiteUserDto;
-import com.ggck.vware.user.SiteUserService;
+import com.ggck.vware.user.entity.SiteUserEntity;
+import com.ggck.vware.user.service.SiteUserService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,8 +32,8 @@ public class VbtiController {
   @PostMapping("/resultSave")
   public String resultSave(@RequestParam(name = "testResult") String testResult,
       Principal principal, Model model, HttpServletResponse response) {
-    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
-    SiteUserDto testUserDto = SiteUserDto.builder()
+    SiteUserEntity siteUser = this.siteUserService.getUser(principal.getName());
+    com.ggck.vware.user.dto.SiteUserDto testUserDto = com.ggck.vware.user.dto.SiteUserDto.builder()
         .userId(siteUser.getUserId())
         .userEmail(siteUser.getUserEmail())
         .userNickName(siteUser.getUserNickName())

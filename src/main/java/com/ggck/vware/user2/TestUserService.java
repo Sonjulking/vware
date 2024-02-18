@@ -1,6 +1,5 @@
 package com.ggck.vware.user2;
 
-import com.ggck.vware.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

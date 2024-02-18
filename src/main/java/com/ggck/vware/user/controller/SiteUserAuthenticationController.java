@@ -1,4 +1,4 @@
-package com.ggck.vware.user;
+package com.ggck.vware.user.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

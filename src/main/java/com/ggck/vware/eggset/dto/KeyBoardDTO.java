@@ -9,6 +9,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class KeyBoardDTO {
     private Long keyboardId;
     private String keyboardName;

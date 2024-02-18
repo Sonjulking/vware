@@ -7,49 +7,142 @@
       .noBorder {
         border: solid 0px white;
       }
+
+      table {
+        margin-top: 0.5rem;
+        width: 500px;
+      }
+
+      .my-page-wrap {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+      }
+
+
+      .a-block {
+        text-decoration: none;
+        display: flex;
+        justify-content: center; /* 가로 방향으로 가운데 정렬 */
+        align-items: center; /* 세로 방향으로 가운데 정렬 */
+      }
+
+      .a-block p {
+        color: salmon;
+      }
+
+      .a-block p:hover {
+        text-decoration: underline;
+      }
+
+      .th-header {
+        font-size: 20pt;
+        color: salmon;
+        padding-bottom: 1rem;
+        text-align: center;
+      }
+
+      th {
+        text-align: left;
+      }
+
+      #userId, #userEmail {
+        background-color: rgba(0, 0, 0, 0);
+      }
+
+      .btn-wrap {
+        display: flex;
+        justify-content: center;
+      }
+
+      .modBtn {
+        cursor: pointer;
+        margin-top: 1em;
+        height: 2.25rem;
+        background-color: rgba(0, 0, 0, 0);
+        color: #ff4454;
+        border-radius: 5px;
+        border: solid 3px #ff4454;
+      }
+
+
+      .modBtn:hover {
+        background-color: #ff9ca4;
+        color: aliceblue;
+        transition: 0.7s;
+      }
+
+      .nextP {
+        font-size: 10pt;
+        color: salmon;
+        text-decoration-line: none;
+      }
+
+      .nextP:hover {
+        text-decoration-line: underline;
+      }
+
+      .nextP:visited {
+        color: salmon;
+        text-decoration-line: none;
+      }
     </style>
   </head>
   <body>
-  <div class="my-3 border-bottom">
-    <div>
-      <h4>유저수정</h4>
-    </div>
-  </div>
-  <div th:text="${session.reconfirmCheck}"></div>
 
-  <div th:if="${session.reconfirmCheck == true}">
+  <!--<div th:text="${session.reconfirmCheck}"></div>-->
+  <h2 align="center">회원정보 수정</h2>
+  <div th:if="${session.reconfirmCheck == true}" class="my-page-wrap">
     <!--세션이 존재할 때-->
     <form th:action="@{/user/MyPage/modify}" th:object="${siteUserModifyForm}" method="post">
       <div th:replace="~{common/form_errors :: formErrorsFragment}"></div>
-      <div class="mb-3">
-        <label for="userId" class="form-label">사용자ID</label>
-        <input type="text" th:field="*{userId}"
-               class="form-control noBorder" readonly>
-        <!--    th:if="${#strings.isEmpty(userId)}" th:value="${myUserDTO.userId}" -->
-      </div>
-      <!--<div th:text="${myUserDTO.userId}"></div>-->
-      <div class="mb-3">
-        <label for="userNickName" class="form-label">사용자 닉네임 </label>
-        <input type="text" th:field="*{userNickName}" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label for="userEmail" class="form-label">이메일</label>
-        <input type="text" th:field="*{userEmail}" class="form-control noBorder" readonly>
+      <table>
+        <tr class="mb-3">
+          <th><label for="userId" class="form-label">사용자ID</label>
+          </th>
+          <td><input type="text" th:field="*{userId}"
+                     class="form-control noBorder" readonly></td>
+          <!--    th:if="${#strings.isEmpty(userId)}" th:value="${myUserDTO.userId}" -->
+        </tr>
+        <!--<div th:text="${myUserDTO.userId}"></div>-->
+        <tr class="mb-3">
+          <th><label for="userNickName" class="form-label">사용자 닉네임 </label>
+          </th>
+          <td><input type="text" th:field="*{userNickName}" class="form-control"></td>
+        </tr>
+        <tr class="mb-3">
+          <th><label for="userEmail" class="form-label">이메일</label>
+          </th>
+          <td><input type="text" th:field="*{userEmail}" class="form-control noBorder" readonly>
+          </td>
 
-        <!-- <span th:text="${myUserDTO.userEmail}"></span>-->
+          <!-- <span th:text="${myUserDTO.userEmail}"></span>-->
+        </tr>
+        <tr>
+          <th><label class="form-label">선호 포지션</label></th>
+          <td><input type="radio" th:field="*{preferredPosition}" value="타격대">타격대
+            <input type="radio" th:field="*{preferredPosition}" value="척후대">척후대
+            <input type="radio" th:field="*{preferredPosition}" value="감시자">감시자
+            <input type="radio" th:field="*{preferredPosition}" value="전략가">전략가
+          </td>
+        </tr>
+
+
+      </table>
+
+      <div class="btn-wrap">
+        <button type="submit" class="btn modBtn">회원정보 수정</button>
       </div>
-      <div>
-        <label class="form-label">선호 포지션</label>
-        <input type="radio" th:field="*{preferredPosition}" value="타격대">타격대
-        <input type="radio" th:field="*{preferredPosition}" value="척후대">척후대
-        <input type="radio" th:field="*{preferredPosition}" value="감시자">감시자
-        <input type="radio" th:field="*{preferredPosition}" value="전략가">전략가
-      </div>
-      <button type="submit" class="btn btn-primary">수정하기</button>
+
+
+      <a class="nextP" th:href="@{/user/MyPage/modifyPassword}">
+        <p align="center" class="nextP">비밀번호 변경하기</p>
+      </a>
+
+
     </form>
-    <a th:href="@{/user/MyPage/modifyPassword}">
-      <button>비밀번호 변경하기</button>
-    </a>
+
   </div>
   <div th:if="${session.reconfirmCheck != true}">
     <!--세션이 존재하지 않을 때-->

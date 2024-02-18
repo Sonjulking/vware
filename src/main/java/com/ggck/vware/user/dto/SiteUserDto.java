@@ -1,4 +1,4 @@
-package com.ggck.vware.user;
+package com.ggck.vware.user.dto;
 
 import java.time.LocalDateTime;
 import lombok.AccessLevel;

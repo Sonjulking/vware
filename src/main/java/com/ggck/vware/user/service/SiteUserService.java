@@ -1,12 +1,12 @@
-package com.ggck.vware.user;
+package com.ggck.vware.user.service;
 
 import com.ggck.vware.DataNotFoundException;
-import jakarta.persistence.Column;
+import com.ggck.vware.user.dto.SiteUserDto;
+import com.ggck.vware.user.repository.SiteUserRepository;
+import com.ggck.vware.user.entity.SiteUserEntity;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,8 @@ public class SiteUserService {
   private final SiteUserRepository siteUserRepository;
   private final PasswordEncoder passwordEncoder;
 
-  public SiteUserDto create(SiteUserDto siteUserDto) {
+  public com.ggck.vware.user.dto.SiteUserDto create(
+      com.ggck.vware.user.dto.SiteUserDto siteUserDto) {
     String email = siteUserDto.getUserEmail();
     String username = siteUserDto.getUserId();
     String nickname = siteUserDto.getUserNickName();
@@ -34,7 +35,7 @@ public class SiteUserService {
     }
 */
     //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //비밀번호를 암호화 해주는 보안작업
-    SiteUser siteUser = new SiteUser();
+    SiteUserEntity siteUser = new SiteUserEntity();
     siteUser.setUserId(siteUserDto.getUserId());
     siteUser.setUserEmail(siteUserDto.getUserEmail());
     //siteUser.setPassword(siteUserDto.getPassword());
@@ -48,8 +49,8 @@ public class SiteUserService {
     return siteUserDto;
   }
 
-  public SiteUser getUser(String userId) {
-    Optional<SiteUser> siteUser = this.siteUserRepository.findByUserId(userId);
+  public SiteUserEntity getUser(String userId) {
+    Optional<SiteUserEntity> siteUser = this.siteUserRepository.findByUserId(userId);
     if (siteUser.isPresent()) {
       return siteUser.get();
     } else {
@@ -57,7 +58,8 @@ public class SiteUserService {
     }
   }
 
-  public void savePositionResult(SiteUser siteUser, SiteUserDto siteUserDto,
+  public void savePositionResult(
+      SiteUserEntity siteUser, com.ggck.vware.user.dto.SiteUserDto siteUserDto,
       String positionResult) {
     siteUser.setUserId(siteUserDto.getUserId());
     siteUser.setUserEmail(siteUserDto.getUserEmail());
@@ -68,7 +70,8 @@ public class SiteUserService {
     this.siteUserRepository.save(siteUser);
   }
 
-  public void updateUserInfo(SiteUser siteUser, SiteUserDto siteUserDto) {
+  public void updateUserInfo(SiteUserEntity siteUser,
+      com.ggck.vware.user.dto.SiteUserDto siteUserDto) {
     siteUser.setUserId(siteUserDto.getUserId());
     siteUser.setUserEmail(siteUserDto.getUserEmail());
     //siteUser.setPassword(siteUserDto.getPassword());
@@ -81,18 +84,26 @@ public class SiteUserService {
     this.siteUserRepository.save(siteUser);
   }
 
-  public void updateUserPassword(SiteUser siteUser, SiteUserDto siteUserDto) {
+  public void updateUserPassword(
+      SiteUserEntity siteUser, com.ggck.vware.user.dto.SiteUserDto siteUserDto) {
     siteUser.setPassword(passwordEncoder.encode(siteUserDto.getPassword()));
     this.siteUserRepository.save(siteUser);
   }
 
-  public SiteUser emailGetUser(String userEmail) {
-    Optional<SiteUser> siteUser = this.siteUserRepository.findByUserEmail(userEmail);
+  public SiteUserEntity emailGetUser(String userEmail) {
+    Optional<SiteUserEntity> siteUser = this.siteUserRepository.findByUserEmail(userEmail);
     if (siteUser.isPresent()) {
       return siteUser.get();
     } else {
       throw new DataNotFoundException("siteuser not found");
     }
+  }
+
+  public void findUser(SiteUserEntity siteUser, SiteUserDto siteUserDto) {
+
+    siteUser.setPassword(passwordEncoder.encode(siteUserDto.getPassword()));
+
+    this.siteUserRepository.save(siteUser);
   }
 
 

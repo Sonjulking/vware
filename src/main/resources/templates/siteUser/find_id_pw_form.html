@@ -7,6 +7,53 @@
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap"); /*폰트*/
 
+    .modal {
+      display: none; /* 모달 숨기기 */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5); /* 배경 투명도 */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      border: 1px solid #888;
+      height: 10%;
+      width: 25%;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      text-align: center; /* 텍스트를 가운데 정렬합니다. */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /*                                                           */
     body {
       background-color: #ece8e1;
       color: #ff4454;
@@ -237,7 +284,7 @@
           </div>
           <div class="email-wrap">
             <input type="text" id="inputCode" name="inputCode" class="input_code"
-                   disabled="disabled">
+                   disabled="disabled" maxlength="6">
             <button type="button" class="inputCodeButton" disabled="disabled">번호입력</button>
           </div>
           <span id="code_timer"></span>
@@ -245,13 +292,23 @@
         </div>
 
         <div class="submit-btn-wrap">
-          <button type="submit" class="btn btn-primary submit-btn">입력하기</button>
+          <button type="submit" class="btn btn-primary submit-btn" disabled>입력하기</button>
         </div>
 
       </form>
     </div>
   </div>
 </div>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <!-- <span class="close">&times;</span>-->
+    <p>메일을 발송중입니다. 잠시만 기다려주세요. <br>
+      발송되지 않았다면, 새로고침 후 다시 시도해주세요.
+    </p>
+  </div>
+</div>
+
 <script type="application/javascript" th:src="@{https://code.jquery.com/jquery-3.6.3.js}"></script>
 <script>
   let code;
@@ -325,6 +382,7 @@
       clearInterval(timer); //타이머 끔
       clearInterval(codeTimer); //코드 소멸 타이머도 끔
       inputCodeTest = true;
+      $(".submit-btn").attr("disabled", false);
 
     } else {                                            // 일치하지 않을 경우
       $("#userEmail").prop("readonly", false);
@@ -358,7 +416,23 @@
     }, 1000);
   }
 
-  $("#userId").val("");
+  // 모달 열기 버튼 클릭 시 이벤트 처리
+  $('.submit-btn').click(function () {
+    $('#modal').css('display', 'block'); // 모달 보이기
+  });
+
+  /*
+    // 모달 닫기 버튼 또는 모달 외부 클릭 시 이벤트 처리
+    $('.close, .modal').click(function () {
+      $('#modal').css('display', 'none'); // 모달 숨기기
+    });
+  */
+
+  // 모달 내부 클릭 시 이벤트 전파 방지
+  $('.modal-content').click(function (event) {
+    event.stopPropagation(); // 이벤트 전파 방지
+  });
+
 
 </script>
 </body>

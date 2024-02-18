@@ -15,18 +15,17 @@
 
       }
 
-
       .a-block {
-        text-decoration: none;
-        display: flex;
-        justify-content: center; /* 가로 방향으로 가운데 정렬 */
-        align-items: center; /* 세로 방향으로 가운데 정렬 */
+        font-size: 10pt;
+        color: salmon;
+        text-decoration-line: none;
       }
-      .a-block p{
+
+      .a-block p {
         color: salmon;
       }
 
-      .a-block p:hover{
+      .a-block p:hover {
         text-decoration: underline;
       }
 
@@ -76,8 +75,13 @@
     </table>
   </div>
   <a class="a-block" th:href="@{/user/MyPage/prevModify}">
-    <p>개인정보 수정하기</p>
+    <p align="center">개인정보 수정하기</p>
   </a>
+
+  <a class="a-block" th:href="@{/user/MyPage/modifyPassword}">
+    <p align="center">탈퇴하기</p>
+  </a>
+
 
   </body>
 </div>

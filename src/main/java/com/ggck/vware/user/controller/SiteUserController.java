@@ -1,25 +1,30 @@
-package com.ggck.vware.user;
+package com.ggck.vware.user.controller;
 
+import com.ggck.vware.user.dto.SiteUserDto;
+import com.ggck.vware.user.entity.SiteUserEntity;
+import com.ggck.vware.user.form.SiteUserCreateForm;
+import com.ggck.vware.user.form.SiteUserModifyForm;
+import com.ggck.vware.user.form.SiteUserModifyPasswordForm;
+import com.ggck.vware.user.service.SiteUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.io.IOException;
-import java.lang.ref.ReferenceQueue;
 import java.security.Principal;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,13 +41,15 @@ public class SiteUserController {
   private final PasswordEncoder passwordEncoder;
 
 
-/*
-  @ExceptionHandler(DataIntegrityViolationException.class)
-  public void handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-    // DataIntegrityViolationException 처리 로직
-    System.out.println("콘솔아 떠라~ " + ex.getMessage());
-  }
-*/
+  /*
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public void handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+      // DataIntegrityViolationException 처리 로직
+      System.out.println("콘솔아 떠라~ " + ex.getMessage());
+    }
+  */
+  @Autowired
+  private JavaMailSender javaMailSender;
 
   @GetMapping("/signup")
  /* public String signup(SiteUserCreateForm siteUserCreateForm) {
@@ -64,12 +71,12 @@ public class SiteUserController {
     }
     if (!siteUserCreateForm.getPassword1()
         .equals(siteUserCreateForm.getPassword2())) { //패스워드확인이 실패하면
-      bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않아요~");
+      bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
       return "siteUser/signup_form";
 
     }
     try {
-      SiteUserDto newUserDto = SiteUserDto.builder()
+      com.ggck.vware.user.dto.SiteUserDto newUserDto = com.ggck.vware.user.dto.SiteUserDto.builder()
           .userId(siteUserCreateForm.getUserId())
           .userEmail(siteUserCreateForm.getUserEmail())
           .userNickName(siteUserCreateForm.getUserNickName())
@@ -145,8 +152,8 @@ public class SiteUserController {
   @GetMapping("/MyPage")
   public String myPage(Principal principal, ModelMap modelMap) {
     String loginId = principal.getName();
-    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
-    SiteUserDto myUserDto = SiteUserDto.builder()
+    SiteUserEntity siteUser = this.siteUserService.getUser(principal.getName());
+    com.ggck.vware.user.dto.SiteUserDto myUserDto = com.ggck.vware.user.dto.SiteUserDto.builder()
         .userId(siteUser.getUserId())
         .userEmail(siteUser.getUserEmail())
         .userNickName(siteUser.getUserNickName())
@@ -218,8 +225,8 @@ public class SiteUserController {
       ModelMap modelMap,
       HttpServletRequest request) {
     String loginId = principal.getName();
-    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
-    SiteUserDto myUserDto = SiteUserDto.builder()
+    SiteUserEntity siteUser = this.siteUserService.getUser(principal.getName());
+    com.ggck.vware.user.dto.SiteUserDto myUserDto = com.ggck.vware.user.dto.SiteUserDto.builder()
         .userId(siteUser.getUserId())
         .userEmail(siteUser.getUserEmail())
         .userNickName(siteUser.getUserNickName())
@@ -257,7 +264,7 @@ public class SiteUserController {
       HttpServletRequest request, Model model, ModelMap modelMap, Principal principal) {
 
     String loginId = principal.getName(); //로그인된 아이디 값 가져오기
-    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
+    SiteUserEntity siteUser = this.siteUserService.getUser(principal.getName());
 
     if (bindingResult.hasErrors()) { //에러가 생기면
       System.out.println("hasErrors"); //
@@ -265,7 +272,7 @@ public class SiteUserController {
     }
     try {
 
-      SiteUserDto modifyUserDto = SiteUserDto.builder()
+      com.ggck.vware.user.dto.SiteUserDto modifyUserDto = com.ggck.vware.user.dto.SiteUserDto.builder()
           .userId(siteUserModifyForm.getUserId())
           .userEmail(siteUserModifyForm.getUserEmail())
           .userNickName(siteUserModifyForm.getUserNickName())
@@ -307,18 +314,18 @@ public class SiteUserController {
       BindingResult bindingResult,
       Principal principal, HttpServletResponse response) {
     String loginId = principal.getName(); //로그인된 아이디 값 가져오기
-    SiteUser siteUser = this.siteUserService.getUser(principal.getName());
+    SiteUserEntity siteUser = this.siteUserService.getUser(principal.getName());
     if (bindingResult.hasErrors()) { //에러가 생기면
       //bindingResult.reject("comeon", "비밀번호 입력하세용");
       return "siteUser/modify_password_form";
     }
     if (!siteUserModifyPasswordForm.getPassword1()
         .equals(siteUserModifyPasswordForm.getPassword2())) { //패스워드확인이 실패하면
-      bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않아요~");
+      bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
       return "siteUser/modify_password_form";
     }
 
-    SiteUserDto modifyPasswordUserDto = SiteUserDto.builder()
+    com.ggck.vware.user.dto.SiteUserDto modifyPasswordUserDto = com.ggck.vware.user.dto.SiteUserDto.builder()
         .password(siteUserModifyPasswordForm.getPassword1())
         .build();
     siteUserService.updateUserPassword(siteUser, modifyPasswordUserDto);
@@ -343,10 +350,39 @@ public class SiteUserController {
 
 
   @PostMapping("/findIdPwd")
-  public String findIdPwd(@RequestParam("email") String userEmail) {
-    System.out.println("유저이메일" + userEmail);
-    SiteUser siteUser = this.siteUserService.emailGetUser(userEmail);
-    return "";
+  public String findIdPwd(@RequestParam("email") String userEmail, HttpServletResponse response) {
+
+    SiteUserEntity siteUser = this.siteUserService.emailGetUser(userEmail);
+    String myId = siteUser.getUserId();
+
+    int codeLength = 6; //6자리
+
+    Random random = new Random();
+
+    StringBuilder randomPwd = new StringBuilder();
+
+    for (int i = 0; i < codeLength; i++) {
+      int digit = random.nextInt(10); // 0부터 9까지의 난수
+      randomPwd.append(digit);
+    }
+
+    String temporaryPwd = randomPwd.toString();
+    SiteUserDto finderDto = com.ggck.vware.user.dto.SiteUserDto.builder()
+        .password(temporaryPwd)
+        .build();
+    siteUserService.findUser(siteUser, finderDto);
+
+    SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+
+    simpleMailMessage.setTo(userEmail);
+    simpleMailMessage.setSubject("EGG.GG 아이디와 임시 비밀번호 입니다.");
+    simpleMailMessage.setText(
+        "아이디 : " + myId + "\n임시 비밀번호 :  " + temporaryPwd + "\n아이디와 임시비밀번호로 로그인 부탁드립니다.");
+
+    javaMailSender.send(simpleMailMessage);
+
+    System.out.println("임시비밀번호 : " + temporaryPwd);
+    return "siteUser/login_form";
   }
 
 }

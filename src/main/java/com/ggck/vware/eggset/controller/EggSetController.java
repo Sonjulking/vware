@@ -35,9 +35,11 @@ public class EggSetController {
     // 키보드 목록 조회
     @GetMapping("/")
     public String findKeyBoard(Model model) {
+        System.out.println("키보드 키보드 : ");
         List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findKeyBoard();
         // keyBoardList 라는 이름으로 데이터를 담음
         model.addAttribute("keyBoardList", keyBoardDTOList);
+
         return "EGGSET/equipment";
     }
 

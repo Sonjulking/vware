@@ -1,4 +1,4 @@
-package com.ggck.vware.user;
+package com.ggck.vware.user.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,13 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotNull;
-import java.sql.Time;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -35,7 +30,7 @@ import lombok.Setter;
     this.signUpTime = signUpTime;
     this.lastAccessTime = lastAccessTime;
   }*/
-public class SiteUser {
+public class SiteUserEntity {
 
   @Id
   @SequenceGenerator(name = "id_sequence_generator", sequenceName = "id_sequence", allocationSize = 1)
