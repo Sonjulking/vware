@@ -14,7 +14,6 @@ public class KeyBoardDTO {
     private Long keyboardId;
     private String keyboardName;
 
-    // Entity를 DTO로 변환 like BoardEntity의 toSaveEntity
     public static KeyBoardDTO toKeyBoardDTO(KeyBoardEntity keyBoardEntity) {
         KeyBoardDTO keyBoardDTO = new KeyBoardDTO();
         keyBoardDTO.setKeyboardId(keyBoardEntity.getKeyboardId());

@@ -1,8 +1,6 @@
 package com.ggck.vware.eggset.controller;
 
-import com.ggck.vware.eggset.dto.EggSetDTO;
-import com.ggck.vware.eggset.dto.KeyBoardDTO;
-import com.ggck.vware.eggset.dto.MouseDTO;
+import com.ggck.vware.eggset.dto.*;
 import com.ggck.vware.eggset.service.EggSetAdminService;
 import com.ggck.vware.eggset.service.EggSetHomeService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +27,8 @@ public class EggSetHomeController {
         List<EggSetDTO> eggSetDTOList = eggSetHomeService.findAll();
         List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findKeyboard();
         List<MouseDTO> mouseDTOList = eggSetAdminService.findMouse();
+        List<MonitorDTO> monitorDTOList = eggSetAdminService.findMonitor();
+        List<GpuDTO> gpuDTOList = eggSetAdminService.findGpu();
 
         // 전체 리스트 조회
         model.addAttribute("eggSetList", eggSetDTOList);
@@ -36,6 +36,11 @@ public class EggSetHomeController {
         model.addAttribute("keyBoardList", keyBoardDTOList);
         // 마우스 Select 리스트
         model.addAttribute("mouseList", mouseDTOList);
+        // 모니터 Select 리스트
+        model.addAttribute("monitorList", monitorDTOList);
+        // 그래픽카드 Select 리스트
+        model.addAttribute("gpuList", gpuDTOList);
+
         return "EGGSET/equipment";
     }
 

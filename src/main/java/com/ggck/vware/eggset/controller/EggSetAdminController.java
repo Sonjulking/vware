@@ -1,6 +1,8 @@
 package com.ggck.vware.eggset.controller;
 
+import com.ggck.vware.eggset.dto.GpuDTO;
 import com.ggck.vware.eggset.dto.KeyBoardDTO;
+import com.ggck.vware.eggset.dto.MonitorDTO;
 import com.ggck.vware.eggset.dto.MouseDTO;
 import com.ggck.vware.eggset.service.EggSetAdminService;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +61,45 @@ public class EggSetAdminController {
         // mouseList 라는 이름으로 데이터를 담음
         model.addAttribute("mouseList", mouseDTOList);
         return "EGGSET/newMouse";
+    }
+
+    //모니터 목록 조회
+    @GetMapping("/Monitor")
+    public String findMonitor(Model model) {
+        List<MonitorDTO> monitorDTOList = eggSetAdminService.findMonitor();
+        // keyBoardList 라는 이름으로 데이터를 담음
+        model.addAttribute("monitorList", monitorDTOList);
+        return "EGGSET/newMonitor";
+    }
+
+    //모니터 신규 등록
+    @PostMapping("/Monitor/save")
+    public String saveMonitor(@ModelAttribute MonitorDTO monitorDTO, Model model)
+    {
+        System.out.println("monitorDTO = " + monitorDTO);
+        eggSetAdminService.monitorSave(monitorDTO);
+        List<MonitorDTO> monitorDTOList = eggSetAdminService.findMonitor();
+        model.addAttribute("monitorList", monitorDTOList);
+        return "EGGSET/newMonitor";
+    }
+
+    //그래픽카드 목록 조회
+    @GetMapping("/Gpu")
+    public String findGpu(Model model) {
+        List<GpuDTO> gpuDTOList = eggSetAdminService.findGpu();
+        // keyBoardList 라는 이름으로 데이터를 담음
+        model.addAttribute("gpuList", gpuDTOList);
+        return "EGGSET/newGpu";
+    }
+
+    //모니터 신규 등록
+    @PostMapping("/Gpu/save")
+    public String saveGpu(@ModelAttribute GpuDTO gpuDTO, Model model)
+    {
+        System.out.println("gpuDTO = " + gpuDTO);
+        eggSetAdminService.gpuSave(gpuDTO);
+        List<GpuDTO> gpuDTOList = eggSetAdminService.findGpu();
+        model.addAttribute("gpuList", gpuDTOList);
+        return "EGGSET/newGpu";
     }
 }

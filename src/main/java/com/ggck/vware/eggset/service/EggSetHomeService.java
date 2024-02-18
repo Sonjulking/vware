@@ -1,14 +1,8 @@
 package com.ggck.vware.eggset.service;
 
-import com.ggck.vware.eggset.dto.EggSetDTO;
-import com.ggck.vware.eggset.dto.KeyBoardDTO;
-import com.ggck.vware.eggset.dto.MouseDTO;
-import com.ggck.vware.eggset.entity.EggSetEntity;
-import com.ggck.vware.eggset.entity.KeyBoardEntity;
-import com.ggck.vware.eggset.entity.MouseEntity;
-import com.ggck.vware.eggset.repository.EggSetRepository;
-import com.ggck.vware.eggset.repository.KeyBoardRepository;
-import com.ggck.vware.eggset.repository.MouseRepository;
+import com.ggck.vware.eggset.dto.*;
+import com.ggck.vware.eggset.entity.*;
+import com.ggck.vware.eggset.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +15,8 @@ public class EggSetHomeService {
     private final EggSetRepository eggSetRepository;
     private final KeyBoardRepository keyBoardRepository;
     private final MouseRepository mouseRepository;
+    private final MonitorRepository monitorRepository;
+    private final GpuRepository gpuRepository;
 
     public List<EggSetDTO> findAll() {
         // Repository에서 뭔가를 가져올때는 무조건 Entity로 넘어오는데, (List 형태의 Entity)
@@ -57,5 +53,29 @@ public class EggSetHomeService {
             mouseDTOList.add(MouseDTO.toMouseDTO(mouseEntity));
         }
         return mouseDTOList;
+    }
+
+    //모니터
+    public List<MonitorDTO> findMonitor() {
+
+        List<MonitorEntity> monitorEntityList = monitorRepository.findAll();
+        List<MonitorDTO> monitorDTOList = new ArrayList<>();
+
+        for (MonitorEntity monitorEntity : monitorEntityList) {
+            monitorDTOList.add(MonitorDTO.toMonitorDTO(monitorEntity));
+        }
+        return monitorDTOList;
+    }
+
+    //그래픽카드
+    public List<GpuDTO> findGpu() {
+
+        List<GpuEntity> gpuEntityList = gpuRepository.findAll();
+        List<GpuDTO> gpuDTOList = new ArrayList<>();
+
+        for (GpuEntity gpuEntity : gpuEntityList) {
+            gpuDTOList.add(GpuDTO.toGpuDTO(gpuEntity));
+        }
+        return gpuDTOList;
     }
 }

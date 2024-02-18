@@ -24,8 +24,18 @@
         </div>
         edpi: <input type="text" name="edpi"> <br>
         sensi: <input type="text" name="sensi"> <br>
-        monitor: <input type="text" name="monitor"> <br>
-        gpu: <input type="text" name="gpu"> <br>
+        <div>
+          monitor: <select class="form-select" name="monitor">
+          <option value="">==모니터 종류 선택==</option>
+          <option th:each="monitor : ${monitorList}" th:value="${monitor.monitorName}" th:text="${monitor.monitorName}"></option>
+        </select>
+        </div>
+        <div>
+          gpu: <select class="form-select" name="gpu">
+          <option value="">==그래픽카드 종류 선택==</option>
+          <option th:each="gpu : ${gpuList}" th:value="${gpu.gpuName}" th:text="${gpu.gpuName}"></option>
+        </select>
+        </div>
         <input type="submit" value="등록">
         <button type="button" id="modal_close">닫기</button>
       </form>

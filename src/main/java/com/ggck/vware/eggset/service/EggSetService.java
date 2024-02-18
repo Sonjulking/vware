@@ -1,14 +1,8 @@
 package com.ggck.vware.eggset.service;
 
-import com.ggck.vware.eggset.dto.EggSetDTO;
-import com.ggck.vware.eggset.dto.KeyBoardDTO;
-import com.ggck.vware.eggset.dto.MouseDTO;
-import com.ggck.vware.eggset.entity.EggSetEntity;
-import com.ggck.vware.eggset.entity.KeyBoardEntity;
-import com.ggck.vware.eggset.entity.MouseEntity;
-import com.ggck.vware.eggset.repository.EggSetRepository;
-import com.ggck.vware.eggset.repository.KeyBoardRepository;
-import com.ggck.vware.eggset.repository.MouseRepository;
+import com.ggck.vware.eggset.dto.*;
+import com.ggck.vware.eggset.entity.*;
+import com.ggck.vware.eggset.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +21,8 @@ public class EggSetService {
     private final EggSetRepository eggSetRepository;
     private final KeyBoardRepository keyBoardRepository;
     private final MouseRepository mouseRepository;
+    private final MonitorRepository monitorRepository;
+    private final GpuRepository gpuRepository;
 
     //eggSet 기본 save
     public void save(EggSetDTO eggSetDTO) {
@@ -44,6 +40,18 @@ public class EggSetService {
     public void saveMouse(MouseDTO mouseDTO) {
         MouseEntity mouseEntity = MouseEntity.toSaveEntity(mouseDTO);
         mouseRepository.save(mouseEntity);
+    }
+
+    //monitor 기본 save
+    public void saveMonitor(MonitorDTO monitorDTO) {
+        MonitorEntity monitorEntity = MonitorEntity.toSaveEntity(monitorDTO);
+        monitorRepository.save(monitorEntity);
+    }
+
+    //gpu 기본 save
+    public void saveGpu(GpuDTO gpuDTO) {
+        GpuEntity gpuEntity = GpuEntity.toSaveEntity(gpuDTO);
+        gpuRepository.save(gpuEntity);
     }
 
 
