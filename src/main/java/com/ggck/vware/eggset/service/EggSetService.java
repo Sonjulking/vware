@@ -1,8 +1,14 @@
 package com.ggck.vware.eggset.service;
 
 import com.ggck.vware.eggset.dto.EggSetDTO;
+import com.ggck.vware.eggset.dto.KeyBoardDTO;
+import com.ggck.vware.eggset.dto.MouseDTO;
 import com.ggck.vware.eggset.entity.EggSetEntity;
+import com.ggck.vware.eggset.entity.KeyBoardEntity;
+import com.ggck.vware.eggset.entity.MouseEntity;
 import com.ggck.vware.eggset.repository.EggSetRepository;
+import com.ggck.vware.eggset.repository.KeyBoardRepository;
+import com.ggck.vware.eggset.repository.MouseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +25,25 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EggSetService {
     private final EggSetRepository eggSetRepository;
+    private final KeyBoardRepository keyBoardRepository;
+    private final MouseRepository mouseRepository;
 
+    //eggSet 기본 save
     public void save(EggSetDTO eggSetDTO) {
         EggSetEntity eggSetEntity = EggSetEntity.toSaveEntity(eggSetDTO);
         eggSetRepository.save(eggSetEntity);
+    }
+
+    //keyBoard 기본 save
+    public void saveKeyboard(KeyBoardDTO keyBoardDTO) {
+        KeyBoardEntity keyBoardEntity = KeyBoardEntity.toSaveEntity(keyBoardDTO);
+        keyBoardRepository.save(keyBoardEntity);
+    }
+
+    //mouse 기본 save
+    public void saveMouse(MouseDTO mouseDTO) {
+        MouseEntity mouseEntity = MouseEntity.toSaveEntity(mouseDTO);
+        mouseRepository.save(mouseEntity);
     }
 
 

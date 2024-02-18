@@ -2,6 +2,7 @@ package com.ggck.vware.eggset.controller;
 
 import com.ggck.vware.eggset.dto.EggSetDTO;
 import com.ggck.vware.eggset.dto.KeyBoardDTO;
+import com.ggck.vware.eggset.dto.MouseDTO;
 import com.ggck.vware.eggset.service.EggSetAdminService;
 import com.ggck.vware.eggset.service.EggSetHomeService;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +27,15 @@ public class EggSetHomeController {
     public String findAll(Model model) {
         // DB에서 전체 게시글 데이터를 가져와서 index.html 에 보여준다 (홈 화면)
         List<EggSetDTO> eggSetDTOList = eggSetHomeService.findAll();
-        List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findKeyBoard();
-        // keyBoardList 라는 이름으로 데이터를 담음
-        model.addAttribute("keyBoardList", keyBoardDTOList);
-        // eggSetList 라는 이름으로 데이터를 담음
+        List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findKeyboard();
+        List<MouseDTO> mouseDTOList = eggSetAdminService.findMouse();
+
+        // 전체 리스트 조회
         model.addAttribute("eggSetList", eggSetDTOList);
+        // 키보드 Select 리스트
+        model.addAttribute("keyBoardList", keyBoardDTOList);
+        // 마우스 Select 리스트
+        model.addAttribute("mouseList", mouseDTOList);
         return "EGGSET/equipment";
     }
 

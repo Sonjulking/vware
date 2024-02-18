@@ -11,12 +11,17 @@
         <!-- 얘들은 한 글에 대한 세트 데이터기 때문에, dto 클래스 객체로 담아서 코드를 줄이고 효율적으로 관리 -->
         name: <input type="text" name="name"> <br>
         <div>
-          keyboard: <select class="form-select">
+          keyboard: <select class="form-select" name="keyboard">
           <option value="">==키보드 종류 선택==</option>
-          <option th:each="keyboard : ${keyBoardList}" th:value="${keyboard.keyboardId}" th:text="${keyboard.keyboardName}"></option>
+          <option th:each="keyboard : ${keyBoardList}" th:value="${keyboard.keyboardName}" th:text="${keyboard.keyboardName}"></option>
         </select>
         </div>
-        mouse: <input type="text" name="mouse"> <br>
+        <div>
+          mouse: <select class="form-select" name="mouse">
+          <option value="">==마우스 종류 선택==</option>
+          <option th:each="mouse : ${mouseList}" th:value="${mouse.mouseName}" th:text="${mouse.mouseName}"></option>
+        </select>
+        </div>
         edpi: <input type="text" name="edpi"> <br>
         sensi: <input type="text" name="sensi"> <br>
         monitor: <input type="text" name="monitor"> <br>
