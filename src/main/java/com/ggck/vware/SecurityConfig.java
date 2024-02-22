@@ -1,6 +1,12 @@
 package com.ggck.vware;
 
 import com.ggck.vware.user.CustomSiteUserDetails;
+import com.ggck.vware.user.entity.SiteUserEntity;
+import com.ggck.vware.user.repository.SiteUserRepository;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +23,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
+  @Autowired
+  private SiteUserRepository siteUserRepository;
+
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
@@ -29,6 +38,7 @@ public class SecurityConfig {
             .successHandler(loginSuccessHandler()))
         .logout((logout) -> logout
             .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+            /*  .logoutRequestMatcher(new AntPathRequestMatcher("/user/MyPage/withdrawal"))*/
             .logoutSuccessUrl("/")
             .invalidateHttpSession(true))
     ;
@@ -53,7 +63,22 @@ public class SecurityConfig {
     return (request, response, authentication) -> {
       CustomSiteUserDetails userDetails = (CustomSiteUserDetails) authentication.getPrincipal();
       String userNickName = userDetails.getUserNickName();
-      int point = userDetails.getPoint();
+      //int point = userDetails.getPoint();
+      int point = 0;
+      Optional<SiteUserEntity> userEntityOptional = siteUserRepository.findByUserId(
+          userDetails.getUsername()); //아이디를 매개변수로, 유저정보를 담아줌.
+      if (userEntityOptional.isPresent()) { //유저정보가 존재한다면.
+        SiteUserEntity userEntity = userEntityOptional.get(); //userEntity에 담아준다
+        userEntity.setLastAccessTime(LocalDateTime.now()); //접속시간 등록
+
+        if (!Objects.equals(userEntity.getPaymentStatus(), "1")) {
+          userEntity.setPaymentStatus("1");
+          userEntity.setPoint(userEntity.getPoint() + 5);
+        }
+
+        siteUserRepository.save(userEntity);
+        point = userEntity.getPoint();
+      }
 
       // 로그인 성공 시 JavaScript 코드를 실행하여 alert 창을 띄움
       String script =

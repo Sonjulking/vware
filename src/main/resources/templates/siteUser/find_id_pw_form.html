@@ -258,7 +258,8 @@
 <div class="form-wrap">
   <div class="left-form">
     <p>
-      EGG.GG에 회원가입 해주셔서 감사합니다.
+      아이디와 패스워드를 찾기위한 <br>
+      &nbsp &nbsp &nbsp &nbsp인증을 진행해주세요.
     </p>
   </div>
   <div class="right-form">
@@ -266,7 +267,18 @@
 
     <div class="input-wrap">
       <form th:action="@{/user/findIdPwd}" method="post">
-        <!--<div th:replace="~{common/form_errors :: formErrorsFragment}"></div>-->
+        <!--       <div th:replace="~{common/form_errors :: formErrorsFragment}"></div>-->
+        <!--        <div class="alert alert-danger"
+                     role="alert" th:if="${#fields.hasAnyErrors()}">
+                  <div class="errBox" th:each="err : ${#fields.allErrors()}" th:text="${err}">
+                  </div>
+                </div>-->
+
+        <div th:if="${error}">
+          <p class="alert alert-danger" align="center">
+            등록되지 않은 E-Mail입니다.
+          </p>
+        </div>
         <div class="mb-3">
           <div>
             <label for="userEmail" class="form-label">E-MAIL</label>

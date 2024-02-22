@@ -5,6 +5,7 @@ import com.ggck.vware.user.entity.SiteUserEntity;
 import com.ggck.vware.user.form.SiteUserCreateForm;
 import com.ggck.vware.user.form.SiteUserModifyForm;
 import com.ggck.vware.user.form.SiteUserModifyPasswordForm;
+import com.ggck.vware.user.repository.SiteUserRepository;
 import com.ggck.vware.user.service.SiteUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,15 +13,25 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -33,14 +44,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor // fianl이나 @NonNull인 필드 값만 파라미터로 받는 생성자를 만듬.
 @Controller
+@EnableScheduling
 @RequestMapping("/user")
 public class SiteUserController {
 
   private final SiteUserService siteUserService;
-
   private final PasswordEncoder passwordEncoder;
 
-
+  @Autowired
+  private SiteUserRepository siteUserRepository;
   /*
     @ExceptionHandler(DataIntegrityViolationException.class)
     public void handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
@@ -350,39 +362,102 @@ public class SiteUserController {
 
 
   @PostMapping("/findIdPwd")
-  public String findIdPwd(@RequestParam("email") String userEmail, HttpServletResponse response) {
+  public String findIdPwd(@RequestParam("email") String userEmail, HttpServletResponse response,
+      Model model)
+      throws Exception {
+    /*    if (siteUser == null) {
 
-    SiteUserEntity siteUser = this.siteUserService.emailGetUser(userEmail);
-    String myId = siteUser.getUserId();
+      throw new Exception("사용자를 찾을 수 없습니다.");
 
-    int codeLength = 6; //6자리
+    }*/
 
-    Random random = new Random();
+    try {
 
-    StringBuilder randomPwd = new StringBuilder();
+      SiteUserEntity siteUser = this.siteUserService.emailGetUser(userEmail);
 
-    for (int i = 0; i < codeLength; i++) {
-      int digit = random.nextInt(10); // 0부터 9까지의 난수
-      randomPwd.append(digit);
+      String myId = siteUser.getUserId();
+
+      int codeLength = 6; //6자리
+
+      Random random = new Random();
+
+      StringBuilder randomPwd = new StringBuilder();
+
+      for (int i = 0; i < codeLength; i++) {
+        int digit = random.nextInt(10); // 0부터 9까지의 난수
+        randomPwd.append(digit);
+      }
+
+      String temporaryPwd = randomPwd.toString();
+      SiteUserDto finderDto = com.ggck.vware.user.dto.SiteUserDto.builder()
+          .password(temporaryPwd)
+          .build();
+      siteUserService.findUser(siteUser, finderDto);
+
+      SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+
+      simpleMailMessage.setTo(userEmail);
+      simpleMailMessage.setSubject("EGG.GG 아이디와 임시 비밀번호 입니다.");
+      simpleMailMessage.setText(
+          "아이디 : " + myId + "\n임시 비밀번호 :  " + temporaryPwd + "\n아이디와 임시비밀번호로 로그인 부탁드립니다.");
+
+      javaMailSender.send(simpleMailMessage);
+
+      System.out.println("임시비밀번호 : " + temporaryPwd);
+      return "siteUser/login_form";
+
+
+    } catch (Exception e) {
+      model.addAttribute("error", true);
+
+      return "siteUser/find_id_pw_form";
     }
 
-    String temporaryPwd = randomPwd.toString();
-    SiteUserDto finderDto = com.ggck.vware.user.dto.SiteUserDto.builder()
-        .password(temporaryPwd)
-        .build();
-    siteUserService.findUser(siteUser, finderDto);
-
-    SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-
-    simpleMailMessage.setTo(userEmail);
-    simpleMailMessage.setSubject("EGG.GG 아이디와 임시 비밀번호 입니다.");
-    simpleMailMessage.setText(
-        "아이디 : " + myId + "\n임시 비밀번호 :  " + temporaryPwd + "\n아이디와 임시비밀번호로 로그인 부탁드립니다.");
-
-    javaMailSender.send(simpleMailMessage);
-
-    System.out.println("임시비밀번호 : " + temporaryPwd);
-    return "siteUser/login_form";
   }
 
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/MyPage/withdrawal")
+  public String withdrawal(HttpServletRequest request, Principal principal,
+      HttpServletResponse response) {
+    String loginId = principal.getName(); //로그인된 아이디 값 가져오기
+    Authentication auth = SecurityContextHolder.getContext()
+        .getAuthentication(); //로그인되어있는 계정정보 가져오기
+    SiteUserEntity siteUser = this.siteUserService.getUser(principal.getName());
+    siteUserService.withdrawalUser(siteUser);
+
+    String script =
+        "<script>alert('회원탈퇴가 정상적으로 처리되었습니다. 그동안 이용해주셔서 감사합니다.'); window.location='/';</script>"; //메인으로 넘어감
+
+    try {
+      response.setContentType("text/html;charset=UTF-8");
+      response.getWriter().write(script);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    new SecurityContextLogoutHandler().logout(request, response, auth); //로그아웃 처리
+    return "EGG/main";
+
+  }
+
+  @Scheduled(cron = "0 0 0 * * ?") //매일 자정에 실행
+  public void cleanWithdrawalData() {
+    LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
+    List<SiteUserEntity> withdrawalUsers = siteUserRepository.findByWithdrawalTimeBefore(
+        thirtyDaysAgo); //탈퇴한지 30일이 지난 유저들
+    siteUserRepository.deleteAll(withdrawalUsers);
+    System.out.println("자동삭제됐다옹" + withdrawalUsers);
+  }
+
+  @Scheduled(cron = "0 0 0 * * ?") //매일 자정에 실행
+  //@Scheduled(cron = "*/5 * * * * *") //5초마다
+  public void cleanPointStatus() {
+    List<SiteUserEntity> paidPointUsers = siteUserRepository.findByPaymentStatus("1");
+
+    for (SiteUserEntity user : paidPointUsers) {
+      user.setPaymentStatus("0");
+    }
+    siteUserRepository.saveAll(paidPointUsers);
+
+  }
 }

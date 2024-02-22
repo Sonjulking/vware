@@ -106,5 +106,12 @@ public class SiteUserService {
     this.siteUserRepository.save(siteUser);
   }
 
+  public void withdrawalUser(SiteUserEntity siteUser) {
+    siteUser.setWithdrawalStatus("1");
+    siteUser.setWithdrawalTime(LocalDateTime.now());
+    this.siteUserRepository.save(siteUser);
+
+  }
+
 
 }

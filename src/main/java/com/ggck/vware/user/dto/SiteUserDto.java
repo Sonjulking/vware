@@ -21,7 +21,7 @@ public class SiteUserDto {
 
   private String userId; //유저 아이디
   private String userNickName; //유저 닉네임
-  
+
   private String password; //유저 비밀번호
 
   private String userEmail; //유저 이메일
@@ -31,9 +31,11 @@ public class SiteUserDto {
   private String preferredPosition; //선호 포지션
 
   private String testResult; //검사 결과
+  private String withdrawalStatus; //탈퇴여부
 
   private LocalDateTime signUpTime; //가입 시간
   private LocalDateTime lastAccessTime; //마지막 접속 시간
+  private LocalDateTime withdrawalTime; //탈퇴일자
 
   //@Builder
   /*public static Builder builder() {

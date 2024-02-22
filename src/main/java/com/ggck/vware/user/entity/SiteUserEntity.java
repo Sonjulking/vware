@@ -56,15 +56,19 @@ public class SiteUserEntity {
   //@Column(nullable = false)
   @NotNull
   private int point = 100; //포인트
+  
+  private String paymentStatus; //포인트 지급여부
 
   @NotNull
   private String preferredPosition; //선호 포지션
 
   private String testResult; //검사 결과
 
+  private String withdrawalStatus; //탈퇴 여부
+
   private LocalDateTime signUpTime; //가입 시간
   private LocalDateTime lastAccessTime; //마지막 접속 시간
-
+  private LocalDateTime withdrawalTime; //탈퇴시간
 
 }
 

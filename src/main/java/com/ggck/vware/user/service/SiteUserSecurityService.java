@@ -6,6 +6,7 @@ import com.ggck.vware.user.SiteUserRole;
 import com.ggck.vware.user.entity.SiteUserEntity;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +25,8 @@ public class SiteUserSecurityService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
     Optional<SiteUserEntity> _siteUser = this.siteUserRepository.findByUserId(userId);
-    if (_siteUser.isEmpty()) {
+    if (_siteUser.isEmpty() || Objects.equals(_siteUser.get().getWithdrawalStatus(),
+        "1")) { //회원이 없을때, 탈퇴한 회원일 때
       throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
     }
     SiteUserEntity siteUser = _siteUser.get();
