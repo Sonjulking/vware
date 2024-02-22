@@ -62,7 +62,7 @@
     <!--board라는 변수로 boardList에 하나씩 접근을 하는것-->
     <tr th:each="board: ${eggSetList}">
       <td>
-        <div id="modal_update_open"
+        <div id="modal_update_open" class="modal_update_open"
              style="color: blue; font-weight: bold; font-size: large"
              th:text="${board.id}"></div>
       </td>
@@ -119,15 +119,22 @@
     <div class="modal_layer"></div>
   </div>
   <script>
+
     document.getElementById("modal_open").onclick = function () {
       document.getElementById("modal1").style.display = "block";
     }
     document.getElementById("modal_close").onclick = function () {
       document.getElementById("modal1").style.display = "none";
     }
-    document.getElementById("modal_update_open").onclick = function () {
-      document.getElementById("modal2").style.display = "block";
+
+    let modalUpdateOpen = document.querySelectorAll(".modal_update_open");
+
+    for (let i = 0; i < modalUpdateOpen.length; i++) {
+      modalUpdateOpen[i].onclick = function () {
+        document.getElementById("modal2").style.display = "block";
+      }
     }
+
     document.getElementById("modal_update_close").onclick = function () {
       document.getElementById("modal2").style.display = "none";
     }
