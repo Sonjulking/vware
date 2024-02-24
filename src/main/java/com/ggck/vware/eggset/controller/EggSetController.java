@@ -4,6 +4,7 @@ import com.ggck.vware.eggset.dto.*;
 import com.ggck.vware.eggset.entity.EggSetEntity;
 import com.ggck.vware.eggset.service.EggSetHomeService;
 import com.ggck.vware.eggset.service.EggSetService;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,13 +41,11 @@ public class EggSetController {
   @GetMapping("/selectById")
   @ResponseBody
   public String selectById(@RequestParam("id") String id, ModelMap modelMap) {
-
+    Gson gson = new Gson();
 
     EggSetEntity eggSetEntity = eggSetHomeService.findByIdEgg(Long.valueOf(id));
 
-    modelMap.addAttribute("eggSetAjax", eggSetEntity);
-
-    return "EGGSET/equipment";
+    return gson.toJson(eggSetEntity);
 
   }
 
