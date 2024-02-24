@@ -131,6 +131,16 @@
 
     for (let i = 0; i < modalUpdateOpen.length; i++) {
       modalUpdateOpen[i].onclick = function () {
+        let id = modalUpdateOpen[i].text();
+        $.ajax({
+          type :"GET",
+          url: "selectById?id=" +id,
+
+          success:function (data){
+
+          }
+
+        });
         document.getElementById("modal2").style.display = "block";
       }
     }
@@ -138,6 +148,11 @@
     document.getElementById("modal_update_close").onclick = function () {
       document.getElementById("modal2").style.display = "none";
     }
+
+    $(".modal_update_open").click(function () {
+
+    });
+
 
   </script>
 </div>

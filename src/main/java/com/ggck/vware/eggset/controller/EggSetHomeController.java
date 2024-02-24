@@ -25,6 +25,7 @@ public class EggSetHomeController {
     public String findAll(Model model) {
         // DB에서 전체 게시글 데이터를 가져와서 index.html 에 보여준다 (홈 화면)
         List<EggSetDTO> eggSetDTOList = eggSetHomeService.findAll();
+
         List<KeyBoardDTO> keyBoardDTOList = eggSetAdminService.findKeyboard();
         List<MouseDTO> mouseDTOList = eggSetAdminService.findMouse();
         List<MonitorDTO> monitorDTOList = eggSetAdminService.findMonitor();
