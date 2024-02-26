@@ -32,97 +32,20 @@
         <td>2022-02-22</td>
         <td>12</td>
       </tr>
-      <tr>
-        <td>9</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html">유저 이벤트 안내</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
+      <tr th:each="post : ${postList}">
+
+        <td href="" th:text="${post.postNumber}"></td>
+        <div class="tit_wrap">
+          <td class="tit">
+            <a href="/" th:text="${post.subject}"></a
+            ><span class="comment" th:text="${post.commentEntityList.size()}"></span>
+          </td>
+        </div>
+        <td class="profile"><a href=" " th:text="${post.author.userNickName}"></a></td>
+        <td th:text="${post.createTime}"></td>
+        <td>viewPoint</td>
       </tr>
-      <tr>
-        <td>8</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html">조만간 업데이트가 있을 예정입니다.</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
-      </tr>
-      <tr>
-        <td>7</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html">양념 치킨 vs 후라이드 치킨</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html">긴급 공지입니다.</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html">사이트 이용시 피드백 부탁드립니다.</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html">사이트 사용방법 안내</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html"
-          >서버점검으로 일시적으로 이용이 불가능합니다.</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html">사이트를 이용해주셔서 감사합니다.</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td class="tit">
-          <a href="../vbti/post_view.html">첫 번째 공지입니다.</a
-          ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-        </td>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12345</td>
-      </tr>
+
       </tbody>
     </table>
     <a href="../vbti/post.html"
