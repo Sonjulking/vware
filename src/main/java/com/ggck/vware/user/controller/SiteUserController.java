@@ -127,15 +127,15 @@ public class SiteUserController {
 
       System.out.println("e.getMessage() 출력 : " + errorMessage);
       if (errorMessage != null && errorMessage.contains(
-          "site_user.UK_7txm0o5jvngqyt8iwgnr1ohwu")) { //아이디 중복일때
+          "site_user_entity.UK_h47ghyni8djesbuhqcbflv8il")) { //아이디 중복일때 site_user.UK_7txm0o5jvngqyt8iwgnr1ohwu (윈도우로 실행시)
         System.out.println("아이디 중복");
         bindingResult.rejectValue("userId", "signupFailed", "이미 등록된 아이디 입니다.");
-      } else if (errorMessage != null && errorMessage.contains( //이메일 중복일때
-          "site_user.UK_cff3da7kxabw064f3qqd3t2kj")) {
+      } else if (errorMessage != null && errorMessage.contains(
+          "site_user_entity.UK_isq45epchnlf1p8ytx6abskom")) {    //이메일 중복일때 site_user.UK_cff3da7kxabw064f3qqd3t2kj
         System.out.println("이메일 중복");
         bindingResult.rejectValue("userEmail", "signupFailed", "이미 등록된 이메일 입니다.");
-      } else if (errorMessage != null && errorMessage.contains( //닉네임 중복일때
-          "site_user.UK_eydkr1n0qdr8lsiduiqh3pcjx")) {
+      } else if (errorMessage != null && errorMessage.contains(
+          "site_user_entity.UK_7li9yovuhod5ssrc486yd7ie6")) {  //닉네임 중복일때 site_user.UK_eydkr1n0qdr8lsiduiqh3pcjx
         System.out.println("닉네임 중복");
         bindingResult.rejectValue("userNickName", "signupFailed", "이미 등록된 닉네임 입니다.");
       } else {

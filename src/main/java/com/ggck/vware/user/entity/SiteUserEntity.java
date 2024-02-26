@@ -34,7 +34,7 @@ public class SiteUserEntity {
 
   @Id
   @SequenceGenerator(name = "id_sequence_generator", sequenceName = "id_sequence", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_sequence_generator")
+  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "id_sequence_generator")
   @Column(unique = true)
   private Long userNumber; //유저 넘버
 
@@ -56,7 +56,7 @@ public class SiteUserEntity {
   //@Column(nullable = false)
   @NotNull
   private int point = 100; //포인트
-  
+
   private String paymentStatus; //포인트 지급여부
 
   @NotNull
