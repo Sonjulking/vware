@@ -15,10 +15,6 @@ import java.util.List;
 public class EggSetHomeService {
 
   private final EggSetRepository eggSetRepository;
-  private final KeyBoardRepository keyBoardRepository;
-  private final MouseRepository mouseRepository;
-  private final MonitorRepository monitorRepository;
-  private final GpuRepository gpuRepository;
 
   public List<EggSetDTO> findAll() {
     // Repository에서 뭔가를 가져올때는 무조건 Entity로 넘어오는데, (List 형태의 Entity)
@@ -33,52 +29,15 @@ public class EggSetHomeService {
     return eggSetDTOList;
   }
 
-  //키보드
-  public List<KeyBoardDTO> findKeyboard() {
+  public List<EggSetDTO> update() {
 
-    List<KeyBoardEntity> keyBoardEntityList = keyBoardRepository.findAll();
-    List<KeyBoardDTO> keyBoardDTOList = new ArrayList<>();
+    List<EggSetEntity> eggSetEntityList = eggSetRepository.findAll();
+    List<EggSetDTO> eggSetDTOList = new ArrayList<>();
 
-    for (KeyBoardEntity keyBoardEntity : keyBoardEntityList) {
-      keyBoardDTOList.add(KeyBoardDTO.toKeyBoardDTO(keyBoardEntity));
+    for (EggSetEntity eggSetEntity : eggSetEntityList) {
+      eggSetDTOList.add(EggSetDTO.toEggSetDTO(eggSetEntity));
     }
-    return keyBoardDTOList;
-  }
-
-  //마우스
-  public List<MouseDTO> findMouse() {
-
-    List<MouseEntity> mouseEntityList = mouseRepository.findAll();
-    List<MouseDTO> mouseDTOList = new ArrayList<>();
-
-    for (MouseEntity mouseEntity : mouseEntityList) {
-      mouseDTOList.add(MouseDTO.toMouseDTO(mouseEntity));
-    }
-    return mouseDTOList;
-  }
-
-  //모니터
-  public List<MonitorDTO> findMonitor() {
-
-    List<MonitorEntity> monitorEntityList = monitorRepository.findAll();
-    List<MonitorDTO> monitorDTOList = new ArrayList<>();
-
-    for (MonitorEntity monitorEntity : monitorEntityList) {
-      monitorDTOList.add(MonitorDTO.toMonitorDTO(monitorEntity));
-    }
-    return monitorDTOList;
-  }
-
-  //그래픽카드
-  public List<GpuDTO> findGpu() {
-
-    List<GpuEntity> gpuEntityList = gpuRepository.findAll();
-    List<GpuDTO> gpuDTOList = new ArrayList<>();
-
-    for (GpuEntity gpuEntity : gpuEntityList) {
-      gpuDTOList.add(GpuDTO.toGpuDTO(gpuEntity));
-    }
-    return gpuDTOList;
+    return eggSetDTOList;
   }
 
   public EggSetEntity findByIdEgg(Long id) {
