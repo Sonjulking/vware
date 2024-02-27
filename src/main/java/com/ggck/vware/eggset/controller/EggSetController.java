@@ -38,10 +38,14 @@ public class EggSetController {
   }
 
   @PostMapping("/update") // post로 보내서 post로 받는 것.
-  public String update(@ModelAttribute EggSetDTO eggSetDTO, Model model)
+  public String update(@RequestParam("updateUserName") String userName,
+      @ModelAttribute EggSetDTO eggSetDTO,
+      Model model)
   // @ModelAttribute 사용하면, BoardDTO 클래스 객체를 찾아서 주소에 있는 들어간 필드값이 일치하면 해당하는 Setter 호출해서 값을 담아줌.
   {
     System.out.println("eggSetDTO = " + eggSetDTO);
+    System.out.println("유저네임 : " + userName);
+    eggSetDTO.setName(userName);
     eggSetService.save(eggSetDTO);
 
     List<EggSetDTO> eggSetDTOList = eggSetHomeService.update();
