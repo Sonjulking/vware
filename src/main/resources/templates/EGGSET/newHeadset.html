@@ -6,10 +6,9 @@
   </div>
   <div id="modal1" tabindex="-1" role="dialog">
     <div class="modal_content">
-      <h2>신규 모니터 등록 창</h2>
-      <form action="/EggSetAdmin/Monitor/save" method="post"> <!-- action 속성 : 목적지~어디로 보낼것이냐~(서버주소), method 속성 : http request method(get//주소창에 보이고, post//주소창에 안보인다) -->
-        <!-- 얘들은 한 글에 대한 세트 데이터기 때문에, dto 클래스 객체로 담아서 코드를 줄이고 효율적으로 관리 -->
-        모니터 이름: <input type="text" name="monitorName"> <br>
+      <h2>신규 헤드셋 등록 창</h2>
+      <form action="/EggSetAdmin/Headset/save" method="post">
+        헤드셋 이름: <input type="text" name="headsetName"> <br>
         <input type="submit" value="등록">
         <button type="button" id="modal_close">닫기</button>
       </form>
@@ -18,15 +17,13 @@
   </div>
   <table>
     <tr>
-      <td>모니터 고유 ID</td>
-      <td>모니터 이름</td>
+      <td>헤드셋 고유 ID</td>
+      <td>헤드셋 이름</td>
     </tr>
-    <!--th:each는 for each처럼 생각하면 된다.-->
-    <!--board라는 변수로 boardList에 하나씩 접근을 하는것-->
-    <tr th:each="board: ${monitorList}">
+    <tr th:each="board: ${headsetList}">
       <td><div id="modal_update_open"
-               th:text="${board.monitorId}"></div></td>
-      <td th:text="${board.monitorName}"></td>
+               th:text="${board.headsetId}"></div></td>
+      <td th:text="${board.headsetName}"></td>
     </tr>
   </table>
   <script>

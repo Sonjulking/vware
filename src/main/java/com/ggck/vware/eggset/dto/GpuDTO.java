@@ -11,8 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class GpuDTO {
-    private Long GpuId;
-    private String GpuName;
+    private Long gpuId;
+    private String gpuName;
 
     public static GpuDTO toGpuDTO(GpuEntity gpuEntity) {
         GpuDTO gpuDTO = new GpuDTO();

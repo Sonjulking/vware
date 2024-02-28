@@ -1,17 +1,8 @@
 package com.ggck.vware.eggset.service;
 
-import com.ggck.vware.eggset.dto.GpuDTO;
-import com.ggck.vware.eggset.dto.KeyBoardDTO;
-import com.ggck.vware.eggset.dto.MonitorDTO;
-import com.ggck.vware.eggset.dto.MouseDTO;
-import com.ggck.vware.eggset.entity.GpuEntity;
-import com.ggck.vware.eggset.entity.KeyBoardEntity;
-import com.ggck.vware.eggset.entity.MonitorEntity;
-import com.ggck.vware.eggset.entity.MouseEntity;
-import com.ggck.vware.eggset.repository.GpuRepository;
-import com.ggck.vware.eggset.repository.KeyBoardRepository;
-import com.ggck.vware.eggset.repository.MonitorRepository;
-import com.ggck.vware.eggset.repository.MouseRepository;
+import com.ggck.vware.eggset.dto.*;
+import com.ggck.vware.eggset.entity.*;
+import com.ggck.vware.eggset.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +16,9 @@ public class EggSetAdminService {
     private final MouseRepository mouseRepository;
     private final MonitorRepository monitorRepository;
     private final GpuRepository gpuRepository;
+    private final MousepadRepository mousepadRepository;
+    private final TeamRepository teamRepository;
+    private final HeadsetRepository headsetRepository;
 
     //키보드 목록 조회
     public List<KeyBoardDTO> findKeyboard() {
@@ -92,5 +86,56 @@ public class EggSetAdminService {
     public void gpuSave(GpuDTO gpuDTO) {
         GpuEntity gpuEntity = GpuEntity.toSaveEntity(gpuDTO);
         gpuRepository.save(gpuEntity);
+    }
+
+    //마우스패드 목록 조회
+    public List<MousepadDTO> findMousepad() {
+        List<MousepadEntity> mousepadEntityList = mousepadRepository.findAll();
+        List<MousepadDTO> mousepadDTOList = new ArrayList<>();
+
+        for (MousepadEntity mousepadEntity : mousepadEntityList) {
+            mousepadDTOList.add(MousepadDTO.toMousepadDTO(mousepadEntity));
+        }
+        return mousepadDTOList;
+    }
+
+    //마우스패드 저장
+    public void mousepadSave(MousepadDTO mousepadDTO) {
+        MousepadEntity mousepadEntity = MousepadEntity.toSaveEntity(mousepadDTO);
+        mousepadRepository.save(mousepadEntity);
+    }
+
+    //팀 목록 조회
+    public List<TeamDTO> findTeam() {
+        List<TeamEntity> teamEntityList = teamRepository.findAll();
+        List<TeamDTO> teamDTOList = new ArrayList<>();
+
+        for (TeamEntity teamEntity : teamEntityList) {
+            teamDTOList.add(TeamDTO.toTeamDTO(teamEntity));
+        }
+        return teamDTOList;
+    }
+
+    //팀 저장
+    public void teamSave(TeamDTO teamDTO) {
+        TeamEntity teamEntity = TeamEntity.toSaveEntity(teamDTO);
+        teamRepository.save(teamEntity);
+    }
+
+    //헤드셋 목록 조회
+    public List<HeadsetDTO> findHeadset() {
+        List<HeadsetEntity> headsetEntityList = headsetRepository.findAll();
+        List<HeadsetDTO> headsetDTOList = new ArrayList<>();
+
+        for (HeadsetEntity headsetEntity : headsetEntityList) {
+            headsetDTOList.add(HeadsetDTO.toHeadsetDTO(headsetEntity));
+        }
+        return headsetDTOList;
+    }
+
+    //헤드셋 저장
+    public void headsetSave(HeadsetDTO headsetDTO) {
+        HeadsetEntity headsetEntity = HeadsetEntity.toSaveEntity(headsetDTO);
+        headsetRepository.save(headsetEntity);
     }
 }
