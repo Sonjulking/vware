@@ -1,0 +1,46 @@
+<html layout:decorate="~{common/layout}">
+
+<div layout:fragment="content">
+
+  <link rel="stylesheet" th:href="@{/css/community/post_form.css}">
+
+
+  <link rel="stylesheet" href="./summernote/summernote-lite.css"/>
+  <body>
+  <form th:action="@{/community/create}" th:object="${communityPostForm}" method="post">
+    <!--CommunityPostForm communityPostForm 객체이름과 동일-->
+    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+      <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
+    </div>
+    <div id="Q_board_wrap">
+      <div id="Q_board">
+        <select name="postType">
+          <option value="자유" selected>자유</option>
+          <option value="유머">유머</option>
+          <option value="질문">질문</option>
+        </select> <span>제목 : </span>
+        <input
+            class="title-box"
+            type="text"
+            placeholder="제목을 입력하세요."
+            th:field="*{subject}"
+        />
+        <div id="myEditor"><textarea th:field="*{content}" class="form-control"
+                                     rows="10"></textarea></div>
+      </div>
+
+      <div class="sub_btn_wrap">
+        <a href="javascript:history.back();">
+          <button class="sub_btn" type="submit" name="cancel">취소</button>
+        </a>
+        <button class="sub_btn" type="submit" name="submit_con">등록</button>
+      </div>
+    </div>
+  </form>
+  <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+  <script src="./summernote/summernote-lite.js"></script>
+  <script src="./summernote/lang/summernote-ko-KR.js"></script>
+  <script src="./js/summernote.js"></script>
+  </body>
+</div>
+</html>

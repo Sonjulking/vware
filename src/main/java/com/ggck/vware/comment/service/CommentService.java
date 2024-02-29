@@ -18,7 +18,6 @@ public class CommentService {
     CommentEntity comment = new CommentEntity();
     comment.setContent(content);
     comment.setCreateTime(LocalDateTime.now());
-
     comment.setCommunityPostEntity(communityPost);
     this.commentRepository.save(comment);
   }

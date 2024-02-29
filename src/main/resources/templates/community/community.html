@@ -2,8 +2,14 @@
 
 <div layout:fragment="content">
 
-  <link rel="stylesheet" th:href="@{/css/community/board.css}">
+  <style>
+    .disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
 
+  </style>
+  <link rel="stylesheet" th:href="@{/css/community/board.css}">
 
   <div class="board_list_wrap">
     <table class="board_list">
@@ -20,25 +26,16 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>10</td>
-        <div class="tit_wrap">
-          <td class="tit">
-            <a href="../vbti/post_view.html">VBTI별 유저 특징</a
-            ><span class="comment">&nbsp;&nbsp;&nbsp;[1]</span>
-          </td>
-        </div>
-        <td class="profile"><a href=" ">KangChan</a></td>
-        <td>2022-02-22</td>
-        <td>12</td>
-      </tr>
-      <tr th:each="post, loop: ${postList}">
+
+      <tr th:each="post, loop: ${paging}">
 
         <!--<td href="" th:text="${post.postNumber}"></td>-->
-        <td th:text="${loop.count}"></td>
+        <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
         <!--<td th:text="${paging.getTotalElements - (paging.number * paging.size) -loop.count +1}"></td>-->
         <div class="tit_wrap">
+
           <td class="tit">
+            <span class="post_type" th:text="'[' + ${post.postType} + ']'"></span>
             <a th:href="@{|/community/detail/${post.postNumber}|}" th:text="${post.subject}"></a>
             <span class="comment" th:text="'[' + ${post.commentEntityList.size()} + ']'"></span>
           </td>
@@ -50,25 +47,31 @@
 
       </tbody>
     </table>
-    <a href="../vbti/post.html">
-      <button class="sub_btn" type="submit">작성하기</button>
+    <a th:href="@{/community/create}">
+      <button class="sub_btn" type="submit">글쓰기</button>
     </a>
   </div>
-
-  <div class="paging_wrap">
-    <div class="paging">
-      <a href="#" class="pbt"><<</a>
-      <a href="#" class="pbt"><</a>
-      <a href="#" class="nump_on">1</a>
-      <a href="#" class="nump">2</a>
-      <a href="#" class="nump">3</a>
-      <a href="#" class="nump">4</a>
-      <a href="#" class="nump">5</a>
-      <a href="#" class="pbt">></a>
-      <a href="#" class="pbt">>></a>
+  <!--페이징 처리-->
+  <div th:if="${!paging.isEmpty()}">
+    <div class="paging_wrap">
+      <div class="paging">
+        <a th:href="@{|?page=1|}" class="pbt"><<</a>
+        <a class="pbt" th:classappend="${!paging.hasPrevious}?'disabled'"
+           th:href="@{|?page=${paging.number-1}|}"><span><</span></a>
+        <!--th:classappend="${!paging.hasPrevious} ? 'disabled'" 이전 페이지가 없으면 링크 disabled 클래스 추가-->
+        <a th:each="page: ${#numbers.sequence(1, paging.totalPages)}"
+           th:if="${page >= paging.number-5 and page <= paging.number+5}"
+           th:classappend="${page == paging.number + 1} ? 'nump_on'"
+           class="nump" th:text="${page}" th:href="@{|?page=${page}|}">
+        </a>
+        <a th:classappend="${!paging.hasNext()}?'disabled'" th:href="@{|?page=${paging.number+1}|}"
+           class="pbt">></a>
+        <a th:href="@{|?page=${paging.totalPages}|}" class="pbt">>></a>
+      </div>
     </div>
   </div>
 
+  <!--프로필 보기 모달창-->
   <div id="popup" style="display: none">
     <div id="d_menu">
       <p><a href="">프로필 보기</a></p>

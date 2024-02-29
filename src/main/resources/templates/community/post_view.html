@@ -11,7 +11,7 @@
           <span th:text="${postDetail.postType}"></span>
           <span th:text="${#temporals.format(postDetail.createTime, 'yyyy-MM-dd HH:mm')}"></span>
 
-          <span th:text="${postDetail.author.userNickName}">Kang Chan</span>
+          <span th:text="${postDetail.author.userNickName}"></span>
         </div>
         <div class="post_wrap_left">
           <span th:text="${postDetail.views}"></span>
@@ -21,6 +21,9 @@
     </div>
     <div class="post_content">
       <p th:text="${postDetail.content}"></p>
+    </div>
+    <div>
+      <p th:each ="commnent : ${postDetail.commentEntityList}" th:text = "${commnent.content}"></p>
     </div>
     <div>
       <form th:action="@{|/comment/create/${postDetail.postNumber}|}" method="post">

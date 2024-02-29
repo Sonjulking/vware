@@ -52,7 +52,7 @@ public class CommunityPostEntity {
 
   private LocalDateTime modifyTime; //게시글 수정시간
 
-  @OneToMany(mappedBy = "communityPostEntity", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "communityPostEntity", cascade = CascadeType.REMOVE) //CommentEntity와 연결되어있음.
   private List<CommentEntity> commentEntityList; //게시글에 달린 댓글
 
   private int views = 0; //조회수 

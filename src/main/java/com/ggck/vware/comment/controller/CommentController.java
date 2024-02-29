@@ -3,7 +3,6 @@ package com.ggck.vware.comment.controller;
 import com.ggck.vware.comment.service.CommentService;
 import com.ggck.vware.community_post.entity.CommunityPostEntity;
 import com.ggck.vware.community_post.service.CommunityPostSerivce;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +26,6 @@ public class CommentController {
     CommunityPostEntity communityPost = this.communityPostSerivce.getPost(id);
     this.commentService.create(communityPost, content);
     return String.format("redirect:/community/detail/%s", id);
-
 
   }
 

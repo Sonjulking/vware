@@ -1,9 +1,11 @@
 caption {
   display: none;
 }
+
 table {
   border-collapse: collapse;
 }
+
 .board_list_wrap {
   padding: 50px;
 }
@@ -13,6 +15,7 @@ table {
   border-top: 2px solid #ff4454;
   margin: 0 auto;
 }
+
 .board_list tr {
   color: salmon;
   border-bottom: 2px solid pink;
@@ -36,6 +39,7 @@ td > a {
   text-decoration: none !important;
   color: inherit !important;
 }
+
 td > a:hover {
   text-decoration: underline !important;
   color: inherit !important;
@@ -45,6 +49,7 @@ td > a:active {
   text-decoration: underline !important;
   color: pink !important;
 }
+
 .paging_wrap {
   position: absolute;
   top: 90%;
@@ -88,6 +93,7 @@ td > a:active {
   flex-direction: column;
   justify-content: center;
 }
+
 .comment {
   color: rgb(255, 145, 163);
   position: absolute;
@@ -109,6 +115,7 @@ td > a:active {
   border-radius: 5px;
   font-size: 8pt;
 }
+
 #d_menu p {
   text-align: center;
 
@@ -126,6 +133,7 @@ td > a:active {
   color: pink;
   text-decoration: none;
 }
+
 #divView {
   position: absolute;
   display: none;
@@ -155,8 +163,16 @@ td > a:active {
   color: aliceblue;
   transition: 0.7s;
 }
+
 .sub_btn:focus {
   outline-color: transparent;
   outline-style: solid;
   box-shadow: 0 0 0 4px #ff8080eb;
+}
+
+.post_type {
+  position: relative;
+  bottom: 0.25em;
+  color: #ff4454;
+  font-size: xx-small;
 }
