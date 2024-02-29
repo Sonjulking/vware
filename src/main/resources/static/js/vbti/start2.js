@@ -31,6 +31,8 @@ function setResult() {
   resultDesc.innerHTML = infoList[point].desc;
   const hiddenInput = document.querySelector("#hidden_test_result");
   hiddenInput.value = infoList[point].agent; // 밸류값에다가 결과를 저장
+  const hiddenInputRole = document.querySelector("#hidden_test_role");
+  hiddenInputRole.value = infoList[point].role;
 
 }
 

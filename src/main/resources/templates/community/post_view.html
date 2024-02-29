@@ -1,42 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>발로란트 적성검사</title>
-    <link rel="stylesheet" href="css/nav.css" />
-    <link rel="stylesheet" href="css/post_view.css" />
-  </head>
-  <body>
-    <span id="main_logo_text"><a id="logo_link" href="main.html">VBTI</a></span>
-    <nav>
-      <ul>
-        <li><a href="main.html">HOME</a></li>
-        <li><a href="community.html">NOTICE</a></li>
-        <li><a href="question.html">TEST</a></li>
-        <li><a href="madmovie.html">MAD MOVIE</a></li>
-      </ul>
-    </nav>
-    <div id="Q_board_wrap">
-      <div class="post_top">
-        <p>사이트 사용방법 안내</p>
-        <div class="post_meta_wrap">
-          <div class="post_wrap_left">
-            <span>공지사항</span>
-            <span>2023-03-02 22:43</span>
-            <span>Kang Chan</span>
-          </div>
-          <div class="post_wrap_left">
-            <span>조회 127</span>
-            <span>댓글 1</span>
-          </div>
+<html layout:decorate="~{common/layout}">
+
+<div layout:fragment="content">
+  <link rel="stylesheet" th:href="@{/css/community/post_view.css}">
+  <div id="Q_board_wrap">
+    <div class="post_top">
+      <p th:text="${postDetail.subject}"></p>
+      <div class="post_meta_wrap">
+        <div class="post_wrap_left">
+
+          <span th:text="${postDetail.postType}"></span>
+          <span th:text="${#temporals.format(postDetail.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+
+          <span th:text="${postDetail.author.userNickName}">Kang Chan</span>
+        </div>
+        <div class="post_wrap_left">
+          <span th:text="${postDetail.views}"></span>
+          <span th:text="|${#lists.size(postDetail.commentEntityList)}|"></span>
         </div>
       </div>
-      <div class="post_content">
-        <p>시작 버튼을 누르세요.</p>
-        <p>질문을 보시고 생각나는대로 답변해주세요.</p>
-      </div>
     </div>
-  </body>
+    <div class="post_content">
+      <p th:text="${postDetail.content}"></p>
+    </div>
+    <div>
+      <form th:action="@{|/comment/create/${postDetail.postNumber}|}" method="post">
+        <textarea name="content" id="content" rows="2"></textarea>
+        <input type="submit" value="답변등록">
+      </form>
+    </div>
+
+  </div>
+
+</div>
 </html>

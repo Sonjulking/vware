@@ -7,17 +7,20 @@
   <style>
     .main-wrap {
       position: relative;
-      left: 1em;
+      /*      left: 1em;*/
       display: flex;
       justify-content: center;
     }
 
+
     .searchInput {
+      position: relative;
+      left: 2em;
       width: 25%;
       padding-top: 1em;
       padding-bottom: 1em;
       padding-left: 2em;
-      border: rgba(255, 68, 84, 0.5)solid 2px;
+      border: rgba(255, 68, 84, 0.5) solid 2px;
       border-radius: 10px;
       background-color: rgba(255, 255, 255, 0.5);
     }
@@ -25,14 +28,13 @@
     .search-icon {
       position: relative;
       top: 0.25em;
-      right: 1.5em;
+      right:0.5em;
     }
+
   </style>
 </head>
 <div layout:fragment="content">
-  <p align="center" id="main_logo_text"
-  ><a id="logo_link" th:href="@{/}">EGG.GG</a></p
-  >
+  <p align="center" id="main_logo_text"><a id="logo_link" th:href="@{/}">EGG.GG</a></p>
   <div class="main-wrap">
 
     <input class="searchInput" type="text" placeholder="닉네임#태그 형식으로 입력해주세요."> <a href="/"><i

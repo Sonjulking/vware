@@ -55,7 +55,10 @@ public class CommunityPostEntity {
   @OneToMany(mappedBy = "communityPostEntity", cascade = CascadeType.REMOVE)
   private List<CommentEntity> commentEntityList; //게시글에 달린 댓글
 
-  private int views = 0;
+  private int views = 0; //조회수 
 
+  private String postType; //게시글 유형
+
+  private int commentCount = 0; //게시글에 달린 댓글 갯수
 
 }

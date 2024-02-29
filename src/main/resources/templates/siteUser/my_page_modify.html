@@ -11,6 +11,8 @@
       table {
         margin-top: 0.5rem;
         width: 500px;
+        border: #febbbb solid 8px;
+        border-radius: 20px;
       }
 
       .my-page-wrap {
@@ -87,19 +89,31 @@
         color: salmon;
         text-decoration-line: none;
       }
+
+      .modify_head {
+        font-weight: bold;
+      }
     </style>
   </head>
-  <body>
 
+  <body>
   <!--<div th:text="${session.reconfirmCheck}"></div>-->
-  <h2 align="center">회원정보 수정</h2>
   <div th:if="${session.reconfirmCheck == true}" class="my-page-wrap">
     <!--세션이 존재할 때-->
     <form th:action="@{/user/MyPage/modify}" th:object="${siteUserModifyForm}" method="post">
       <div th:replace="~{common/form_errors :: formErrorsFragment}"></div>
       <table>
+        <tr>
+          <th></th>
+          <td>
+            <p class="modify_head">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              회원정보 수정</p>
+          </td>
+        </tr>
+
         <tr class="mb-3">
-          <th><label for="userId" class="form-label">사용자ID</label>
+          <th>
+            <label for="userId" class="form-label">사용자ID</label>
           </th>
           <td><input type="text" th:field="*{userId}"
                      class="form-control noBorder" readonly></td>
@@ -127,19 +141,14 @@
             <input type="radio" th:field="*{preferredPosition}" value="전략가">전략가
           </td>
         </tr>
-
-
       </table>
 
       <div class="btn-wrap">
         <button type="submit" class="btn modBtn">회원정보 수정</button>
       </div>
-
-
       <a class="nextP" th:href="@{/user/MyPage/modifyPassword}">
         <p align="center" class="nextP">비밀번호 변경하기</p>
       </a>
-
 
     </form>
 

@@ -32,27 +32,27 @@
         <td>2022-02-22</td>
         <td>12</td>
       </tr>
-      <tr th:each="post : ${postList}">
+      <tr th:each="post, loop: ${postList}">
 
-        <td href="" th:text="${post.postNumber}"></td>
+        <!--<td href="" th:text="${post.postNumber}"></td>-->
+        <td th:text="${loop.count}"></td>
+        <!--<td th:text="${paging.getTotalElements - (paging.number * paging.size) -loop.count +1}"></td>-->
         <div class="tit_wrap">
           <td class="tit">
-            <a href="/" th:text="${post.subject}"></a
-            ><span class="comment" th:text="${post.commentEntityList.size()}"></span>
+            <a th:href="@{|/community/detail/${post.postNumber}|}" th:text="${post.subject}"></a>
+            <span class="comment" th:text="'[' + ${post.commentEntityList.size()} + ']'"></span>
           </td>
         </div>
         <td class="profile"><a href=" " th:text="${post.author.userNickName}"></a></td>
-        <td th:text="${post.createTime}"></td>
-        <td>viewPoint</td>
+        <td th:text="${#temporals.format(post.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${post.views}"></td>
       </tr>
 
       </tbody>
     </table>
-    <a href="../vbti/post.html"
-    >
+    <a href="../vbti/post.html">
       <button class="sub_btn" type="submit">작성하기</button>
-    </a
-    >
+    </a>
   </div>
 
   <div class="paging_wrap">

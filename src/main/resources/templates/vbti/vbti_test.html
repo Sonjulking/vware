@@ -45,12 +45,13 @@
         <div class="resultDesc"></div>
         <form th:action="@{/vbti/resultSave}" method="post" class="result-save-form">
           <input type="hidden" name="testResult" id="hidden_test_result">
+          <input type="hidden" name="testResultRole" id="hidden_test_role">
           <a class="nav-link logout-save" sec:authorize="isAnonymous()" th:href="@{/user/login}">결과를
             로그인을 하여
             저장하세요.</a>
           <input sec:authorize="isAuthenticated()" class="login-save" type="submit" value="결과 저장하기">
         </form>
-        <div th:utext="${resultSavedScript}"></div>
+        <!--   <div class="result-script" th:utext="${resultSavedScript}"></div>-->
         <!--      th:utext 속성은 HTML을 unescaped로 렌더링 -->
       </div>
     </section>
