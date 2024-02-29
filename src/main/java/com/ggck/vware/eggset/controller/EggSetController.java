@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +44,7 @@ public class EggSetController {
   {
     System.out.println("eggSetDTO = " + eggSetDTO);
     System.out.println("유저네임 : " + userName);
-    eggSetDTO.setName(userName);
+    eggSetDTO.setPlayer(userName);
     eggSetService.save(eggSetDTO);
 
     List<EggSetDTO> eggSetDTOList = eggSetHomeService.update();
@@ -58,7 +57,7 @@ public class EggSetController {
 
   @GetMapping("/selectById")
   @ResponseBody
-  public String selectById(@RequestParam("id") String id, ModelMap modelMap) {
+  public String selectById(@RequestParam("id") String id) {
     Gson gson = new Gson();
 
     EggSetEntity eggSetEntity = eggSetHomeService.findByIdEgg(Long.valueOf(id));
