@@ -1,6 +1,7 @@
 package com.ggck.vware;
 
 import com.ggck.vware.user.CustomSiteUserDetails;
+import com.ggck.vware.user.SiteUserRole;
 import com.ggck.vware.user.entity.SiteUserEntity;
 import com.ggck.vware.user.repository.SiteUserRepository;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Role;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +35,9 @@ public class SecurityConfig {
         .disable() // 이거 안하면 시큐리티에서 post 막음 -> TODO : 보안 취약해질 수 있으니 다른 방법 구글링 해서 해결할 것 : 고강찬 담당
         .authorizeHttpRequests((authorizeHttpRequests) ->
             authorizeHttpRequests
+                .requestMatchers("/EggSetAdmin/**")
+                .hasRole(
+                    "ADMIN") //어드민 권한일때만 접속가능 부여 SiteUserRole.ADMIN.getValue() //기본적으로 ROLE_ ~~라고 이름이 붙어있는 상태래요.
                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
         .formLogin((formLogin) -> formLogin.loginPage("/user/login").defaultSuccessUrl("/")
             .successHandler(loginSuccessHandler()))

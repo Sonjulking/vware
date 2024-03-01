@@ -44,12 +44,13 @@ public class CommunityPostSerivce {
 
   }
 
-  public void create(String subject, String content) {
+  public void create(String subject, String content, SiteUserEntity user) {
 
     CommunityPostEntity cp = new CommunityPostEntity();
     cp.setSubject(subject);
     cp.setContent(content);
     cp.setCreateTime(LocalDateTime.now());
+    cp.setAuthor(user);
     this.communityPostRepository.save(cp);
 
   }
@@ -59,6 +60,18 @@ public class CommunityPostSerivce {
     sorts.add(Sort.Order.desc("createTime"));
     Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); //페이지당, 10개의 게시물을 보여줌
     return this.communityPostRepository.findAll(pageable);
+  }
+
+  public void modify(CommunityPostEntity communityPost, String subject, String content) {
+    communityPost.setSubject(subject);
+    communityPost.setContent(content);
+    communityPost.setModifyTime(LocalDateTime.now());
+    this.communityPostRepository.save(communityPost);
+
+  }
+
+  public void delete(CommunityPostEntity communityPost) {
+    this.communityPostRepository.delete(communityPost);
   }
 
 }

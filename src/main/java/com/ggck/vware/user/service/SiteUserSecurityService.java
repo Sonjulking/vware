@@ -32,8 +32,9 @@ public class SiteUserSecurityService implements UserDetailsService {
     SiteUserEntity siteUser = _siteUser.get();
     List<GrantedAuthority> authorities = new ArrayList<>();
 
-    if ("admin".equals(userId)) {
-      authorities.add(new SimpleGrantedAuthority(SiteUserRole.ADMIN.getValue()));
+    if (SiteUserRole.ADMIN.getValue().equals(siteUser.getRole())) { //ROLE 컬럼과 ROLE_ADMIN이 같을때
+      authorities.add(
+          new SimpleGrantedAuthority(SiteUserRole.ADMIN.getValue())); //ROLE_ADMIN 권한을 부여해줌
     } else {
       authorities.add(new SimpleGrantedAuthority(SiteUserRole.USER.getValue()));
     }

@@ -47,9 +47,13 @@
 
       </tbody>
     </table>
-    <a th:href="@{/community/create}">
-      <button class="sub_btn" type="submit">글쓰기</button>
+    <a sec:authorize="isAuthenticated()" th:href="@{/community/create}">
+      <button class="sub_btn" type="button">글쓰기</button>
     </a>
+    <a sec:authorize="isAnonymous()" th:href="@{/user/login}">
+      <button class="sub_btn" type="button">글쓰기</button>
+    </a>
+
   </div>
   <!--페이징 처리-->
   <div th:if="${!paging.isEmpty()}">

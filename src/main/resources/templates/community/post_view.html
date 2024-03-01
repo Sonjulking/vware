@@ -22,17 +22,54 @@
     <div class="post_content">
       <p th:text="${postDetail.content}"></p>
     </div>
+
     <div>
-      <p th:each ="commnent : ${postDetail.commentEntityList}" th:text = "${commnent.content}"></p>
+      <a th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"
+         th:href="@{|/community/modify/${postDetail.postNumber}|}" sec:authorize="isAuthenticated()"
+         th:text="수정"> </a>
     </div>
     <div>
-      <form th:action="@{|/comment/create/${postDetail.postNumber}|}" method="post">
-        <textarea name="content" id="content" rows="2"></textarea>
-        <input type="submit" value="답변등록">
+      <a th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"
+         sec:authorize="isAuthenticated()"
+         th:href="@{|/community/delete/${postDetail.postNumber}|}"
+         onclick="return confirm('정말로 삭제하시겠습니까? 삭제하게 되면 복구가 불가능합니다.')"
+         th:text="삭제"
+      ></a>
+    </div>
+
+    <div th:each="comment : ${postDetail.commentEntityList}" class="post_content">
+      <span th:text="${comment.content}"></span>
+      <span th:if="${comment.author.userNickName != null}"
+            th:text="${comment.author.userNickName}"></span>
+      <span th:text="${#temporals.format(comment.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+      <div>
+        <a th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
+           th:href="@{|/comment/modify/${postDetail.postNumber}|}"
+           sec:authorize="isAuthenticated()"
+           th:text="수정"> </a>
+      </div>
+      <div>
+        <a th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
+           sec:authorize="isAuthenticated()"
+           th:href="@{|/comment/delete/${postDetail.postNumber}|}"
+           onclick="return confirm('정말로 탈퇴하시겠습니까? 탈퇴하게 되면 복구가 불가능합니다.')"
+           th:text="삭제"
+        ></a>
+      </div>
+    </div>
+    <div>
+      <form th:action="@{|/comment/create/${postDetail.postNumber}|}" th:object="${commentForm}"
+            method="post">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+          <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+        </div>
+        <textarea th:field="*{content}" name="content" id="content" rows="2"></textarea>
+        <input sec:authorize="isAuthenticated()" type="submit" value="답변등록">
+        <a sec:authorize="isAnonymous()" th:href="@{/user/login}">
+          <input type="button" value="답변등록">
+        </a>
       </form>
     </div>
-
   </div>
-
 </div>
 </html>

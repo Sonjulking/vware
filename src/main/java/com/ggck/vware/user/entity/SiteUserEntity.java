@@ -70,5 +70,6 @@ public class SiteUserEntity {
   private LocalDateTime lastAccessTime; //마지막 접속 시간
   private LocalDateTime withdrawalTime; //탈퇴시간
 
+  private String role = "ROLE_USER"; //권한부여를 위한 컬럼
 }
 

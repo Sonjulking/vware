@@ -7,8 +7,9 @@
 
   <link rel="stylesheet" href="./summernote/summernote-lite.css"/>
   <body>
-  <form th:action="@{/community/create}" th:object="${communityPostForm}" method="post">
+  <form th:object="${communityPostForm}" method="post">
     <!--CommunityPostForm communityPostForm 객체이름과 동일-->
+    <!--form태그에서 action 속성없이 폼을 전송하면, 현재 주소에 맞게가버림.-->
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
       <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
     </div>
