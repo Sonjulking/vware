@@ -6,9 +6,7 @@
   justify-content: space-evenly;
   margin: 0px auto;
   border-radius: 10px;
-
   width: 50%;
-  height: 800px;
 }
 
 #answer_btn_wrap {
@@ -28,12 +26,14 @@
   margin: 0 auto;
   border-radius: 5px;
 }
+
 .post_top p {
   padding-bottom: 7px;
   margin-left: 10px;
   margin-right: 10px;
   border-bottom: pink solid 1px;
 }
+
 .post_meta_wrap {
   display: flex;
   flex-direction: row;
@@ -44,8 +44,8 @@
 
 .post_content {
   background-color: #f5f5f5;
-  width: 85%;
-  height: 85%;
+  width: 85.45%;
+  min-height: 500px;
   /* border: 2px solid rgb(227, 227, 227); */
   border: 2px solid pink;
   border-radius: 5px;
@@ -62,4 +62,11 @@
 
 .post_wrap_left :last-child {
   border-right: 0px solid rgba(0, 0, 0, 0);
+}
+
+.horizontal-line {
+  border: none; /* 테두리를 없앱니다 */
+  border-top: 1px solid black; /* 위쪽 테두리를 1px 두께의 검은색 실선으로 설정합니다 */
+  width: 100%; /* 요소의 너비를 100%로 설정하여 가로 전체에 가로줄이 나타나도록 합니다 */
+  margin: 20px 0; /* 위아래 여백을 설정합니다. 필요에 따라 조절할 수 있습니다 */
 }

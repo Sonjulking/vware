@@ -1,10 +1,13 @@
 package com.ggck.vware.comment.service;
 
+import com.ggck.vware.DataNotFoundException;
 import com.ggck.vware.comment.entity.CommentEntity;
 import com.ggck.vware.comment.repository.CommentRepository;
 import com.ggck.vware.community_post.entity.CommunityPostEntity;
 import com.ggck.vware.user.entity.SiteUserEntity;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +27,24 @@ public class CommentService {
     this.commentRepository.save(comment);
     return comment;
   }
+
+  public CommentEntity getComment(Integer id) {
+    Optional<CommentEntity> comment = this.commentRepository.findById(id);
+    if (comment.isPresent()) {
+      return comment.get();
+    } else {
+      throw new DataNotFoundException("comment not found");
+    }
+  }
+
+  public void modify(CommentEntity comment, String content) {
+    comment.setContent(content);
+    comment.setModifyTime(LocalDateTime.now());
+    this.commentRepository.save(comment);
+  }
+
+  public void delete(CommentEntity comment) {
+    this.commentRepository.delete(comment);
+  }
+
 }

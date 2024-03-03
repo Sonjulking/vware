@@ -10,9 +10,7 @@ import lombok.Setter;
 public class CommentForm {
 
   @NotEmpty(message = "내용은 필수항목입니다.")
-  @Size(max = 5)
+  @Size(max = 200)
   private String content;
-
-
 
 }

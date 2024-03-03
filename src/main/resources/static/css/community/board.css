@@ -51,11 +51,7 @@ td > a:active {
 }
 
 .paging_wrap {
-  position: absolute;
-  top: 90%;
-  left: 50%;
 
-  transform: translate(-50%);
   display: flex;
   justify-content: center;
 }
@@ -175,4 +171,9 @@ td > a:active {
   bottom: 0.25em;
   color: #ff4454;
   font-size: xx-small;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
 }

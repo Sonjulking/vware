@@ -2,6 +2,7 @@
 
 <div layout:fragment="content">
   <link rel="stylesheet" th:href="@{/css/community/post_view.css}">
+  <!--게시글 상세 내용-->
   <div id="Q_board_wrap">
     <div class="post_top">
       <p th:text="${postDetail.subject}"></p>
@@ -36,27 +37,49 @@
          th:text="삭제"
       ></a>
     </div>
-
+    <div class="horizontal-line"></div> <!-- 가로줄을 담을 요소 -->
+    <!--댓글-->
     <div th:each="comment : ${postDetail.commentEntityList}" class="post_content">
       <span th:text="${comment.content}"></span>
       <span th:if="${comment.author.userNickName != null}"
             th:text="${comment.author.userNickName}"></span>
       <span th:text="${#temporals.format(comment.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+      <div th:text="${comment.author.userId}"></div>
+
+      <a class="box"
+         th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
+         sec:authorize="isAuthenticated()"
+         th:text="수정"></a>
+      <p th:text="${comment.commentNumber}" style="display: none;"></p>
+
       <div>
         <a th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
-           th:href="@{|/comment/modify/${postDetail.postNumber}|}"
            sec:authorize="isAuthenticated()"
-           th:text="수정"> </a>
-      </div>
-      <div>
-        <a th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
-           sec:authorize="isAuthenticated()"
-           th:href="@{|/comment/delete/${postDetail.postNumber}|}"
-           onclick="return confirm('정말로 탈퇴하시겠습니까? 탈퇴하게 되면 복구가 불가능합니다.')"
+           th:href="@{|/comment/delete/${comment.commentNumber}|}"
+           onclick="return confirm('정말로 삭제하시겠습니까? 삭제하게 되면 복구가 불가능합니다.')"
            th:text="삭제"
         ></a>
       </div>
+
     </div>
+
+    <div id="hiddenDiv" style="display: none;">
+      <div class="box">
+        <form id="hiddenForm"
+              th:object="${commentForm}"
+              method="post">
+          <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+          </div>
+          <div class="mb-3">
+            <textarea th:field="*{content}" class="form-control" rows="2"></textarea>
+          </div>
+          <input type="hidden" name="postNumber" th:value="${postDetail.postNumber}">
+          <input type="submit" value="저장하기" class="btn btn-primary my-2">
+        </form>
+      </div>
+    </div>
+
     <div>
       <form th:action="@{|/comment/create/${postDetail.postNumber}|}" th:object="${commentForm}"
             method="post">
@@ -71,5 +94,54 @@
       </form>
     </div>
   </div>
+
+
+  <div id="container">
+    <div class="box">첫 번째 Div</div>
+    <div class="box">두 번째 Div</div>
+    <div class="box">세 번째 Div</div>
+    <div class="box">네 번째 Div</div>
+    <div class="box">다섯 번째 Div</div>
+  </div>
+  <script>
+    let hiddenForm = document.querySelector("#hiddenForm");
+
+    // 새로운 div를 생성하는 함수
+    function toggleHiddenDiv() {
+      var hiddenDiv = document.getElementById("hiddenDiv");
+
+      if (hiddenDiv.style.display === "none" || hiddenDiv.style.display === "") {
+        hiddenDiv.style.display = "block";
+      } else {
+        hiddenDiv.style.display = "none";
+      }
+    }
+
+    function createNewDiv(event) {
+      toggleHiddenDiv();
+      let clickedDiv = event.currentTarget;
+      let nextDiv = clickedDiv.nextSibling;
+      while (nextDiv && nextDiv.nodeType !== 1) {
+        nextDiv = nextDiv.nextSibling;
+      }
+      console.log("박스 텍스트" + nextDiv.textContent);
+      // 클릭된 div에 새로운 div를 삽입
+
+      clickedDiv.parentNode.insertBefore(hiddenDiv.querySelector(".box"), clickedDiv.nextSibling);
+
+      hiddenForm.action = "/comment/modify/" + nextDiv.textContent;
+    }
+
+    // 클릭된 div에 클릭 이벤트 핸들러 추가
+    var boxes = document.querySelectorAll(".box");
+    boxes.forEach(function (box) {
+      box.addEventListener("click", createNewDiv);
+
+    });
+
+
+  </script>
 </div>
+
+
 </html>
