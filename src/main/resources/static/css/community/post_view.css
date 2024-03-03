@@ -25,6 +25,7 @@
   border: 2px solid pink;
   margin: 0 auto;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .post_top p {
@@ -40,6 +41,7 @@
   justify-content: space-between;
   margin-left: 5px;
   margin-right: 5px;
+  margin-bottom: 10px;
 }
 
 .post_content {
@@ -66,7 +68,148 @@
 
 .horizontal-line {
   border: none; /* 테두리를 없앱니다 */
-  border-top: 1px solid black; /* 위쪽 테두리를 1px 두께의 검은색 실선으로 설정합니다 */
-  width: 100%; /* 요소의 너비를 100%로 설정하여 가로 전체에 가로줄이 나타나도록 합니다 */
-  margin: 20px 0; /* 위아래 여백을 설정합니다. 필요에 따라 조절할 수 있습니다 */
+  border-top: 3px solid rgba(255, 192, 203, 0.5); /* 위쪽 테두리를 1px 두께의 검은색 실선으로 설정합니다 */
+  width: 85%; /* 요소의 너비를 100%로 설정하여 가로 전체에 가로줄이 나타나도록 합니다 */
+  margin: 20px auto;
+  /* margin: 20px 0; !* 위아래 여백을 설정합니다. 필요에 따라 조절할 수 있습니다 *!*/
+  align-content: center;
+}
+
+.post_comment {
+  background-color: #efefef;
+  width: 85.45%;
+  min-height: 50px;
+  /* border: 2px solid rgb(227, 227, 227); */
+  border: 2px solid pink;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  word-break: break-all; /*칸 넘으면 엔터키 자동으로*/
+}
+
+.input_comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 0.5em;
+  min-height: 50px;
+}
+
+.input_comment textarea {
+  width: 85%;
+}
+
+#hiddenForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/*
+.hidden_input_comment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 0.5em;
+  min-height: 50px;
+}
+*/
+
+.input_comment_textarea {
+  border: 2px solid pink;
+  width: 85%;
+}
+
+.hidden_input_comment_textarea {
+  border: 2px solid pink;
+  width: 85%;
+}
+
+.hidden_post_comment {
+  background-color: #efefef;
+  width: 85.45%;
+  min-height: 50px;
+  /* border: 2px solid rgb(227, 227, 227); */
+  border: 2px solid pink;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 5px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.inline_block {
+  display: inline-block;
+}
+
+.comment_submit_btn {
+  cursor: pointer;
+  border: 2.5px solid pink;
+  border-radius: 3px;
+  color: salmon;
+  font-weight: bolder;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.comment_submit_btn:hover {
+  transition: 0.5s;
+  background-color: #ffe3e5;
+}
+
+.comment_underline {
+  border: 1px solid rgba(255, 192, 203, 0.75);
+
+}
+
+.modify_href {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
+.modify_post_comment {
+  background-color: #f5f5f5;
+  width: 85.45%;
+  min-height: 25px;
+  /* border: 2px solid rgb(227, 227, 227); */
+  border: 2px solid pink;
+  border-radius: 5px;
+  margin: 10px auto;
+  margin-bottom: 2px;
+  padding: 5px;
+  box-sizing: border-box;
+  word-break: break-all; /*칸 넘으면 엔터키 자동으로*/
+}
+
+.modify_post_comment a {
+  cursor: pointer;
+  text-decoration-line: none;
+  color: salmon;
+}
+
+.inline_block a {
+  cursor: pointer;
+  text-decoration-line: none;
+
+  color: salmon;
+}
+
+.comment_submit_btn_login {
+  cursor: pointer;
+  border: 2.5px solid pink;
+  border-radius: 3px;
+  color: salmon;
+  font-weight: bolder;
+  background-color: rgba(0, 0, 0, 0);
+  box-sizing: revert;
+  text-decoration: none;
+  padding-top: 6px;
+  font-size: 10pt;
+}
+
+.comment_submit_btn_login:hover {
+  transition: 0.5s;
+  background-color: #ffe3e5;
 }

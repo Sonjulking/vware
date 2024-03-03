@@ -1,5 +1,4 @@
 <html layout:decorate="~{common/layout}">
-
 <div layout:fragment="content">
   <link rel="stylesheet" th:href="@{/css/community/post_view.css}">
   <!--게시글 상세 내용-->
@@ -10,99 +9,106 @@
         <div class="post_wrap_left">
 
           <span th:text="${postDetail.postType}"></span>
-          <span th:text="${#temporals.format(postDetail.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+          <span th:text="|${#temporals.format(postDetail.createTime, 'yyyy-MM-dd HH:mm')} |"></span>
 
           <span th:text="${postDetail.author.userNickName}"></span>
         </div>
         <div class="post_wrap_left">
-          <span th:text="${postDetail.views}"></span>
-          <span th:text="|${#lists.size(postDetail.commentEntityList)}|"></span>
+          <span th:text="|조회수 ${postDetail.views}회|"></span>
+          <span th:text="|댓글 ${#lists.size(postDetail.commentEntityList)}개|"></span>
         </div>
       </div>
     </div>
+
     <div class="post_content">
       <p th:text="${postDetail.content}"></p>
+
+    </div>
+    <div
+        th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"
+        class="modify_post_comment modify_href">
+      <div>
+        <a th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"
+           th:href="@{|/community/modify/${postDetail.postNumber}|}"
+           sec:authorize="isAuthenticated()"
+           th:text="수정하기"> </a>
+      </div>
+      <span>&nbsp; &nbsp; &nbsp;&nbsp;</span>
+      <div>
+        <a th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"
+           sec:authorize="isAuthenticated()"
+           th:href="@{|/community/delete/${postDetail.postNumber}|}"
+           onclick="return confirm('정말로 삭제하시겠습니까? 삭제하게 되면 복구가 불가능합니다.')"
+           th:text="삭제하기"></a>
+      </div>
+    </div>
+    <!--댓글 입력창-->
+    <div sec:authorize="isAuthenticated()">
+      <form th:action="@{|/comment/create/${postDetail.postNumber}|}" th:object="${commentForm}"
+            method="post" class="post_comment input_comment">
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+          <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+        </div>
+        <textarea th:field="*{content}" name="content" id="content" class="input_comment_textarea"
+                  rows="2"></textarea>
+        <input type="submit" value="등록하기"
+               class="comment_submit_btn">
+      </form>
     </div>
 
-    <div>
-      <a th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"
-         th:href="@{|/community/modify/${postDetail.postNumber}|}" sec:authorize="isAuthenticated()"
-         th:text="수정"> </a>
-    </div>
-    <div>
-      <a th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"
-         sec:authorize="isAuthenticated()"
-         th:href="@{|/community/delete/${postDetail.postNumber}|}"
-         onclick="return confirm('정말로 삭제하시겠습니까? 삭제하게 되면 복구가 불가능합니다.')"
-         th:text="삭제"
-      ></a>
-    </div>
     <div class="horizontal-line"></div> <!-- 가로줄을 담을 요소 -->
-    <!--댓글-->
-    <div th:each="comment : ${postDetail.commentEntityList}" class="post_content">
-      <span th:text="${comment.content}"></span>
-      <span th:if="${comment.author.userNickName != null}"
-            th:text="${comment.author.userNickName}"></span>
-      <span th:text="${#temporals.format(comment.createTime, 'yyyy-MM-dd HH:mm')}"></span>
-      <div th:text="${comment.author.userId}"></div>
 
-      <a class="box"
-         th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
-         sec:authorize="isAuthenticated()"
-         th:text="수정"></a>
-      <p th:text="${comment.commentNumber}" style="display: none;"></p>
+    <!--댓글-->
+    <div th:each="comment : ${postDetail.commentEntityList}" class="post_comment">
+      <div class="comment_header_wrap">
+        <span th:if="${comment.author.userNickName != null}"
+              th:text="${comment.author.userNickName}"></span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span th:text="${#temporals.format(comment.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+        <hr class="comment_underline">
+      </div>
+      <span th:text="${comment.content}"></span>
+      <hr class="comment_underline">
 
       <div>
-        <a th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
-           sec:authorize="isAuthenticated()"
-           th:href="@{|/comment/delete/${comment.commentNumber}|}"
-           onclick="return confirm('정말로 삭제하시겠습니까? 삭제하게 되면 복구가 불가능합니다.')"
-           th:text="삭제"
-        ></a>
-      </div>
+        <div class="inline_block">
+          <a class="box"
+             th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
+             sec:authorize="isAuthenticated()"
+             th:text="수정"></a>
+          <p th:text="${comment.commentNumber}" style="display: none;"></p>
+        </div>
 
+        <div class="inline_block">
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <a th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.userId }"
+             sec:authorize="isAuthenticated()"
+             th:href="@{|/comment/delete/${comment.commentNumber}|}"
+             onclick="return confirm('정말로 삭제하시겠습니까? 삭제하게 되면 복구가 불가능합니다.')"
+             th:text="삭제"></a>
+        </div>
+      </div>
     </div>
 
-    <div id="hiddenDiv" style="display: none;">
-      <div class="box">
+    <div id="hiddenDiv" style="display: none;" class="hidden_input_comment">
+      <div class="box hidden_post_comment">
         <form id="hiddenForm"
               th:object="${commentForm}"
               method="post">
           <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
             <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
           </div>
-          <div class="mb-3">
-            <textarea th:field="*{content}" class="form-control" rows="2"></textarea>
-          </div>
+
+          <textarea th:field="*{content}" class="form-control hidden_input_comment_textarea "
+                    rows="2"></textarea>
           <input type="hidden" name="postNumber" th:value="${postDetail.postNumber}">
-          <input type="submit" value="저장하기" class="btn btn-primary my-2">
+          <input type="submit" value="등록하기" class="btn btn-primary my-2 comment_submit_btn">
         </form>
       </div>
     </div>
-
-    <div>
-      <form th:action="@{|/comment/create/${postDetail.postNumber}|}" th:object="${commentForm}"
-            method="post">
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-          <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
-        </div>
-        <textarea th:field="*{content}" name="content" id="content" rows="2"></textarea>
-        <input sec:authorize="isAuthenticated()" type="submit" value="답변등록">
-        <a sec:authorize="isAnonymous()" th:href="@{/user/login}">
-          <input type="button" value="답변등록">
-        </a>
-      </form>
-    </div>
   </div>
 
-
-  <div id="container">
-    <div class="box">첫 번째 Div</div>
-    <div class="box">두 번째 Div</div>
-    <div class="box">세 번째 Div</div>
-    <div class="box">네 번째 Div</div>
-    <div class="box">다섯 번째 Div</div>
-  </div>
   <script>
     let hiddenForm = document.querySelector("#hiddenForm");
 
@@ -121,15 +127,23 @@
       toggleHiddenDiv();
       let clickedDiv = event.currentTarget;
       let nextDiv = clickedDiv.nextSibling;
+      let postCommentDiv = clickedDiv.closest('.post_comment');
+
+      if (postCommentDiv) {
+        postCommentDiv.parentNode.insertBefore(hiddenDiv.querySelector(".box"),
+            postCommentDiv.nextSibling);
+        hiddenForm.action = "/comment/modify/" + postCommentDiv.querySelector("p").textContent;
+      }
       while (nextDiv && nextDiv.nodeType !== 1) {
         nextDiv = nextDiv.nextSibling;
       }
       console.log("박스 텍스트" + nextDiv.textContent);
       // 클릭된 div에 새로운 div를 삽입
 
-      clickedDiv.parentNode.insertBefore(hiddenDiv.querySelector(".box"), clickedDiv.nextSibling);
+      clickedDiv.parentNode.insertBefore(hiddenDiv.querySelector(".box"), postCommentDiv);
 
       hiddenForm.action = "/comment/modify/" + nextDiv.textContent;
+
     }
 
     // 클릭된 div에 클릭 이벤트 핸들러 추가
