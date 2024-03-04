@@ -73,48 +73,6 @@
     </div>
     <div class="modal_layer"></div>
   </div>
-  <table>
-    <tr>
-      <td>Id</td>
-      <td>팀</td>
-      <td>플레이어</td>
-      <td>마우스</td>
-      <td>Hz</td>
-      <td>DPI</td>
-      <td>감도</td>
-      <td>eDPI</td>
-      <td>조준감도</td>
-      <td>모니터</td>
-      <td>해상도</td>
-      <td>그래픽카드</td>
-      <td>마우스패드</td>
-      <td>키보드</td>
-      <td>헤드셋</td>
-    </tr>
-    <!--th:each는 for each처럼 생각하면 된다.-->
-    <!--board라는 변수로 boardList에 하나씩 접근을 하는것-->
-    <tr th:each="board: ${eggSetList}">
-      <td>
-        <div id="modal_update_open" class="modal_update_open"
-             style=" font-weight: bold; font-size: large"
-             th:text="${board.id}"></div>
-      </td>
-      <td th:text="${board.team}"></td>
-      <td th:text="${board.player}"></td>
-      <td th:text="${board.mouse}"></td>
-      <td th:text="${board.hz}"></td>
-      <td th:text="${board.dpi}"></td>
-      <td th:text="${board.sens}"></td>
-      <td th:text="${board.edpi}"></td>
-      <td th:text="${board.scopedsens}"></td>
-      <td th:text="${board.monitor}"></td>
-      <td th:text="${board.resolution}"></td>
-      <td th:text="${board.gpu}"></td>
-      <td th:text="${board.mousepad}"></td>
-      <td th:text="${board.keyboard}"></td>
-      <td th:text="${board.headset}"></td>
-    </tr>
-  </table>
   <div id="modal2" tabindex="-1" role="dialog">
     <div class="modal_content">
 
@@ -177,12 +135,54 @@
                   th:text="${headset.headsetName}"></option>
         </select>
         </div>
-          <input type="submit" value="등록">
-          <button type="button" id="modal_update_close">닫기</button>
+        <input type="submit" value="등록">
+        <button type="button" id="modal_update_close">닫기</button>
       </form>
     </div>
     <div class="modal_layer"></div>
   </div>
+  <table>
+    <tr>
+      <td>Id</td>
+      <td>팀</td>
+      <td>플레이어</td>
+      <td>마우스</td>
+      <td>Hz</td>
+      <td>DPI</td>
+      <td>감도</td>
+      <td>eDPI</td>
+      <td>조준감도</td>
+      <td>모니터</td>
+      <td>해상도</td>
+      <td>그래픽카드</td>
+      <td>마우스패드</td>
+      <td>키보드</td>
+      <td>헤드셋</td>
+    </tr>
+    <!--th:each는 for each처럼 생각하면 된다.-->
+    <!--board라는 변수로 boardList에 하나씩 접근을 하는것-->
+    <tr th:each="board: ${eggSetList}">
+      <td>
+        <div id="modal_update_open" class="modal_update_open"
+             style=" font-weight: bold; font-size: large"
+             th:text="${board.id}"></div>
+      </td>
+      <td th:text="${board.team}"></td>
+      <td th:text="${board.player}"></td>
+      <td th:text="${board.mouse}"></td>
+      <td th:text="${board.hz}"></td>
+      <td th:text="${board.dpi}"></td>
+      <td th:text="${board.sens}"></td>
+      <td th:text="${board.edpi}"></td>
+      <td th:text="${board.scopedsens}"></td>
+      <td th:text="${board.monitor}"></td>
+      <td th:text="${board.resolution}"></td>
+      <td th:text="${board.gpu}"></td>
+      <td th:text="${board.mousepad}"></td>
+      <td th:text="${board.keyboard}"></td>
+      <td th:text="${board.headset}"></td>
+    </tr>
+  </table>
   <script>
 
     document.getElementById("modal_open").onclick = function () {
