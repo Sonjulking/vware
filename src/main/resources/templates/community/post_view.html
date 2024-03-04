@@ -7,10 +7,8 @@
       <p th:text="${postDetail.subject}"></p>
       <div class="post_meta_wrap">
         <div class="post_wrap_left">
-
           <span th:text="${postDetail.postType}"></span>
           <span th:text="|${#temporals.format(postDetail.createTime, 'yyyy-MM-dd HH:mm')} |"></span>
-
           <span th:text="${postDetail.author.userNickName}"></span>
         </div>
         <div class="post_wrap_left">
@@ -22,8 +20,8 @@
 
     <div class="post_content">
       <p th:text="${postDetail.content}"></p>
-
     </div>
+
     <div
         th:if="${#authorization.expression('isAuthenticated()') and postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId}"
         class="modify_post_comment modify_href">
@@ -42,17 +40,23 @@
            th:text="삭제하기"></a>
       </div>
     </div>
+
     <!--댓글 입력창-->
     <div sec:authorize="isAuthenticated()">
+
       <form th:action="@{|/comment/create/${postDetail.postNumber}|}" th:object="${commentForm}"
             method="post" class="post_comment input_comment">
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-          <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+
+        <div class="alert alert-danger err-alert" role="alert" th:if="${#fields.hasAnyErrors()}">
+          <div style="text-align: center;" th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
         </div>
+
         <textarea th:field="*{content}" name="content" id="content" class="input_comment_textarea"
                   rows="2"></textarea>
+
         <input type="submit" value="등록하기"
                class="comment_submit_btn">
+
       </form>
     </div>
 
@@ -96,8 +100,9 @@
         <form id="hiddenForm"
               th:object="${commentForm}"
               method="post">
-          <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+          <div class="alert alert-danger err-alert" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div style="text-align: center;" th:each="err : ${#fields.allErrors()}"
+                 th:text="${err}"/>
           </div>
 
           <textarea th:field="*{content}" class="form-control hidden_input_comment_textarea "
@@ -150,12 +155,32 @@
     var boxes = document.querySelectorAll(".box");
     boxes.forEach(function (box) {
       box.addEventListener("click", createNewDiv);
-
     });
 
+    function check_input_textarea() {
+      let input_comment_textarea = document.querySelector(".input_comment_textarea").value;
+      if (input_comment_textarea.trim() === '') {
+        alert('내용을 입력해주세요.');
+        return false;
+      } else {
+        return true;
+      }
+    }
 
+    // 모달 열기 버튼 클릭 시 이벤트 처리
+    document.querySelector('.comment_submit_btn').addEventListener('click', function () {
+      document.getElementById('alert_modal').style.display = 'block';
+    });
+
+    /*  function check_hidden_input_textarea() {
+        let input_comment_textarea = document.querySelector(".hidden_input_comment_textarea").value;
+        if (input_comment_textarea.trim() === '') {
+          alert('내용을 입력해주세요.');
+          return false;
+        } else {
+          return true;
+        }
+      }*/
   </script>
 </div>
-
-
 </html>

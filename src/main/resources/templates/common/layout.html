@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>발로란트 적성검사</title>
+  <title>EGG.GG</title>
   <!--  <link rel="stylesheet" href="css/nav.css"/>
     <link rel="stylesheet" href="css/main.css"/>-->
   <link rel="stylesheet" th:href="@{/css/vbti/main.css}">
@@ -12,9 +12,7 @@
 </head>
 <body>
 <div class="main_header_wrap">
-      <span id="main_logo_text"
-      ><a id="logo_link" th:href="@{/}">EGG.GG</a></span
-      >
+  <span id="main_logo_text"><a id="logo_link" th:href="@{/}">EGG.GG</a></span>
   <span id="clock">00:00:00</span>
 </div>
 <nav>
@@ -23,7 +21,7 @@
     <li><a th:href="@{/community}">COMMUNITY</a></li>
     <li><a th:href="@{/vbti/test}">VBTI</a></li>
     <li><a th:href="@{/EggSet}">EGG SET</a></li>
-    <li sec:authorize = "hasRole('ADMIN')"><a th:href="@{/EggSetAdmin}">EGG SET ADMIN</a></li>
+    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/EggSetAdmin}">EGG SET ADMIN</a></li>
     <li><a
         class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/MyPage}">My Page</a>
     </li>

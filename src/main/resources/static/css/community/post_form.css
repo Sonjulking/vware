@@ -154,7 +154,14 @@ hr {
   border-radius: 3px;
   background-color: rgba(0, 0, 0, 0);
 }
-.post_textarea{
+
+.post_textarea {
   width: 99%;
   height: 200%;
+}
+
+.err-alert {
+  color: #ff4454;
+  font-family: "나눔고딕";
+  font-weight: 500;
 }

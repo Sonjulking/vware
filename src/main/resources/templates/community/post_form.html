@@ -10,13 +10,14 @@
   <form th:object="${communityPostForm}" method="post">
     <!--CommunityPostForm communityPostForm 객체이름과 동일-->
     <!--form태그에서 action 속성없이 폼을 전송하면, 현재 주소에 맞게가버림.-->
-    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-      <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
-    </div>
+
     <div id="Q_board_wrap">
+
       <div id="Q_board">
-        <select name="postType"  class="post_type">
+
+        <select name="postType" class="post_type">
           <option value="자유" selected>자유</option>
+          <option sec:authorize="hasRole('ADMIN')" value="공지">공지</option>
           <option value="유머">유머</option>
           <option value="질문">질문</option>
         </select> <span>제목 : </span>
@@ -27,7 +28,12 @@
             th:field="*{subject}"
         />
         <div id="myEditor"><textarea th:field="*{content}" class="form-control post_textarea"
-                                     rows="25"></textarea></div>
+                                     rows="25"></textarea>
+          <div class="alert alert-danger err-alert" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
+          </div>
+        </div>
+
       </div>
 
       <div class="sub_btn_wrap">

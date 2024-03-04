@@ -8,6 +8,7 @@
       <caption>
         게시판 목록
       </caption>
+
       <thead>
       <tr>
         <th>번호</th>
@@ -17,15 +18,13 @@
         <th>조회수</th>
       </tr>
       </thead>
+
       <tbody>
-
       <tr th:each="post, loop: ${paging}">
-
         <!--<td href="" th:text="${post.postNumber}"></td>-->
         <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
         <!--<td th:text="${paging.getTotalElements - (paging.number * paging.size) -loop.count +1}"></td>-->
         <div class="tit_wrap">
-
           <td class="tit">
             <span class="post_type" th:text="'[' + ${post.postType} + ']'"></span>
             <a th:href="@{|/community/detail/${post.postNumber}|}" th:text="${post.subject}"></a>

@@ -196,6 +196,19 @@
   color: salmon;
 }
 
+.modify_post_comment a:hover {
+  cursor: pointer;
+  text-decoration-line: underline;
+  color: salmon;
+}
+
+.inline_block a:hover {
+  cursor: pointer;
+  text-decoration-line: underline;
+
+  color: salmon;
+}
+
 .comment_submit_btn_login {
   cursor: pointer;
   border: 2.5px solid pink;
@@ -212,4 +225,9 @@
 .comment_submit_btn_login:hover {
   transition: 0.5s;
   background-color: #ffe3e5;
+}
+.err-alert {
+  color: #ff4454;
+  font-family: "나눔고딕";
+  font-weight: 500;
 }
