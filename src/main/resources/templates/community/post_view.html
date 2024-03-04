@@ -25,7 +25,7 @@
 
     </div>
     <div
-        th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"
+        th:if="${#authorization.expression('isAuthenticated()') and postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId}"
         class="modify_post_comment modify_href">
       <div>
         <a th:if="${postDetail.author != null and #authentication.getPrincipal().getUsername() == postDetail.author.userId }"

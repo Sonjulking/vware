@@ -15,7 +15,7 @@
     </div>
     <div id="Q_board_wrap">
       <div id="Q_board">
-        <select name="postType">
+        <select name="postType"  class="post_type">
           <option value="자유" selected>자유</option>
           <option value="유머">유머</option>
           <option value="질문">질문</option>
@@ -26,8 +26,8 @@
             placeholder="제목을 입력하세요."
             th:field="*{subject}"
         />
-        <div id="myEditor"><textarea th:field="*{content}" class="form-control"
-                                     rows="10"></textarea></div>
+        <div id="myEditor"><textarea th:field="*{content}" class="form-control post_textarea"
+                                     rows="25"></textarea></div>
       </div>
 
       <div class="sub_btn_wrap">

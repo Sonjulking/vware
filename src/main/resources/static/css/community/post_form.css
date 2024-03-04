@@ -2,16 +2,17 @@
   margin-top: 10px;
   margin: 0px auto;
   border-radius: 10px;
-/*  border: 4px solid #ff4454;*/
+  /*  border: 4px solid #ff4454;*/
 
   width: 50%;
   height: 600px;
 }
+
 #Q_board {
   border: 3px solid pink;
   margin: 20px auto;
   width: 85%;
-  height: 450px;
+  height: 445px;
 
   border-radius: 5px;
 }
@@ -28,6 +29,7 @@ hr {
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .answer {
   /* padding: 25px 50px; */
   min-height: 50px;
@@ -47,6 +49,7 @@ hr {
   color: aliceblue;
   transition: 0.7s;
 }
+
 .answer:focus {
   outline-color: transparent;
   outline-style: solid;
@@ -92,6 +95,7 @@ hr {
 .sub_btn_wrap {
   margin-right: 55px;
 }
+
 .sub_btn {
   color: #ff4454;
   padding: 5px 10px;
@@ -111,22 +115,25 @@ hr {
   color: aliceblue;
   transition: 0.7s;
 }
+
 .sub_btn:focus {
   outline-color: transparent;
   outline-style: solid;
   box-shadow: 0 0 0 4px #ff8080eb;
 }
+
 /* summernote 색깔 섬머노트 */
 .note-editable {
   background-color: whitesmoke !important;
   color: black !important;
 }
+
 .title-box {
   margin-left: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
   background-color: whitesmoke;
-  width: 89%;
+  width: 75%;
   height: 25px;
   border: 1px solid pink;
   border-radius: 5px;
@@ -137,4 +144,17 @@ hr {
   font-family: "나눔고딕";
   font-weight: 500;
   margin-left: 15px;
+}
+
+.post_type {
+  margin-left: 1em;
+  font-weight: bolder;
+  color: salmon;
+  border: 2px solid rgba(222, 0, 0, 0.1);
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0);
+}
+.post_textarea{
+  width: 99%;
+  height: 200%;
 }
