@@ -1,8 +1,9 @@
 <html layout:decorate="~{common/layout}">
 <div layout:fragment="content">
   <link rel="stylesheet" th:href="@{/css/EGG/equipment.css}"/>
+
   <div id="modalBtn">
-    <button type="button" id="modal_open">유저 장비 정보 등록</button>
+    <button type="button" id="modal_open">장비 정보 등록</button>
   </div>
   <div id="modal1" tabindex="-1" role="dialog">
     <div class="modal_content">
@@ -95,7 +96,7 @@
     <tr th:each="board: ${eggSetList}">
       <td>
         <div id="modal_update_open" class="modal_update_open"
-             style="color: blue; font-weight: bold; font-size: large"
+             style=" font-weight: bold; font-size: large"
              th:text="${board.id}"></div>
       </td>
       <td th:text="${board.team}"></td>
