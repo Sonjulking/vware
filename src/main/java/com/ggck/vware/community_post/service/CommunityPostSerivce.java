@@ -24,7 +24,8 @@ public class CommunityPostSerivce {
   private final CommunityPostRepository communityPostRepository;
 
   public CommunityPostEntity getPost(Integer id) {
-    Optional<CommunityPostEntity> communityPostEntity = this.communityPostRepository.findById(id);
+    Optional<CommunityPostEntity> communityPostEntity = this.communityPostRepository.findById(
+        id);
     if (communityPostEntity.isPresent()) {
       return communityPostEntity.get();
     } else {
@@ -57,9 +58,11 @@ public class CommunityPostSerivce {
 
   public Page<CommunityPostEntity> getList(int page) {
     List<Order> sorts = new ArrayList<>();
-    sorts.add(Sort.Order.desc("createTime"));
+    sorts.add(Sort.Order.desc("createTime")); //최신순으로 정렬
     Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); //페이지당, 10개의 게시물을 보여줌
-    return this.communityPostRepository.findAll(pageable);
+
+    return this.communityPostRepository.findAllNotDeleted(pageable);
+    //return this.communityPostRepository.findAll(pageable);
   }
 
   public void modify(CommunityPostEntity communityPost, String subject, String content) {
@@ -71,7 +74,23 @@ public class CommunityPostSerivce {
   }
 
   public void delete(CommunityPostEntity communityPost) {
-    this.communityPostRepository.delete(communityPost);
+    communityPost.setDeleteStatus(true);
+    communityPost.setDeleteTime(LocalDateTime.now());
+    this.communityPostRepository.save(communityPost);
+    //this.communityPostRepository.delete(communityPost);
   }
 
+/*
+  public void flagDelete(CommunityPostEntity communityPost) {
+    communityPost.setDeleteStatus(true);
+    communityPost.setDeleteTime(LocalDateTime.now());
+    this.communityPostRepository.save(communityPost);
+  }
+*/
+
+//  public List<CommunityPostEntity> getNoticeList() {
+//    PageRequest pageRequest = PageRequest.of(0, 3); // 최신순으로 3개
+//    return this.communityPostRepository.findByPostTypeAndDeleteStatusIsFalseOrderByCreateTimeDesc(
+//        "공지", pageRequest);
+//  }
 }

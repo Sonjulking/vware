@@ -5,14 +5,19 @@ import com.ggck.vware.community_post.entity.CommunityPostEntity;
 import com.ggck.vware.community_post.form.CommunityPostForm;
 import com.ggck.vware.community_post.repository.CommunityPostRepository;
 import com.ggck.vware.community_post.service.CommunityPostSerivce;
+import com.ggck.vware.notice.entity.NoticeEntity;
+import com.ggck.vware.notice.service.NoticeSerivce;
 import com.ggck.vware.user.entity.SiteUserEntity;
 import com.ggck.vware.user.service.SiteUserService;
 import jakarta.persistence.criteria.CriteriaBuilder.In;
 import jakarta.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,13 +36,16 @@ public class CommunityPostController {
 
   private final CommunityPostRepository communityPostRepository;
   private final CommunityPostSerivce communityPostSerivce;
+  private final NoticeSerivce noticeSerivce;
   private final SiteUserService siteUserService;
 
   @GetMapping()
   public String communityMain(Model model,
       @RequestParam(value = "page", defaultValue = "1") int page) {
     Page<CommunityPostEntity> paging = this.communityPostSerivce.getList(page - 1);
+    List<NoticeEntity> noticeList = this.noticeSerivce.getNoticeList();
     model.addAttribute("paging", paging);
+    model.addAttribute("noticeList", noticeList);
     return "community/community";
   }
 
@@ -121,4 +129,14 @@ public class CommunityPostController {
     this.communityPostSerivce.delete(communityPost);
     return "redirect:/";
   }
+
+  @Scheduled(cron = "0 0 0 * * ?") //매일 자정에 실행
+  public void cleanDeleteData() {
+    LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
+    List<CommunityPostEntity> deleteCommunityPostList = communityPostRepository.findByDeleteTimeBefore(
+        thirtyDaysAgo); //삭제한지 30일이 지난 게시글
+    communityPostRepository.deleteAll(deleteCommunityPostList);
+    System.out.println("게시글 자동삭제됐다옹 : " + deleteCommunityPostList);
+  }
+
 }

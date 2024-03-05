@@ -44,7 +44,10 @@ public class CommentService {
   }
 
   public void delete(CommentEntity comment) {
-    this.commentRepository.delete(comment);
+    comment.setDeleteStatus(true);
+    comment.setDeleteTime(LocalDateTime.now());
+    this.commentRepository.save(comment);
+    //this.commentRepository.delete(comment);
   }
 
 }

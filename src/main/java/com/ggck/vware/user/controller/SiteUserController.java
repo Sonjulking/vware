@@ -446,7 +446,7 @@ public class SiteUserController {
     List<SiteUserEntity> withdrawalUsers = siteUserRepository.findByWithdrawalTimeBefore(
         thirtyDaysAgo); //탈퇴한지 30일이 지난 유저들
     siteUserRepository.deleteAll(withdrawalUsers);
-    System.out.println("자동삭제됐다옹" + withdrawalUsers);
+    System.out.println("자동삭제됐다옹 : " + withdrawalUsers);
   }
 
   @Scheduled(cron = "0 0 0 * * ?") //매일 자정에 실행
@@ -458,6 +458,6 @@ public class SiteUserController {
       user.setPaymentStatus("0");
     }
     siteUserRepository.saveAll(paidPointUsers);
-
+    System.out.println("포인트 지급 여부 초기화!");
   }
 }

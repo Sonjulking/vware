@@ -1,5 +1,4 @@
 <html layout:decorate="~{common/layout}">
-
 <div layout:fragment="content">
   <link rel="stylesheet" th:href="@{/css/community/board.css}">
 
@@ -18,24 +17,8 @@
         <th>조회수</th>
       </tr>
       </thead>
+
       <tbody>
-
-      <tr th:each="noitce: ${noticeList}" class="notice_row">
-        <td>공지</td>
-        <!--<td th:text="${paging.getTotalElements - (paging.number * paging.size) -loop.count +1}"></td>-->
-        <div class="tit_wrap">
-          <td class="tit">
-            <a th:href="@{|/notice/detail/${noitce.postNumber}|}"
-               th:text="${noitce.subject}"></a>&nbsp;
-            <span class="comment"
-                  th:text="|[${#lists.size(noitce.commentEntityList.?[deleteStatus == false])}]|"></span>
-          </td>
-        </div>
-        <td class="profile"><a href=" " th:text="${noitce.author.userNickName}"></a></td>
-        <td th:text="${#temporals.format(noitce.createTime, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${noitce.views}"></td>
-      </tr>
-
 
       <tr th:each="post, loop: ${paging}">
         <!--<td href="" th:text="${post.postNumber}"></td>-->
@@ -44,11 +27,11 @@
         <div class="tit_wrap">
           <td class="tit">
             <span class="post_type" th:text="'[' + ${post.postType} + ']'"></span>
-            <a th:href="@{|/community/detail/${post.postNumber}|}" th:text="${post.subject}"></a>
-            &nbsp;
+            <a th:href="@{|/notice/detail/${post.postNumber}|}" th:text="${post.subject}"></a>&nbsp;
             <span class="comment"
-                  th:text="|[${#lists.size(post.commentEntityList.?[deleteStatus == false])}]| "></span>
+                  th:text="|[${#lists.size(post.commentEntityList.?[deleteStatus == false])}]|"></span>
           </td>
+
         </div>
         <td class="profile"><a href=" " th:text="${post.author.userNickName}"></a></td>
         <td th:text="${#temporals.format(post.createTime, 'yyyy-MM-dd HH:mm')}"></td>
@@ -57,10 +40,7 @@
 
       </tbody>
     </table>
-    <a sec:authorize="isAuthenticated()" th:href="@{/community/create}">
-      <button class="sub_btn" type="button">글쓰기</button>
-    </a>
-    <a sec:authorize="isAnonymous()" th:href="@{/user/login}">
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/notice/posting}">
       <button class="sub_btn" type="button">글쓰기</button>
     </a>
 

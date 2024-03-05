@@ -18,10 +18,11 @@
 <nav>
   <ul>
     <li><a th:href="@{/}">HOME</a></li>
+    <li><a th:href="@{/notice}">NOTICE</a></li>
     <li><a th:href="@{/community}">COMMUNITY</a></li>
     <li><a th:href="@{/vbti/test}">VBTI</a></li>
     <li><a th:href="@{/EggSet}">EGG SET</a></li>
-    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/EggSetAdmin}">EGG SET ADMIN</a></li>
+    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/EggSetAdmin}">ADMIN</a></li>
     <li><a
         class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/MyPage}">My Page</a>
     </li>

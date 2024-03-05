@@ -177,3 +177,7 @@ td > a:active {
   pointer-events: none;
   opacity: 0.6;
 }
+
+.notice_row{
+  background-color: rgba(255, 192, 203, 0.25);
+}

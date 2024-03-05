@@ -1,19 +1,23 @@
-package com.ggck.vware.comment.controller;
+package com.ggck.vware.notice_comment.contorller;
 
 import com.ggck.vware.comment.entity.CommentEntity;
 import com.ggck.vware.comment.form.CommentForm;
-import com.ggck.vware.comment.repository.CommentRepository;
 import com.ggck.vware.comment.service.CommentService;
 import com.ggck.vware.community_post.entity.CommunityPostEntity;
 import com.ggck.vware.community_post.service.CommunityPostSerivce;
+import com.ggck.vware.notice.entity.NoticeEntity;
+import com.ggck.vware.notice.service.NoticeSerivce;
+import com.ggck.vware.notice_comment.entity.NoticeCommentEntity;
+import com.ggck.vware.notice_comment.repository.NoticeCommentRepository;
+import com.ggck.vware.notice_comment.service.NoticeCommentService;
 import com.ggck.vware.user.entity.SiteUserEntity;
 import com.ggck.vware.user.service.SiteUserService;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,15 +31,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
-@RequestMapping("/comment")
+@RequestMapping("/notice/comment")
 @RequiredArgsConstructor
 @Controller
 
-public class CommentController {
+public class NoticeCommentController {
 
-  private final CommunityPostSerivce communityPostSerivce;
-  private final CommentRepository commentRepository;
-  private final CommentService commentService;
+  private final NoticeSerivce noticeSerivce;
+  private final NoticeCommentRepository noticeCommentRepository;
+  private final NoticeCommentService noticeCommentService;
   private final SiteUserService siteUserService;
 
   @PreAuthorize("isAuthenticated()")
@@ -43,17 +47,17 @@ public class CommentController {
   public String createComment(@Valid CommentForm commentForm, BindingResult bindingResult,
       Model model, @PathVariable("id") Integer id
       , Principal principal) {
-    CommunityPostEntity communityPost = this.communityPostSerivce.getPost(id);
+    NoticeEntity notice = this.noticeSerivce.getPost(id);
     SiteUserEntity siteUser = this.siteUserService.getUser(principal.getName());
 
     if (bindingResult.hasErrors()) {
-      model.addAttribute("postDetail", communityPost);
-      return "community/post_view";
+      model.addAttribute("postDetail", notice);
+      return "notice/notice_view";
 
     }
 
-    this.commentService.create(communityPost, commentForm.getContent(), siteUser);
-    return String.format("redirect:/community/detail/%s", id);
+    this.noticeCommentService.create(notice, commentForm.getContent(), siteUser);
+    return String.format("redirect:/notice/detail/%s", id);
 
   }
 
@@ -62,39 +66,40 @@ public class CommentController {
   public String commentModify(@Valid CommentForm commentForm, BindingResult bindingResult,
       @PathVariable("id") Integer id, Principal principal, Model model, @RequestParam("postNumber")
   Integer postNumber) {
-    CommunityPostEntity communityPost = this.communityPostSerivce.getPost(postNumber); //postNumber
+    NoticeEntity notice = this.noticeSerivce.getPost(postNumber);//postNumber
     if (bindingResult.hasErrors()) {
-      model.addAttribute("postDetail", communityPost);
-      return "community/post_view";
+      model.addAttribute("postDetail", notice);
+      return "notice/notice_view";
     }
-    CommentEntity comment = this.commentService.getComment(id);
-    if (!comment.getAuthor().getUserId().equals(principal.getName())) {
+    NoticeCommentEntity noticeComment = this.noticeCommentService.getComment(id);
+    if (!noticeComment.getAuthor().getUserId().equals(principal.getName())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
     }
-    this.commentService.modify(comment, commentForm.getContent());
-    return String.format("redirect:/community/detail/%s",
-        comment.getCommunityPostEntity().getPostNumber());
+    this.noticeCommentService.modify(noticeComment, commentForm.getContent());
+    return String.format("redirect:/notice/detail/%s",
+        noticeComment.getNoticeEntity().getPostNumber());
   }
 
   @PreAuthorize("isAuthenticated()")
   @GetMapping("/delete/{id}")
   public String commentDelete(Principal principal, @PathVariable("id") Integer id) {
-    CommentEntity comment = this.commentService.getComment(id);
-    if (!comment.getAuthor().getUserId().equals(principal.getName())) {
+    NoticeCommentEntity noticeComment = this.noticeCommentService.getComment(id);
+    if (!noticeComment.getAuthor().getUserId().equals(principal.getName())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다");
     }
-    this.commentService.delete(comment);
-    return String.format("redirect:/community/detail/%s",
-        comment.getCommunityPostEntity().getPostNumber());
+    this.noticeCommentService.delete(noticeComment);
+    return String.format("redirect:/notice/detail/%s",
+        noticeComment.getNoticeEntity().getPostNumber());
   }
 
   @Scheduled(cron = "0 0 0 * * ?") //매일 자정에 실행
   public void cleanDeleteData() {
     LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
-    List<CommentEntity> deleteCommentList = commentRepository.findByDeleteTimeBefore(
+    List<NoticeCommentEntity> noticeCommentList = noticeCommentRepository.findByDeleteTimeBefore(
         thirtyDaysAgo); //삭제한지 30일이 지난 게시글
-    commentRepository.deleteAll(deleteCommentList);
-    System.out.println("댓글 자동삭제됐다옹 : " + deleteCommentList);
+    noticeCommentRepository.deleteAll(noticeCommentList);
+    System.out.println("공지 댓글 자동삭제됐다옹 : " + noticeCommentList);
   }
+
 
 }

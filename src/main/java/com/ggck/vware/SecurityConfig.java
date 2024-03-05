@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,16 +25,23 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
+// securedEnabled => Secured 애노테이션 사용 여부, prePostEnabled => PreAuthorize 어노테이션 사용 여부.
 public class SecurityConfig {
 
   @Autowired
   private SiteUserRepository siteUserRepository;
+  @Autowired
+  private CustomAccessDeniedHandler accessDeniedHandler;
 
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .csrf()
         .disable() // 이거 안하면 시큐리티에서 post 막음 -> TODO : 보안 취약해질 수 있으니 다른 방법 구글링 해서 해결할 것 : 고강찬 담당
+        .exceptionHandling()
+        .accessDeniedHandler(accessDeniedHandler)
+        .and()
         .authorizeHttpRequests((authorizeHttpRequests) ->
             authorizeHttpRequests
                 .requestMatchers("/EggSetAdmin/**")
