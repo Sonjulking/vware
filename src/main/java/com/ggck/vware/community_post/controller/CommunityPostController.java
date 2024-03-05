@@ -17,6 +17,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Controller
 @RequiredArgsConstructor //final이나 @Nonul인 필드 값만 파라미터로 받는 생성자를 만듬.
 @RequestMapping("/community")
+@EnableScheduling
 public class CommunityPostController {
 
   private final CommunityPostRepository communityPostRepository;
@@ -131,6 +133,7 @@ public class CommunityPostController {
   }
 
   @Scheduled(cron = "0 0 0 * * ?") //매일 자정에 실행
+  //@Scheduled(cron = "0/10 * * * * *")//10초마다 실행
   public void cleanDeleteData() {
     LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
     List<CommunityPostEntity> deleteCommunityPostList = communityPostRepository.findByDeleteTimeBefore(

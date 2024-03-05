@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/comment")
 @RequiredArgsConstructor
 @Controller
-
+@EnableScheduling
 public class CommentController {
 
   private final CommunityPostSerivce communityPostSerivce;
@@ -89,6 +90,7 @@ public class CommentController {
   }
 
   @Scheduled(cron = "0 0 0 * * ?") //매일 자정에 실행
+  //@Scheduled(cron = "0/10 * * * * *")//10초마다 실행
   public void cleanDeleteData() {
     LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
     List<CommentEntity> deleteCommentList = commentRepository.findByDeleteTimeBefore(
