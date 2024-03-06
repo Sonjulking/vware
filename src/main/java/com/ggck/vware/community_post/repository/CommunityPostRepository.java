@@ -31,4 +31,5 @@ public interface CommunityPostRepository extends JpaRepository<CommunityPostEnti
   // left join fetch는 join과 유사함. join은 쿼리결과에 대상 엔티티만 가져오지만, fetch가 붙으면 대상엔티티와 연관 엔티티들을 함께 가져옴.
   // :postid 는 변수명임 Integer id가 들어가는
   //Optional<CommunityPostEntity> findPostWithCommentNotDeleted(@Param("postId") Integer id);
+
 }

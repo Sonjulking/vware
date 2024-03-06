@@ -1,8 +1,10 @@
 package com.ggck.vware.eggset.service;
 
+import com.ggck.vware.DataNotFoundException;
 import com.ggck.vware.eggset.dto.*;
 import com.ggck.vware.eggset.entity.*;
 import com.ggck.vware.eggset.repository.*;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,41 +20,69 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EggSetService {
-    private final EggSetRepository eggSetRepository;
-    private final KeyBoardRepository keyBoardRepository;
-    private final MouseRepository mouseRepository;
-    private final MonitorRepository monitorRepository;
-    private final GpuRepository gpuRepository;
 
-    //eggSet 기본 save
-    public void save(EggSetDTO eggSetDTO) {
-        EggSetEntity eggSetEntity = EggSetEntity.toSaveEntity(eggSetDTO);
-        eggSetRepository.save(eggSetEntity);
+  private final EggSetRepository eggSetRepository;
+  private final KeyBoardRepository keyBoardRepository;
+  private final MouseRepository mouseRepository;
+  private final MonitorRepository monitorRepository;
+  private final GpuRepository gpuRepository;
+
+  //eggSet 기본 save
+  public void save(EggSetDTO eggSetDTO) {
+    EggSetEntity eggSetEntity = EggSetEntity.toSaveEntity(eggSetDTO);
+    eggSetRepository.save(eggSetEntity);
+  }
+
+  //keyBoard 기본 save
+  public void saveKeyboard(KeyBoardDTO keyBoardDTO) {
+    KeyBoardEntity keyBoardEntity = KeyBoardEntity.toSaveEntity(keyBoardDTO);
+    keyBoardRepository.save(keyBoardEntity);
+  }
+
+  //mouse 기본 save
+  public void saveMouse(MouseDTO mouseDTO) {
+    MouseEntity mouseEntity = MouseEntity.toSaveEntity(mouseDTO);
+    mouseRepository.save(mouseEntity);
+  }
+
+  //monitor 기본 save
+  public void saveMonitor(MonitorDTO monitorDTO) {
+    MonitorEntity monitorEntity = MonitorEntity.toSaveEntity(monitorDTO);
+    monitorRepository.save(monitorEntity);
+  }
+
+  //gpu 기본 save
+  public void saveGpu(GpuDTO gpuDTO) {
+    GpuEntity gpuEntity = GpuEntity.toSaveEntity(gpuDTO);
+    gpuRepository.save(gpuEntity);
+  }
+
+  public EggSetEntity eggGetEntity(String playerName) {
+    Optional<EggSetEntity> eggSetEntity = this.eggSetRepository.findByPlayer(playerName);
+    if (eggSetEntity.isPresent()) {
+      return eggSetEntity.get();
+    } else {
+      throw new DataNotFoundException("eggSetEntity found");
     }
+  }
 
-    //keyBoard 기본 save
-    public void saveKeyboard(KeyBoardDTO keyBoardDTO) {
-        KeyBoardEntity keyBoardEntity = KeyBoardEntity.toSaveEntity(keyBoardDTO);
-        keyBoardRepository.save(keyBoardEntity);
-    }
+  public void update(EggSetEntity eggSetEntity, EggSetDTO eggSetDTO) {
 
-    //mouse 기본 save
-    public void saveMouse(MouseDTO mouseDTO) {
-        MouseEntity mouseEntity = MouseEntity.toSaveEntity(mouseDTO);
-        mouseRepository.save(mouseEntity);
-    }
+    eggSetEntity.setTeam(eggSetDTO.getTeam());
+    eggSetEntity.setPlayer(eggSetEntity.getPlayer());
+    eggSetEntity.setMouse(eggSetDTO.getMouse());
+    eggSetEntity.setHz(eggSetDTO.getHz());
+    eggSetEntity.setDpi(eggSetDTO.getDpi());
+    eggSetEntity.setSens(eggSetDTO.getSens());
+    eggSetEntity.setEdpi(eggSetDTO.getEdpi());
+    eggSetEntity.setScopedsens(eggSetDTO.getScopedsens());
+    eggSetEntity.setMonitor(eggSetDTO.getMonitor());
+    eggSetEntity.setResolution(eggSetDTO.getResolution());
+    eggSetEntity.setGpu(eggSetDTO.getGpu());
+    eggSetEntity.setMousepad(eggSetDTO.getMousepad());
+    eggSetEntity.setKeyboard(eggSetDTO.getKeyboard());
+    eggSetEntity.setHeadset(eggSetDTO.getHeadset());
 
-    //monitor 기본 save
-    public void saveMonitor(MonitorDTO monitorDTO) {
-        MonitorEntity monitorEntity = MonitorEntity.toSaveEntity(monitorDTO);
-        monitorRepository.save(monitorEntity);
-    }
-
-    //gpu 기본 save
-    public void saveGpu(GpuDTO gpuDTO) {
-        GpuEntity gpuEntity = GpuEntity.toSaveEntity(gpuDTO);
-        gpuRepository.save(gpuEntity);
-    }
-
-
+    this.eggSetRepository.save(eggSetEntity);
+  }
 }

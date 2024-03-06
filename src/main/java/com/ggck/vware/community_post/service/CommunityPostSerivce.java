@@ -24,8 +24,7 @@ public class CommunityPostSerivce {
   private final CommunityPostRepository communityPostRepository;
 
   public CommunityPostEntity getPost(Integer id) {
-    Optional<CommunityPostEntity> communityPostEntity = this.communityPostRepository.findById(
-        id);
+    Optional<CommunityPostEntity> communityPostEntity = this.communityPostRepository.findById(id);
     if (communityPostEntity.isPresent()) {
       return communityPostEntity.get();
     } else {

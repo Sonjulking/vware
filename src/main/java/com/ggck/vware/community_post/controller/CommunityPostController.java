@@ -55,6 +55,7 @@ public class CommunityPostController {
   public String postDetail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
 
     CommunityPostEntity communityPostEntity = this.communityPostSerivce.getPost(id);
+
     model.addAttribute("postDetail", communityPostEntity);
 
     return "community/post_view";
