@@ -6,10 +6,9 @@ import com.ggck.vware.community_post.form.CommunityPostForm;
 import com.ggck.vware.community_post.repository.CommunityPostRepository;
 import com.ggck.vware.community_post.service.CommunityPostSerivce;
 import com.ggck.vware.notice.entity.NoticeEntity;
-import com.ggck.vware.notice.service.NoticeSerivce;
+import com.ggck.vware.notice.service.NoticeService;
 import com.ggck.vware.user.entity.SiteUserEntity;
 import com.ggck.vware.user.service.SiteUserService;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -38,14 +37,14 @@ public class CommunityPostController {
 
   private final CommunityPostRepository communityPostRepository;
   private final CommunityPostSerivce communityPostSerivce;
-  private final NoticeSerivce noticeSerivce;
+  private final NoticeService noticeService;
   private final SiteUserService siteUserService;
 
   @GetMapping()
   public String communityMain(Model model,
       @RequestParam(value = "page", defaultValue = "1") int page) {
     Page<CommunityPostEntity> paging = this.communityPostSerivce.getList(page - 1);
-    List<NoticeEntity> noticeList = this.noticeSerivce.getNoticeList();
+    List<NoticeEntity> noticeList = this.noticeService.getNoticeList();
     model.addAttribute("paging", paging);
     model.addAttribute("noticeList", noticeList);
     return "community/community";

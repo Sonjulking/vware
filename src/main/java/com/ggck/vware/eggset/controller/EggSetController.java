@@ -40,7 +40,7 @@ public class EggSetController {
   // post로 보내서 post로 받는 것. //  // @ModelAttribute 사용하면, BoardDTO 클래스 객체를 찾아서 주소에 있는 들어간 필드값이 일치하면 해당하는 Setter 호출해서 값을 담아줌.
   public String update(@RequestParam("updateUserName") String userName,
       @ModelAttribute EggSetDTO eggSetDTO,
-      Model model) {88
+      Model model) {
     System.out.println("유저네임 : sss " + userName);
     System.out.println("eggSetDTO : ssss" + eggSetDTO);
     EggSetEntity eggSetEntity = this.eggSetService.eggGetEntity(userName);

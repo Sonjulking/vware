@@ -1,8 +1,6 @@
 package com.ggck.vware.notice.service;
 
 import com.ggck.vware.DataNotFoundException;
-import com.ggck.vware.community_post.entity.CommunityPostEntity;
-import com.ggck.vware.community_post.repository.CommunityPostRepository;
 import com.ggck.vware.notice.entity.NoticeEntity;
 import com.ggck.vware.notice.repository.NoticeRepository;
 import com.ggck.vware.user.entity.SiteUserEntity;
@@ -21,14 +19,19 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class NoticeSerivce {
+public class NoticeService {
 
   private final NoticeRepository noticeRepository;
 
   public NoticeEntity getPost(Integer id) {
     Optional<NoticeEntity> noticeEntity = this.noticeRepository.findById(id);
     if (noticeEntity.isPresent()) {
-      return noticeEntity.get();
+      NoticeEntity notice = noticeEntity.get();
+
+      notice.setViews(notice.getViews() + 1); //조회수 증가
+      this.noticeRepository.save(notice);
+
+      return notice;
     } else {
       throw new DataNotFoundException("post not found");
     }

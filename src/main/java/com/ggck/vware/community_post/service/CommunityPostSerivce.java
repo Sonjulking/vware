@@ -26,7 +26,13 @@ public class CommunityPostSerivce {
   public CommunityPostEntity getPost(Integer id) {
     Optional<CommunityPostEntity> communityPostEntity = this.communityPostRepository.findById(id);
     if (communityPostEntity.isPresent()) {
-      return communityPostEntity.get();
+      CommunityPostEntity communityPost = communityPostEntity.get();
+
+      communityPost.setViews(communityPost.getViews() + 1); //조회수 증가
+      this.communityPostRepository.save(communityPost);
+
+      return communityPost;
+
     } else {
       throw new DataNotFoundException("post not found");
     }

@@ -1,12 +1,10 @@
 package com.ggck.vware.notice.controller;
 
 import com.ggck.vware.comment.form.CommentForm;
-import com.ggck.vware.community_post.entity.CommunityPostEntity;
 import com.ggck.vware.community_post.form.CommunityPostForm;
-import com.ggck.vware.community_post.service.CommunityPostSerivce;
 import com.ggck.vware.notice.entity.NoticeEntity;
 import com.ggck.vware.notice.repository.NoticeRepository;
-import com.ggck.vware.notice.service.NoticeSerivce;
+import com.ggck.vware.notice.service.NoticeService;
 import com.ggck.vware.user.entity.SiteUserEntity;
 import com.ggck.vware.user.service.SiteUserService;
 import jakarta.validation.Valid;
@@ -36,7 +34,7 @@ import org.springframework.web.server.ResponseStatusException;
 @EnableScheduling
 public class NoticeController {
 
-  private final NoticeSerivce noticeSerivce;
+  private final NoticeService noticeService;
   private final NoticeRepository noticeRepository;
   private final SiteUserService siteUserService;
 
@@ -44,7 +42,7 @@ public class NoticeController {
   @GetMapping()
   public String noticeList(Model model,
       @RequestParam(value = "page", defaultValue = "1") int page) {
-    Page<NoticeEntity> paging = this.noticeSerivce.getList(page - 1);
+    Page<NoticeEntity> paging = this.noticeService.getList(page - 1);
     model.addAttribute("paging", paging);
     return "notice/notice_list";
 
@@ -71,7 +69,7 @@ public class NoticeController {
 
     SiteUserEntity siteUser = this.siteUserService.getUser(principal.getName());
 
-    this.noticeSerivce.create(communityPostForm.getSubject(),
+    this.noticeService.create(communityPostForm.getSubject(),
         communityPostForm.getContent(), siteUser, postType);
 
     return "redirect:/notice"; // 질문 저장후 질문목록으로 이동
@@ -81,7 +79,7 @@ public class NoticeController {
   @GetMapping(value = "/detail/{id}")
   public String postDetail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
 
-    NoticeEntity noticeEntity = this.noticeSerivce.getPost(id);
+    NoticeEntity noticeEntity = this.noticeService.getPost(id);
     model.addAttribute("postDetail", noticeEntity);
 
     return "notice/notice_view";
@@ -91,11 +89,11 @@ public class NoticeController {
   @PreAuthorize("isAuthenticated()")
   @GetMapping("/delete/{id}")
   public String postDelete(Principal principal, @PathVariable("id") Integer id) {
-    NoticeEntity notice = this.noticeSerivce.getPost(id);
+    NoticeEntity notice = this.noticeService.getPost(id);
     if (!notice.getAuthor().getUserId().equals(principal.getName())) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다");
     }
-    this.noticeSerivce.delete(notice);
+    this.noticeService.delete(notice);
     return "redirect:/";
   }
 
